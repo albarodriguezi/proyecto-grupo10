@@ -47,7 +47,7 @@ public class Concert {
 		int occupied = 0;
 		
 		for(Reserva r : reservations) {
-			occupied += r.getPassengers().size();
+			occupied += r.getAttendees().size();
 		}
 		
 		return (seats - occupied);
