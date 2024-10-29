@@ -2,6 +2,7 @@ package es.deusto.ingenieria.prog3.grupodiez.domain;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Reserva implements Serializable {
@@ -51,6 +52,25 @@ public class Reserva implements Serializable {
 	public void setAttendees(List<String> atendees) {
 		this.attendees = atendees;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(attendees, concert, locator);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Reserva other = (Reserva) obj;
+		return Objects.equals(attendees, other.attendees) && Objects.equals(concert, other.concert)
+				&& Objects.equals(locator, other.locator);
+	}
+	
 	
 	
 	
