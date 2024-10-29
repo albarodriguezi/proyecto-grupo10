@@ -20,7 +20,7 @@ public class Concert {
 		this.code = code;
 		this.name = name;
 		this.duration = duration;		
-		this.seats = (plane == null) ? 0 : plane.getSeats();
+		this.seats = seats;
 		this.price = price;
 		this.reservations = new ArrayList<>();
 		this.disponibilidad = disponibilidad;
@@ -80,16 +80,23 @@ public class Concert {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(code);
+		return Objects.hash(code, disponibilidad, duration, name, price, seats);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj != null && getClass() == obj.getClass()) {
-			return ((Flight) obj).code.equals(this.code);
-		} else {
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
+		Concert other = (Concert) obj;
+		return Objects.equals(code, other.code)
+				&& Double.doubleToLongBits(disponibilidad) == Double.doubleToLongBits(other.disponibilidad)
+				&& duration == other.duration && Objects.equals(name, other.name)
+				&& Float.floatToIntBits(price) == Float.floatToIntBits(other.price) && seats == other.seats;
 	}
 
 
