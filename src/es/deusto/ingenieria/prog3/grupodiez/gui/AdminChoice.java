@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -15,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import es.ingenieria.prog3.swing.p2.Calculadora;
+
 
 
 
@@ -87,6 +88,11 @@ import es.ingenieria.prog3.swing.p2.Calculadora;
 			
 	        
 	    }
+		
+		
+		public void actionPerformed(ActionEvent e) { 
+		    
+		  } 
 		
 		public static void main(String[] args) {
 	        // Crear la ventana en el hilo de eventos de Swing para no bloquear
