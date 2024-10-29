@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 
 //TAREA 4.A: Modifica el renderer de la tabla de vuelos
 //Añade una nueva columna a la tabla de aviones para mostrar el porcentaje de 
@@ -16,29 +17,35 @@ import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 public class DisponibilidadTicket extends DefaultTableModel {
 
 	private static final long serialVersionUID = 1L;
-	
 	private List<Concert> concerts;
+	private Fecha fecha;
 	private final List<String> headers = Arrays.asList(
-			"CÓDIGO", //código de cada concierto
-			"NOMBRE", //nombre del concierto
-			"DURACIÓN", //duración aproximada del concierto
-			"ASIENTOS", //asientos libres
+			"FECHA", //fecha del concierto
+			"DISPONIBILIDAD", //AÑADIR DISPONIBILIDAD DE LOS TICKETS EN CADA FECHA
+			"ASIENTOS LIBRES", //número de asientos libres
+			"DURACIÓN", //duración del concierto
 			"PRECIO", //precio del concierto
-			"DISPONIBILIDAD", //disponibilidad para añadir
-			"RESERVAR" 
+			"RESERVAR" //botón de reservar
 			);
 
+	//para añadir la disponibilidad:
+	
+	//constructor con acceso a la lista de conciertos
 	public DisponibilidadTicket (List<Concert> concerts) {
 		this.concerts = concerts;
 	}
 	
+	public DisponibilidadTicket (Fecha fecha) {
+		this.fecha = fecha;
+	}
+
 	@Override
 	public String getColumnName(int column) { //obtener el nombre de cada columna
 		return headers.get(column);
 	}
 
 	@Override
-	public int getRowCount() { //cuantas filas tiene la tabla (número de conciertos
+	public int getRowCount() { //cuantas filas tiene la tabla (número de conciertos)
 		if (concerts != null) { //si no está vacia
 			return concerts.size(); //devuelve la cantidad de elementos
 		} else { 
@@ -48,35 +55,30 @@ public class DisponibilidadTicket extends DefaultTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return headers.size(); 
+		return headers.size(); //devuelve el número de columnas (títulos de arriba)
 	}
 	
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        //Hay que modificar este método para que la columna del botón sea editable.
-    	return (columnIndex == headers.size()-1);
+    	return (columnIndex == 2); //para que DISPONIBILIDAD (índice 2) sea editable
     }
     
-    @Override
-    public void setValueAt(Object aValue, int row, int column) {    	
+    @Override 
+    public void setValueAt(Object aValue, int row, int column) { //para cambiar los valores
     }
 	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Flight flight = flights.get(rowIndex);
+		Concert concert = concerts.get(rowIndex);
 		
 		switch (columnIndex) {
-			case 0: return flight.getAirline();
-			case 1: return flight.getCode();
-			case 2: return flight.getOrigin();
-			case 3: return flight.getDestination();
-			case 4: return Integer.valueOf(flight.getDuration());
-			case 5: return Float.valueOf(flight.getPrice());
-			case 6: return Integer.valueOf(flight.getReservations().size());
-			case 7: return Integer.valueOf(flight.getRemainingSeats());
-			//La disponibilidad se calcula como el cociente entre RemainingSeats y Seats
-			case 8: return Float.valueOf((float) flight.getRemainingSeats()/flight.getSeats());
-			case 9: return flight;
+			case 0: return fecha.getFecha(); //la fecha de la clase Fecha
+			//disponibilidad --> número de tickets --> número máximo de personas que entran en el recinto
+			case 1: return Float.valueOf((float) concert.getRemainingSeats()/concert.getSeats()); 
+			case 2: return Integer.valueOf(concert.getRemainingSeats());
+			case 3: return Integer.valueOf(concert.getDuration());
+			case 4: return Float.valueOf(concert.getPrice());
+			case 5: return concerts;
 			default: return null;
 		}
 	}
