@@ -9,11 +9,11 @@ public class Concert {
 
 	private String code; // codigo del concierto
 	private String name; //nombre del conciert
-	private List<Reserva> reservations; //lista de reservas del concierto
 	private int duration; //duracion del concierto
 	private int seats; //asientos del concierto
 	private float price; //precio de los tickets del conierto
 	private double disponibilidad; //disponibilidad del concierto
+	private List<Reserva> reservations; //lista de reservas del concierto
 	
 	public Concert(String code, String name, List<Reserva> reservations,
 				  int duration, int seats, float price, double disponibilidad) {
