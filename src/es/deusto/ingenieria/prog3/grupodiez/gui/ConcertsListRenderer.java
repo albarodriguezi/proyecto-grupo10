@@ -153,34 +153,34 @@ public class ConcertsListRenderer extends JFrame{
 					result.setHorizontalAlignment(JLabel.CENTER);
 					
 					switch (e) { 
-						case ErasTour:
+						case ERASTOUR:
 							result.setIcon(new ImageIcon("/proyecto-grupo10/images/Erastour.png"));
 							break;
-						case AdeleLive:
+						case 		ADELELIVE, BELIEVETOUR, BORNTODIE, ERASTOUR, FUTURENOSTALGIA, GUTSWORLTOUR, LOVEONTOUR, MUSICOFTHESPHERE, ONTHEROADAGAIN, THEMATHEMATICSTOUR;:
 							result.setIcon(new ImageIcon("/proyecto-grupo10/images/AdeleLive.png"));
 							break;
-						case BelieveTour:
+						case BELIEVETOUR:
 							result.setIcon(new ImageIcon("/proyecto-grupo10/images/BelieveTour.png"));
 							break;
-						case bornToDie:
+						case BORNTODIE:
 							result.setIcon(new ImageIcon("/proyecto-grupo10/images/BornToDie.png"));
 							break;
-						case futureNostalgia:
+						case FUTURENOSTALGIA:
 							result.setIcon(new ImageIcon("/proyecto-grupo10/images/FutureNostalgia.png"));
 							break;
-						case GutsWorldTour:
+						case GUTSWORLTOUR:
 							result.setIcon(new ImageIcon("/proyecto-grupo10/images/GutsWorldTour.png"));
 							break;
-						case LoveOnTour:
+						case LOVEONTOUR:
 							result.setIcon(new ImageIcon("/proyecto-grupo10/images/LoveOnTour.png"));
 							break;
-						case MusicOfTheSherr:
+						case MUSICOFTHESPHERE:
 							result.setIcon(new ImageIcon("/proyecto-grupo10/images/MusicOfTheSphere.png"));
 							break;
-						case OnTheRoadAgain:
+						case ONTHEROADAGAIN:
 							result.setIcon(new ImageIcon("/proyecto-grupo10/images/OnTheRoadAgain.png"));
 							break;
-						case TheMathematicsTour:
+						case THEMATHEMATICSTOUR:
 							result.setIcon(new ImageIcon("/proyecto-grupo10/images/TheMathematicTour.png"));
 							break;
 						default:
