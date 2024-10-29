@@ -10,20 +10,17 @@ public class Concert {
 	private String code; // codigo del concierto
 	private String name; //nombre del conciert
 	private List<Reserva> reservations; //lista de reservas del concierto
-	private int duration; //
-	private int seats;
-	private float price;
-	private double disponibilidad;
+	private int duration; //duracion del concierto
+	private int seats; //asientos del concierto
+	private float price; //precio de los tickets del conierto
+	private double disponibilidad; //disponibilidad del concierto
 	
-	public Flight(String code, Airport origin, Airport destination,
-				  Airline airline, Plane plane, int duration, float price, double disponibilidad) {
+	public Concert(String code, String name, List<Reserva> reservations,
+				  int duration, int seats, float price, double disponibilidad) {
 		this.code = code;
-		this.origin = origin;
-		this.destination = destination;
-		this.airline = airline;
-		this.plane = plane;
+		this.name = name;
 		this.duration = duration;		
-		this.seats = (plane == null) ? 0 : plane.getSeats();
+		this.seats = seats;
 		this.price = price;
 		this.reservations = new ArrayList<>();
 		this.disponibilidad = disponibilidad;
@@ -34,20 +31,8 @@ public class Concert {
 		return code;
 	}
 
-	public Airport getOrigin() {
-		return origin;
-	}
-
-	public Airport getDestination() {
-		return destination;
-	}
-
-	public Airline getAirline() {
-		return airline;
-	}
-
-	public Plane getPlane() {
-		return plane;
+	public String name() {
+		return name;
 	}
 
 	public int getDuration() {
@@ -61,7 +46,7 @@ public class Concert {
 	public int getRemainingSeats() {
 		int occupied = 0;
 		
-		for(Reservation r : reservations) {
+		for(Reserva r : reservations) {
 			occupied += r.getPassengers().size();
 		}
 		
@@ -77,17 +62,17 @@ public class Concert {
 		
 	}
 	
-	public List<Reservation> getReservations() {
+	public List<Reserva> getReserva() {
 		return reservations;
 	}
 	
 	
-	public void setReservations(List<Reservation> reservations) {
+	public void setReserva(List<Reserva> reservations) {
 		this.reservations = reservations;
 	}
 	
 
-	public void addReservation(Reservation reservation) {
+	public void addReserva(Reserva reservation) {
 		if (reservation != null && !reservations.contains(reservation)) {
 			reservations.add(reservation);
 		}
@@ -95,22 +80,31 @@ public class Concert {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(code);
+		return Objects.hash(code, disponibilidad, duration, name, price, seats);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj != null && getClass() == obj.getClass()) {
-			return ((Flight) obj).code.equals(this.code);
-		} else {
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
+		Concert other = (Concert) obj;
+		return Objects.equals(code, other.code)
+				&& Double.doubleToLongBits(disponibilidad) == Double.doubleToLongBits(other.disponibilidad)
+				&& duration == other.duration && Objects.equals(name, other.name)
+				&& Float.floatToIntBits(price) == Float.floatToIntBits(other.price) && seats == other.seats;
 	}
+
 
 	@Override
 	public String toString() {
-		return String.format("%s: %s -> %s (%04d min., %03d seats, %.2f€)", 
-			code, origin.getCode(), destination.getCode(),
-			duration, (seats-reservations.size()), price);
+		return "Concert [code=" + code + ", name=" + name + ", duration=" + duration + ", seats=" + seats + ", price="
+				+ price + ", disponibilidad=" + disponibilidad + "]";
 	}
+
+
 }
