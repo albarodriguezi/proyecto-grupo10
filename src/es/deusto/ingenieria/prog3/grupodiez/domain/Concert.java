@@ -15,13 +15,10 @@ public class Concert {
 	private float price; //precio de los tickets del conierto
 	private double disponibilidad; //disponibilidad del concierto
 	
-	public Flight(String code, Airport origin, Airport destination,
-				  Airline airline, Plane plane, int duration, float price, double disponibilidad) {
+	public Concert(String code, String name, List<Reserva> reservations,
+				  int duration, int seats, float price, double disponibilidad) {
 		this.code = code;
-		this.origin = origin;
-		this.destination = destination;
-		this.airline = airline;
-		this.plane = plane;
+		this.name = name;
 		this.duration = duration;		
 		this.seats = (plane == null) ? 0 : plane.getSeats();
 		this.price = price;
@@ -34,20 +31,8 @@ public class Concert {
 		return code;
 	}
 
-	public Airport getOrigin() {
-		return origin;
-	}
-
-	public Airport getDestination() {
-		return destination;
-	}
-
-	public Airline getAirline() {
-		return airline;
-	}
-
-	public Plane getPlane() {
-		return plane;
+	public String name() {
+		return name;
 	}
 
 	public int getDuration() {
@@ -107,10 +92,12 @@ public class Concert {
 		}
 	}
 
+
 	@Override
 	public String toString() {
-		return String.format("%s: %s -> %s (%04d min., %03d seats, %.2f€)", 
-			code, origin.getCode(), destination.getCode(),
-			duration, (seats-reservations.size()), price);
+		return "Concert [code=" + code + ", name=" + name + ", duration=" + duration + ", seats=" + seats + ", price="
+				+ price + ", disponibilidad=" + disponibilidad + "]";
 	}
+
+
 }
