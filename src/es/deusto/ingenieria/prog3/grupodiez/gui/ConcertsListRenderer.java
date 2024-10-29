@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Nombre;
 import es.deusto.prog3.swing.p4.domain.Comic;
 import es.deusto.prog3.swing.p4.domain.Personaje;
 import es.deusto.prog3.swing.p4.domain.Personaje.Editorial;
@@ -63,18 +64,18 @@ public class ConcertsListRenderer extends JFrame{
 		this.txtFiltro = new JTextField(20);
 		
 		
-		
+		//creamos el listener de los concierto
 		DocumentListener documentListener = new DocumentListener() {
 
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				filterConcert(txtFiltro.getText());
+				//filterConcert(txtFiltro.getText());
 					
 			}
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				filterConcert(txtFiltro.getText());
+				//filterConcert(txtFiltro.getText());
 				
 			}
 
@@ -90,39 +91,39 @@ public class ConcertsListRenderer extends JFrame{
 		
 		
 		
+		//creamos el jpanel de los conciertos
+		JPanel panelFiltro = new JPanel();//creamos en nuevo jpanel
+		panelFiltro.add(new JLabel("Filtro por nombre: "));//definimos el label de la pagina al que vamos a llamar "filtro por nombre"
+		panelFiltro.add(txtFiltro);//añadimos el filtro de text al panel
 		
-		JPanel panelFiltro = new JPanel();
-		panelFiltro.add(new JLabel("Filtro por título: "));
-		panelFiltro.add(txtFiltro);
-		
-		JPanel panelConcert = new JPanel();
-		panelConcert.setLayout(new BorderLayout());
-		panelConcert.add(BorderLayout.CENTER, scrollPaneConcerts);
-		panelConcert.add(BorderLayout.NORTH, panelFiltro);
+		JPanel panelConcert = new JPanel();//definimso le panel concierto donde se van a guardar los datos de los conciertos
+		panelConcert.setLayout(new BorderLayout());//le definimos los border al panel de los conciertos
+		panelConcert.add(BorderLayout.CENTER, scrollPaneConcerts);//en el centro del panel añadimos la lusta de los conciertos
+		panelConcert.add(BorderLayout.NORTH, panelFiltro);//en la parte de arriba añadimos el filtro
 				
 		//El Layout del panel principal es un matriz con 2 filas y 1 columna
 		this.getContentPane().setLayout(new GridLayout(2, 1));
 		this.getContentPane().add(panelConcert);
 		
-		this.setTitle("Ventana principal de Concerts");		
-		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		this.setTitle("Concerts");		
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//que se cierre la ventana
 
-		this.setSize(800, 600);
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);		
+		this.setSize(1000, 800);//definimod el tamaño de la pestaña
+		this.setLocationRelativeTo(null);//definimos que la pestaña se encuentre en el centro de la pantalla
+		this.setVisible(true);//definimso que se pueda ver	
 	}
 	
 	
 	private void initTables() {
 		//Cabecera del modelo de datos
-		Vector<String> cabeceraConcert = new Vector<String>(Arrays.asList( "CODIGO", "NOMBRE", "DURACION", "ASIENTO", "PRECIO", "DISPONIBILIDAD", "RESERVA"));
+		Vector<String> cabeceraConcert = new Vector<String>(Arrays.asList( "CODIGO", "NOMBRE", "DURACION", "ASIENTO", "PRECIO"));//definimos las cabeceras de lñas tablas
 		//Se crea el modelo de datos para la tabla de comics sólo con la cabecera
-		this.modeloDatosConcenrts = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraConcert);
+		this.modeloDatosConcenrts = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraConcert);//se crean las partes de la tabla segun las cabeceras
 		//Se crea la tabla de comics con el modelo de datos
-		this.tablaConcert = new JTable(this.modeloDatosConcenrts);
+		this.tablaConcert = new JTable(this.modeloDatosConcenrts);//definimos la tabña de conciertos
 		
 		
-		KeyListener keyListener = new KeyListener() {
+		KeyListener keyListener = new KeyListener() {//creamos un key listener
 
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -138,7 +139,7 @@ public class ConcertsListRenderer extends JFrame{
 			};
 				
 	//para que salga ha que poner al listener
-			this.tablaConcerts.addKeyListener(keyListener);
+			this.tablaConcert.addKeyListener(keyListener);
 			
 			//Se define un CellRenderer para las celdas de las dos tabla usando una expresión lambda
 			TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
@@ -211,7 +212,7 @@ public class ConcertsListRenderer extends JFrame{
 			};
 			
 			//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
-			/*TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
+			TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
 				JLabel result = new JLabel(value.toString());			
 				result.setHorizontalAlignment(JLabel.CENTER);
 				
@@ -233,10 +234,10 @@ public class ConcertsListRenderer extends JFrame{
 			}; 
 			
 			//Se crea un CellEditor a partir de un JComboBox()
-			//JComboBox<> jComboNombre = new JComboBox<>(Nombre.values());		
-			//DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboNombre);
+			JComboBox<Nombre> jComboNombre = new JComboBox<>(Nombre.values());		
+			DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboNombre){
 			
-			//Se define la altura de las filas de la tabla de comics
+			//Se define la altura de las filas de la tabla de concert
 			this.tablaConcerts.setRowHeight(26);
 			
 			//Se deshabilita la reordenación de columnas
@@ -265,10 +266,10 @@ public class ConcertsListRenderer extends JFrame{
 			
 			MouseMotionAdapter mouseMoveAdapter = new MouseMotionAdapter() {
 				public void mouseMoved(MouseEvent e){
-					filaSeleccionadaPersonaje = tablaPersonajes.rowAtPoint(e.getPoint());
-					tablaPersonajes.repaint();
-				}
-			}
+					filaSeleccionadaConcert = tablaConcert.rowAtPoint(e.getPoint());
+					tablaConcert.repaint();
+				}}
+			
 			
 			
 			this.tablaConcert.addMouseMotionListener(mouseMoveAdapter); 
@@ -276,7 +277,7 @@ public class ConcertsListRenderer extends JFrame{
 			//Se deshabilita la reordenación de columnas
 			this.tablaConcert.getTableHeader().setReorderingAllowed(false);
 			//Se deshabilita el redimensionado de las columna
-			this.tablaConcert.getTableHeader().setResizingAllowed(false);
+			this.tablaConcerttablaConcert.getTableHeader().setResizingAllowed(false);
 			//Se definen criterios de ordenación por defecto para cada columna
 			this.tablaConcert.setAutoCreateRowSorter(true);
 			
@@ -287,7 +288,7 @@ public class ConcertsListRenderer extends JFrame{
 			this.tablaConcert.getColumnModel().getColumn(3).setPreferredWidth(200);
 		}
 	}
-	}
+	};
 };
 
 	
