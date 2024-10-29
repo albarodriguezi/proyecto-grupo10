@@ -10,14 +10,14 @@ public class Reserva implements Serializable {
 	private String locator;
 	private Concert concert;
 	private Fecha fecha;
-	private List<String> atendees;
+	private List<String> attendees;
 	
-	public Reserva(String locator, Concert concert, Fecha fecha, List<String> atendees) {
+	public Reserva(String locator, Concert concert, Fecha fecha, List<String> attendees) {
 		super();
 		this.locator = locator;
 		this.concert = concert;
 		this.fecha = fecha;
-		this.atendees = atendees;
+		this.attendees = attendees;
 	}
 
 	public String getLocator() {
@@ -44,12 +44,12 @@ public class Reserva implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public List<String> getAtendees() {
-		return atendees;
+	public List<String> getAttendees() {
+		return attendees;
 	}
 
-	public void setAtendees(List<String> atendees) {
-		this.atendees = atendees;
+	public void setAttendees(List<String> atendees) {
+		this.attendees = atendees;
 	}
 	
 	
