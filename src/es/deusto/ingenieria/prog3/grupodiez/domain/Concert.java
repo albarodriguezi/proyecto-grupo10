@@ -46,7 +46,7 @@ public class Concert {
 	public int getRemainingSeats() {
 		int occupied = 0;
 		
-		for(Reservation r : reservations) {
+		for(Reserva r : reservations) {
 			occupied += r.getPassengers().size();
 		}
 		
@@ -62,17 +62,17 @@ public class Concert {
 		
 	}
 	
-	public List<Reservation> getReservations() {
+	public List<Reserva> getReserva() {
 		return reservations;
 	}
 	
 	
-	public void setReservations(List<Reservation> reservations) {
+	public void setReserva(List<Reserva> reservations) {
 		this.reservations = reservations;
 	}
 	
 
-	public void addReservation(Reservation reservation) {
+	public void addReserva(Reserva reservation) {
 		if (reservation != null && !reservations.contains(reservation)) {
 			reservations.add(reservation);
 		}
