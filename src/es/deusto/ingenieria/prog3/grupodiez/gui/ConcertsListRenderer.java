@@ -156,7 +156,7 @@ public class ConcertsListRenderer extends JFrame{
 						case ERASTOUR:
 							result.setIcon(new ImageIcon("/proyecto-grupo10/images/Erastour.png"));
 							break;
-						case 		ADELELIVE, BELIEVETOUR, BORNTODIE, ERASTOUR, FUTURENOSTALGIA, GUTSWORLTOUR, LOVEONTOUR, MUSICOFTHESPHERE, ONTHEROADAGAIN, THEMATHEMATICSTOUR;:
+						case ADELELIVE:
 							result.setIcon(new ImageIcon("/proyecto-grupo10/images/AdeleLive.png"));
 							break;
 						case BELIEVETOUR:
@@ -211,7 +211,7 @@ public class ConcertsListRenderer extends JFrame{
 			};
 			
 			//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
-			TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
+			/*TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
 				JLabel result = new JLabel(value.toString());			
 				result.setHorizontalAlignment(JLabel.CENTER);
 				
@@ -221,9 +221,6 @@ public class ConcertsListRenderer extends JFrame{
 					case "DURACION":
 					case "ASIENTO":
 					case "PRECIO":
-					case "DISPONIBILIDAD":
-					case "RESERVA":
-						
 						result.setHorizontalAlignment(JLabel.LEFT);
 				}
 				
@@ -260,9 +257,9 @@ public class ConcertsListRenderer extends JFrame{
 			//this.tablaConcerts.getColumnModel().getColumn(2).setPreferredWidth(400);
 			
 			//Se modifica el modelo de selección de la tabla para que se pueda selecciona únicamente una fila
-			this.tablaConcerts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			//this.tablaConcerts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			//Se define el comportamiento el evento de selección de una fila de la tabla
-			this.tablaConcerts.getSelectionModel().addListSelectionListener(e -> this.loadConcerts();(this.concerts.get((int) tablaConcert.getValueAt(tablaConcert.getSelectedRow(), 0) - 1));
+			//this.tablaConcerts.getSelectionModel().addListSelectionListener(e -> this.loadConcerts();(this.concerts.get((int) tablaConcert.getValueAt(tablaConcert.getSelectedRow(), 0) - 1));
 				}
 				
 			

@@ -1,13 +1,18 @@
 package es.deusto.ingenieria.prog3.grupodiez.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
 public class Concert implements Comparable<Concert>, Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	public enum Nombre{
 		ADELELIVE, BELIEVETOUR, BORNTODIE, ERASTOUR, FUTURENOSTALGIA, GUTSWORLTOUR, LOVEONTOUR, MUSICOFTHESPHERE, ONTHEROADAGAIN, THEMATHEMATICSTOUR;
 	}
@@ -19,8 +24,7 @@ public class Concert implements Comparable<Concert>, Serializable{
 	private float price; //precio de los tickets del conierto
 
 	
-	public Concert(String code, Nombre name, List<Reserva> reservations,
-				  int duration, int seats, float price) {
+	public Concert(String code, Nombre name,int duration, int seats, float price) {
 		this.code = code;
 		this.name = name;
 		this.duration = duration;		
