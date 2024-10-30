@@ -11,10 +11,13 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.TitledBorder;
 
 
 
@@ -90,6 +93,8 @@ import javax.swing.SwingUtilities;
 	    }
 		
 		
+		
+		
 		public void actionPerformed(ActionEvent e) { 
 		    
 		  } 
@@ -101,6 +106,10 @@ import javax.swing.SwingUtilities;
 	    		// Crear una instancia de EjemploLayouts y hacerla visible
 	    		AdminChoice cal = new AdminChoice();
 	    		cal.setVisible(true);
+	    		
+	    		AnadirConcierto add = new AnadirConcierto();
+	    		add.setVisible(true);
+	    		
 	        });
 	    }
 	
