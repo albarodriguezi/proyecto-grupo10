@@ -21,7 +21,6 @@ import javax.swing.table.TableRowSorter;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Nombre;
 
-
 public class ConcertsListRenderer extends JFrame {
     
 	private static final long serialVersionUID = 1L;
@@ -127,7 +126,6 @@ public class ConcertsListRenderer extends JFrame {
 					case THEMATHEMATICSTOUR:
 						result.setIcon(new ImageIcon("resources/images/themathematicstour.jpg"));
 						break;
-						
 					default:
 				}
 			//Si el valor es numérico se renderiza centrado
@@ -150,7 +148,6 @@ public class ConcertsListRenderer extends JFrame {
 				} else {
 					result.setBackground(new Color(190, 227, 219));
 				}
-			//Se usan los colores por defecto de la tabla para las celdas de la tabla de personajes
 			} 
 			
 			//Si la celda está seleccionada se renderiza con el color de selección por defecto
@@ -159,86 +156,66 @@ public class ConcertsListRenderer extends JFrame {
 				result.setForeground(table.getSelectionForeground());			
 			}
 			
+			result.setOpaque(true);
+			
+			return result;
+		};
+
+		//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
+		TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
+			JLabel result = new JLabel(value.toString());			
+			result.setHorizontalAlignment(JLabel.CENTER);
+			
+			switch (value.toString()) {
+				case "TÍTULO":
+				case "NOMBRE":
+				case "EMAIL":
+					result.setHorizontalAlignment(JLabel.LEFT);
+					break; // Se añadió un break aquí para evitar fallos
+			}
+			
+			result.setBackground(table.getBackground());
+			result.setForeground(table.getForeground());
 			
 			result.setOpaque(true);
 			
 			return result;
 		};
-        /*TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
-            JLabel result = new JLabel();
-
-            if (column == 0 && value != null) { // Columna "LOGO"
-                // Intentar cargar la imagen desde la ruta
-                if (value instanceof String) {
-                    String imagePath = (String) value;
-                    File imageFile = new File(imagePath);
-                    if (imageFile.exists()) {  // Verificar que el archivo exista
-                        ImageIcon icon = new ImageIcon(imagePath);
-                        result.setIcon(icon);  // Establecer la imagen en el JLabel
-                    } else {
-                        result.setText("Imagen no encontrada");
-                    }
-                }
-                result.setHorizontalAlignment(JLabel.CENTER);
-            } else if (value != null) { // Para las demás columnas
-                result.setText(value.toString());
-            }
-            
-            return result;
-        };*/
-		//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
-				TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
-					JLabel result = new JLabel(value.toString());			
-					result.setHorizontalAlignment(JLabel.CENTER);
-					
-					switch (value.toString()) {
-						case "TÍTULO":
-						case "NOMBRE":
-						case "EMAIL":
-							result.setHorizontalAlignment(JLabel.LEFT);
-					}
-					
-					result.setBackground(table.getBackground());
-					result.setForeground(table.getForeground());
-					
-					result.setOpaque(true);
-					
-					return result;
-				};
-				
-				//Se crea un CellEditor a partir de un JComboBox()
-				JComboBox<Editorial> jComboEditorial = new JComboBox<>(Editorial.values());		
-				DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
-				
-				//Se define la altura de las filas de la tabla de comics
-				this.tablaComics.setRowHeight(26);
-				
-				//Se deshabilita la reordenación de columnas
-				this.tablaComics.getTableHeader().setReorderingAllowed(false);
-				//Se deshabilita el redimensionado de las columna
-				this.tablaComics.getTableHeader().setResizingAllowed(false);
-				//Se definen criterios de ordenación por defecto para cada columna
-				this.tablaComics.setAutoCreateRowSorter(true);
-				
-				//Se establecen los renderers al la cabecera y el contenido
-				this.tablaComics.getTableHeader().setDefaultRenderer(headerRenderer);		
-				this.tablaComics.setDefaultRenderer(Object.class, cellRenderer);
-				
-				//Se establece el editor específico para la Editorial		
-				this.tablaComics.getColumnModel().getColumn(1).setCellEditor(editorialEditor);
-				
-				//Se define la anchura de la columna Título
-				this.tablaComics.getColumnModel().getColumn(2).setPreferredWidth(400);
-				
-				//Se modifica el modelo de selección de la tabla para que se pueda selecciona únicamente una fila
-				this.tablaComics.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-				//Se define el comportamiento el evento de selección de una fila de la tabla
-				this.tablaComics.getSelectionModel().addListSelectionListener(e -> {
-					//Se obtiene el ID del comic de la fila seleccionada si es distinta de -1
-					if (tablaComics.getSelectedRow() != -1) {
-						this.loadPersonajes(this.comics.get((int) tablaComics.getValueAt(tablaComics.getSelectedRow(), 0) - 1));
-					}
-				});
+		
+		//Se crea un CellEditor a partir de un JComboBox()
+		JComboBox<Nombre> jComboEditorial = new JComboBox<>(Nombre.values());		
+		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
+		
+		//Se define la altura de las filas de la tabla de comics
+		this.tablaConcert.setRowHeight(26);
+		
+		//Se deshabilita la reordenación de columnas
+		this.tablaConcert.getTableHeader().setReorderingAllowed(false);
+		//Se deshabilita el redimensionado de las columna
+		this.tablaConcert.getTableHeader().setResizingAllowed(false);
+		//Se definen criterios de ordenación por defecto para cada columna
+		this.tablaConcert.setAutoCreateRowSorter(true);
+		
+		//Se establecen los renderers al la cabecera y el contenido
+		this.tablaConcert.getTableHeader().setDefaultRenderer(headerRenderer);		
+		this.tablaConcert.setDefaultRenderer(Object.class, cellRenderer);
+		
+		//Se establece el editor específico para la Editorial		
+		this.tablaConcert.getColumnModel().getColumn(1).setCellEditor(editorialEditor);
+		
+		//Se define la anchura de la columna Título
+		this.tablaConcert.getColumnModel().getColumn(2).setPreferredWidth(400);
+		
+		//Se modifica el modelo de selección de la tabla para que se pueda selecciona únicamente una fila
+		this.tablaConcert.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		//Se define el comportamiento el evento de selección de una fila de la tabla
+		//this.tablaConcert.getSelectionModel().addListSelectionListener(e -> {/////////////////////////////////////////AQUI HAY QUE HACER QUE TE LLEVE A LA PAGINA DE FECHAS
+			//Se obtiene el ID del comic de la fila seleccionada si es distinta de -1
+			//if (tablaConcert.getSelectedRow() != -1) {
+				//this.loadPersonajes(this.concerts.get((int) tablaConcert.getValueAt(tablaConcert.getSelectedRow(), 0) - 1)); // Se cambió a concerts
+			//}
+		//});
+    } // Se añadió la llave de cierre para el método initTables
 
     private void loadConcert() {
 		//Se borran los datos del modelo de datos
@@ -249,12 +226,10 @@ public class ConcertsListRenderer extends JFrame {
 		);
     }
 
-
     private void filterConcerts(String text) {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(this.modeloDatosConcerts);
         this.tablaConcert.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
     }
-}
-}
+} // Se añadió la llave de cierre para la clase
 
