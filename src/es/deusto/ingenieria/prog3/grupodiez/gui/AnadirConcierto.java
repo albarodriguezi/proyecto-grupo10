@@ -3,6 +3,8 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -92,6 +94,12 @@ public class AnadirConcierto extends JFrame {
 				
 				setSize(500,400);
 				
+				jButtonCancel.addActionListener(new ActionListener() { 
+		        	  public void actionPerformed(ActionEvent e) { 
+		        		      
+		        		    setVisible(false);
+		        		    } 
+		        		} );
 				
 				
 				

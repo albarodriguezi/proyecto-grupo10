@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -64,11 +65,20 @@ import javax.swing.border.TitledBorder;
 	        	mainPanel.add(fondo);
 	        }
 	        
+	        AnadirConcierto add = new AnadirConcierto();
+	        add.setVisible(false);
 	        
 	        
+	      
+	        addConcert.addActionListener(new ActionListener() { 
+	        	  public void actionPerformed(ActionEvent e) { 
+	        		      
+	        		    add.setVisible(true);
+	        		    } 
+	        		} );
+	        	
 	        
 	        
-
 	        add(mainPanel);
 	        
 	        // Definir el título
@@ -95,9 +105,7 @@ import javax.swing.border.TitledBorder;
 		
 		
 		
-		public void actionPerformed(ActionEvent e) { 
-		    
-		  } 
+		
 		
 		public static void main(String[] args) {
 	        // Crear la ventana en el hilo de eventos de Swing para no bloquear
@@ -107,8 +115,8 @@ import javax.swing.border.TitledBorder;
 	    		AdminChoice cal = new AdminChoice();
 	    		cal.setVisible(true);
 	    		
-	    		AnadirConcierto add = new AnadirConcierto();
-	    		add.setVisible(true);
+	    		//AnadirConcierto add = new AnadirConcierto();
+	    		//add.setVisible(true);
 	    		
 	        });
 	    }
