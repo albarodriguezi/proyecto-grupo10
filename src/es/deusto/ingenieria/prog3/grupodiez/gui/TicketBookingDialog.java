@@ -21,6 +21,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 
 public class TicketBookingDialog extends JDialog { //para interactuar con el usuario
 
@@ -32,37 +33,38 @@ public class TicketBookingDialog extends JDialog { //para interactuar con el usu
 	private JButton jButtonConfirm = new JButton("Confirmar"); //botón de confirmar
 	private JButton jButtonCancel = new JButton("Cancelar"); //botón de cancelar
 		
-	private int tickets = 1; //numero de tickets
+	private int seats = 1; //numero de tickets
+	private Fecha fecha;
+	
 	
 	private List<String> passengers = null; //lista para el número de personas
 	
-	public TicketBookingDialog (Concert concert) {
-		JPanel jPanelConcert = new JPanel();
-		jPanelConcert.setBorder(new TitledBorder("Datos del concierto"));
-		jPanelConcert.setLayout(new GridLayout(5, 1));
+	public TicketBookingDialog (Concert concert, Fecha fecha) {
+		JPanel jPanelConcert = new JPanel(); //crear el panel
+		jPanelConcert.setBorder(new TitledBorder("Datos del concierto")); //borde del titulo
+		jPanelConcert.setLayout(new GridLayout(5, 1)); 
 
-		JLabel jLabelFlight = new JLabel(String.format("- %s", concert.name()));
-		//coger el logo del concierto según el ???????????????????????
-		jLabelConcert.setIcon(new ImageIcon(String.format("resources/images/%s.png", concert.name().getCode()))); //???
+		JLabel jLabelConcert = new JLabel(String.format("- %s", concert.getName()));
+		//
+		jLabelConcert.setIcon(new ImageIcon(String.format("resources/images/%s.png", concert.getName()))); //???
 		
 		jPanelConcert.add(jLabelConcert);
-		jPanelConcert.add(new JLabel(String.format("Origen: %s - %s", flight.getOrigin().getCode(), flight.getOrigin().getName())));
-		jPanelFlight.add(new JLabel(String.format("Destino: %s - %s", flight.getDestination().getCode(), flight.getDestination().getName())));
-		jPanelFlight.add(new JLabel(String.format("Duración: %d m.", flight.getDuration())));
-		jPanelFlight.add(new JLabel(String.format("Precio: %.2f €", flight.getPrice())));
+		jPanelConcert.add(new JLabel(String.format("Fecha: %s - %s", fecha.getFecha()))); //para que aparezca la fecha
+		jPanelConcert.add(new JLabel(String.format("Duración: %d m.", concert.getDuration()))); //para que aparezca la duración
+		jPanelConcert.add(new JLabel(String.format("Precio: %.2f €", concert.getPrice()))); //para que aparezca el precio
 		
-		JPanel jPanelPassengers = new JPanel();
-		jPanelPassengers.setBorder(new TitledBorder("Datos personales"));
-		jPanelPassengers.setLayout(new GridLayout(3, 1));
+		JPanel jPanelAudience = new JPanel(); //crear otro panel
+		jPanelAudience.setBorder(new TitledBorder("Datos personales")); //datos personales
+		jPanelAudience.setLayout(new GridLayout(3, 1));
 		
-		int remainSeats = flight.getSeats()-flight.getReservations().size(); 	
+		int remainSeats = concert.getSeats()-concert.getReserva().size(); 	
 		jSpinnerSeats = new JSpinner(new SpinnerNumberModel(1, 1, remainSeats, 1));				
 		
-		//Evento de cambio del valor del Spinner de número de pasajeros
+		//Evento de cambio del valor del Spinner de número de espectadores
 		jSpinnerSeats.addChangeListener((e) -> {
 			int newSeats = Integer.valueOf(((SpinnerNumberModel) jSpinnerSeats.getModel()).getValue().toString());
 			
-			//Se se ha cambiado el número de asientos, se modifica el combo de personas
+			//Se ha cambiado el número de asientos, se modifica el combo de personas
 			if (newSeats != seats) {
 				if (newSeats > seats) {
 					for (int i=seats+1; i<=newSeats; i++) {
@@ -79,12 +81,12 @@ public class TicketBookingDialog extends JDialog { //para interactuar con el usu
 				//Se actualiza el label del importe total teniendo en cuenta el número de asientos
 				jLabelAmount.setText(String.format("Importe total (%d x %.2f €): %.2f €",
 												   seats,
-												   flight.getPrice(),
-												   (flight.getPrice()*seats)));
+												   concert.getPrice(),
+												   (concert.getPrice()*seats)));
 			}
 		});
 		
-		jComboPassengers.addItem("- Indique los datos de la personas -");
+		jComboPassengers.addItem("- Introduzca los datos de las personas -");
 		//Por defecto se inserta siempre una persona
 		jComboPassengers.addItem("1 - ¿?");
 		
@@ -123,8 +125,8 @@ public class TicketBookingDialog extends JDialog { //para interactuar con el usu
 						name = String.format("%s, %s", lastName.getText().trim(), firstName.getText()).trim();
 					}
 					
-					//El nombre no puede contener el carácter "#"
-					if (!name.contains("#")) {						
+					//El nombre no puede contener el carácter "#" ni "*"
+					if ((!name.contains("#")) || (!name.contains("*"))) {						
 						name = String.format("%d - %s", position, name.toUpperCase());
 						jComboPassengers.removeItemAt(position);
 						jComboPassengers.insertItemAt(name, position);
@@ -137,11 +139,11 @@ public class TicketBookingDialog extends JDialog { //para interactuar con el usu
 		//Se actualiza el label del importe total teniendo en cuenta el número de asientos
 		jLabelAmount.setText(String.format("Importe total (%d x %.2f €): %.2f €",
 				seats,
-				flight.getPrice(),
-				(flight.getPrice()*seats)));
+				concert.getPrice(),
+				(concert.getPrice()*seats)));
 		
 		JPanel jPanelSeats = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		jPanelSeats.add(new JLabel(String.format("N.º billetes (1 - %d): ", remainSeats)));
+		jPanelSeats.add(new JLabel(String.format("N.º tickets (1 - %d): ", remainSeats)));
 		jPanelSeats.add(jSpinnerSeats);
 		
 		JPanel jPanelNames = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -151,9 +153,9 @@ public class TicketBookingDialog extends JDialog { //para interactuar con el usu
 		JPanel jPanelAmount = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		jPanelAmount.add(jLabelAmount);
 		
-		jPanelPassengers.add(jPanelSeats);
-		jPanelPassengers.add(jPanelNames);
-		jPanelPassengers.add(jPanelAmount);
+		jPanelAudience.add(jPanelSeats);
+		jPanelAudience.add(jPanelNames);
+		jPanelAudience.add(jPanelAmount);
 		
 		//Eventos de los botones
 		jButtonCancel.addActionListener((e) -> setVisible(false));
@@ -168,8 +170,8 @@ public class TicketBookingDialog extends JDialog { //para interactuar con el usu
 		
 		JPanel jPanelCenter = new JPanel();
 		jPanelCenter.setLayout(new GridLayout(2, 1));
-		jPanelCenter.add(jPanelFlight);
-		jPanelCenter.add(jPanelPassengers);
+		jPanelCenter.add(jPanelConcert);
+		jPanelCenter.add(jPanelAudience);
 		
 		//this.setLayout(new BorderLayout(10, 10));
 		add(new JPanel(), BorderLayout.NORTH);
@@ -179,7 +181,7 @@ public class TicketBookingDialog extends JDialog { //para interactuar con el usu
 		add(jPanelButtons, BorderLayout.SOUTH);
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setTitle(String.format("Reserva del vuelo '%s'", flight.getCode()));		
+		setTitle(String.format("Reserva del concierto '%s'", concert.getName()));		
 		setIconImage(new ImageIcon("resources/images/tickets.png").getImage());		
 		setSize(500, 350);
 		setModalityType(ModalityType.APPLICATION_MODAL);
