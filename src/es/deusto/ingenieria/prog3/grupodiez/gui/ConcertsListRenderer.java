@@ -85,42 +85,45 @@ public class ConcertsListRenderer extends JFrame {
 			//Si el valor es de tipo Nombre: se renderiza con la imagen centrada
 			if (value instanceof Logo) {
 				Logo e = (Logo) value;
+				
+				
 				result.setText(e.toString());		
 				result.setToolTipText(e.toString());
 				result.setHorizontalAlignment(JLabel.CENTER);
-				
-				switch (e) { 
-					case ADELELIVE:
-						result.setIcon(new ImageIcon("resources/images/adelelive.jpg"));
-						break;
-					case BELIEVETOUR:
-						result.setIcon(new ImageIcon("resources/images/Believetour.jpg"));
-						break;
-					case BORNTODIE:
-						result.setIcon(new ImageIcon("resources/images/borntodie.jpg"));
-						break;
-					case ERASTOUR:
-						result.setIcon(new ImageIcon("resources/images/Erastour.jpg"));
-						break;
-					case FUTURENOSTALGIA:
-						result.setIcon(new ImageIcon("resources/images/futurenostalgia.jpg"));
-						break;
-					case GUTSWORLTOUR:
-						result.setIcon(new ImageIcon("/proyecto-grupo10/resources/images/gutsworldtour.jpg"));
-						break;
-					case MUSICOFTHESPHERE:
-						result.setIcon(new ImageIcon("resources/images/loveontour.png"));
-						break;
-					case ONTHEROADAGAIN:
-						result.setIcon(new ImageIcon("resources/images/musicofthesphere.jpg"));
-						break;
-					case LOVEONTOUR:
-						result.setIcon(new ImageIcon("resources/images/ontheroadagain.png"));
-						break;
-					case THEMATHEMATICSTOUR:
-						result.setIcon(new ImageIcon("resources/images/themathematicstour.jpg"));
-						break;
-					default:
+				if (column == 0) {
+					switch (e) { 
+						case ADELELIVE:
+							result.setIcon(new ImageIcon("resources/images/adelelive.jpg"));
+							break;
+						case BELIEVETOUR:
+							result.setIcon(new ImageIcon("resources/images/Believetour.jpg"));
+							break;
+						case BORNTODIE:
+							result.setIcon(new ImageIcon("resources/images/borntodie.jpg"));
+							break;
+						case ERASTOUR:
+							result.setIcon(new ImageIcon("resources/images/Erastour.jpg"));
+							break;
+						case FUTURENOSTALGIA:
+							result.setIcon(new ImageIcon("resources/images/futurenostalgia.jpg"));
+							break;
+						case GUTSWORLTOUR:
+							result.setIcon(new ImageIcon("/proyecto-grupo10/resources/images/gutsworldtour.jpg"));
+							break;
+						case MUSICOFTHESPHERE:
+							result.setIcon(new ImageIcon("resources/images/loveontour.png"));
+							break;
+						case ONTHEROADAGAIN:
+							result.setIcon(new ImageIcon("resources/images/musicofthesphere.jpg"));
+							break;
+						case LOVEONTOUR:
+							result.setIcon(new ImageIcon("resources/images/ontheroadagain.png"));
+							break;
+						case THEMATHEMATICSTOUR:
+							result.setIcon(new ImageIcon("resources/images/themathematicstour.jpg"));
+							break;
+						default:
+				}
 				}
 			//Si el valor es numérico se renderiza centrado
 			} else if (value instanceof Number) {
