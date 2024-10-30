@@ -11,7 +11,7 @@ import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 import es.deusto.ingenieria.prog3.grupodiez.gui.ConcertsListRenderer;
-import es.deusto.prog3.swing.p4.gui.JFramePrincipal;
+
 
 
 
@@ -20,16 +20,16 @@ public class Main{
 	public static void main(String[] args) {
 		//se crean 10 conciertos 
 		
-		Concert AdeleLive = new Concert(Concert.Nombre.ADELELIVE, "123456", Concert.Nombre.ADELELIVE, 3, 92567, 150);
-		Concert BelieveTour = new Concert(Concert.Nombre.BELIEVETOUR, "456789", Concert.Nombre.BELIEVETOUR, 3, 92567, 150);
-		Concert BornToDie = new Concert(Concert.Nombre.BORNTODIE, "789123", Concert.Nombre.BORNTODIE, 3, 92567, 150);
-		Concert ErasTour = new Concert(Concert.Nombre.ERASTOUR, "789456", Concert.Nombre.ERASTOUR, 3, 92567, 150);
-		Concert FutureNostalgia = new Concert(Concert.Nombre.FUTURENOSTALGIA, "123123", Concert.Nombre.FUTURENOSTALGIA, 3, 92567, 150);
-		Concert GutSWorldTour = new Concert(Concert.Nombre.GUTSWORLTOUR, "456456", Concert.Nombre.GUTSWORLTOUR, 3, 92567, 150);
-		Concert LoveOnTour = new Concert(Concert.Nombre.LOVEONTOUR, "789789", Concert.Nombre.LOVEONTOUR, 3, 92567, 150);
-		Concert MusicOfTheSphere = new Concert(Concert.Nombre.MUSICOFTHESPHERE, "147369", Concert.Nombre.MUSICOFTHESPHERE, 3, 92567, 150);
-		Concert OnTheRoadAgain = new Concert(Concert.Nombre.ONTHEROADAGAIN, "258147", Concert.Nombre.ONTHEROADAGAIN, 3, 92567, 150);
-		Concert TheMathematicsTour = new Concert(Concert.Nombre.THEMATHEMATICSTOUR, "369258", Concert.Nombre.THEMATHEMATICSTOUR, 3, 92567, 150);
+		Concert AdeleLive = new Concert(Concert.Logo.ADELELIVE, "123456", "Adele Live", 3, 92567, 150);
+		Concert BelieveTour = new Concert(Concert.Logo.BELIEVETOUR, "456789", "Believe Tour", 3, 92567, 150);
+		Concert BornToDie = new Concert(Concert.Logo.BORNTODIE, "789123", "Born To Die", 3, 92567, 150);
+		Concert ErasTour = new Concert(Concert.Logo.ERASTOUR, "789456", "Eras Tour", 3, 92567, 150);
+		Concert FutureNostalgia = new Concert(Concert.Logo.FUTURENOSTALGIA, "123123", "future Nostalgia", 3, 92567, 150);
+		Concert GutSWorldTour = new Concert(Concert.Logo.GUTSWORLTOUR, "456456", "Guts World Tour", 3, 92567, 150);
+		Concert LoveOnTour = new Concert(Concert.Logo.LOVEONTOUR, "789789", "Love on Tour", 3, 92567, 150);
+		Concert MusicOfTheSphere = new Concert(Concert.Logo.MUSICOFTHESPHERE, "147369", "Music Of Thw Sphere", 3, 92567, 150);
+		Concert OnTheRoadAgain = new Concert(Concert.Logo.ONTHEROADAGAIN, "258147", "on the Road Again", 3, 92567, 150);
+		Concert TheMathematicsTour = new Concert(Concert.Logo.THEMATHEMATICSTOUR, "369258", "the Mathematics Tour", 3, 92567, 150);
 
 	
 		//se crean dos o tres fecha por 

@@ -3,9 +3,7 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -19,7 +17,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
-import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Nombre;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
+
 
 public class ConcertsListRenderer extends JFrame {
     
@@ -66,11 +65,7 @@ public class ConcertsListRenderer extends JFrame {
         JPanel panelConcert = new JPanel();
         panelConcert.setLayout(new BorderLayout());
         panelConcert.add(BorderLayout.CENTER, scrollPaneConcerts);
-        panelConcert.add(BorderLayout.NORTH, panelFiltro);
-
-        this.getContentPane().setLayout(new GridLayout(1, 1));
         this.getContentPane().add(panelConcert);
-
         this.setTitle("Concerts");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(2000, 800);
@@ -88,10 +83,9 @@ public class ConcertsListRenderer extends JFrame {
 			JLabel result = new JLabel(value.toString());
 						
 			//Si el valor es de tipo Nombre: se renderiza con la imagen centrada
-			if (value instanceof Nombre) {
-				Nombre e = (Nombre) value;
-				
-				result.setText("");		
+			if (value instanceof Logo) {
+				Logo e = (Logo) value;
+				result.setText(e.toString());		
 				result.setToolTipText(e.toString());
 				result.setHorizontalAlignment(JLabel.CENTER);
 				
@@ -144,9 +138,9 @@ public class ConcertsListRenderer extends JFrame {
 			//La filas pares e impares se renderizan de colores diferentes de la tabla de comics			
 			if (table.equals(tablaConcert)) {
 				if (row % 2 == 0) {
-					result.setBackground(new Color(250, 249, 249));
+					result.setBackground(new Color(230, 250, 250));
 				} else {
-					result.setBackground(new Color(190, 227, 219));
+					result.setBackground(new Color(190, 230, 220));
 				}
 			} 
 			
@@ -162,16 +156,18 @@ public class ConcertsListRenderer extends JFrame {
 		};
 
 		//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
-		TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
+		/*TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
 			JLabel result = new JLabel(value.toString());			
 			result.setHorizontalAlignment(JLabel.CENTER);
 			
 			switch (value.toString()) {
-				case "TÍTULO":
+				case "CODIGO":
 				case "NOMBRE":
-				case "EMAIL":
+				case "DURACION":
+				case "TICKETS":
+				case "PRECIO":
 					result.setHorizontalAlignment(JLabel.LEFT);
-					break; // Se añadió un break aquí para evitar fallos
+					break; 
 			}
 			
 			result.setBackground(table.getBackground());
@@ -180,34 +176,24 @@ public class ConcertsListRenderer extends JFrame {
 			result.setOpaque(true);
 			
 			return result;
-		};
-		
+		};*/
 		//Se crea un CellEditor a partir de un JComboBox()
 		JComboBox<Nombre> jComboEditorial = new JComboBox<>(Nombre.values());		
 		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
 		
-		//Se define la altura de las filas de la tabla de comics
-		this.tablaConcert.setRowHeight(26);
 		
-		//Se deshabilita la reordenación de columnas
-		this.tablaConcert.getTableHeader().setReorderingAllowed(false);
-		//Se deshabilita el redimensionado de las columna
-		this.tablaConcert.getTableHeader().setResizingAllowed(false);
-		//Se definen criterios de ordenación por defecto para cada columna
-		this.tablaConcert.setAutoCreateRowSorter(true);
-		
-		//Se establecen los renderers al la cabecera y el contenido
-		this.tablaConcert.getTableHeader().setDefaultRenderer(headerRenderer);		
+		this.tablaConcert.setRowHeight(40);//altira de las fila
+		this.tablaConcert.getTableHeader().setReorderingAllowed(false);		//Se deshabilita la reordenación de columnas
+		this.tablaConcert.getTableHeader().setResizingAllowed(false);		//Se deshabilita el redimensionado de las columna
+		this.tablaConcert.setAutoCreateRowSorter(true);		//Se definen criterios de ordenación por defecto para cada columna
+		//Se establecen los renderers al la cabecera y el contenido	
 		this.tablaConcert.setDefaultRenderer(Object.class, cellRenderer);
-		
-		//Se establece el editor específico para la Editorial		
-		this.tablaConcert.getColumnModel().getColumn(1).setCellEditor(editorialEditor);
-		
 		//Se define la anchura de la columna Título
-		this.tablaConcert.getColumnModel().getColumn(2).setPreferredWidth(400);
+		this.tablaConcert.getColumnModel().getColumn(2).setPreferredWidth(500);
 		
+//-----------------------------------------------------------------------------como al seleccionar una fila se va a la pagina de fechas-----------------------------
 		//Se modifica el modelo de selección de la tabla para que se pueda selecciona únicamente una fila
-		this.tablaConcert.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		//this.tablaConcert.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		//Se define el comportamiento el evento de selección de una fila de la tabla
 		//this.tablaConcert.getSelectionModel().addListSelectionListener(e -> {/////////////////////////////////////////AQUI HAY QUE HACER QUE TE LLEVE A LA PAGINA DE FECHAS
 			//Se obtiene el ID del comic de la fila seleccionada si es distinta de -1
@@ -215,8 +201,9 @@ public class ConcertsListRenderer extends JFrame {
 				//this.loadPersonajes(this.concerts.get((int) tablaConcert.getValueAt(tablaConcert.getSelectedRow(), 0) - 1)); // Se cambió a concerts
 			//}
 		//});
-    } // Se añadió la llave de cierre para el método initTables
+    } //
 
+    
     private void loadConcert() {
 		//Se borran los datos del modelo de datos
 		this.modeloDatosConcerts.setRowCount(0);
@@ -226,10 +213,11 @@ public class ConcertsListRenderer extends JFrame {
 		);
     }
 
+    //hacemos que se puedan filtrar(creamos el buscador)
     private void filterConcerts(String text) {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(this.modeloDatosConcerts);
         this.tablaConcert.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
     }
-} // Se añadió la llave de cierre para la clase
+} 
 

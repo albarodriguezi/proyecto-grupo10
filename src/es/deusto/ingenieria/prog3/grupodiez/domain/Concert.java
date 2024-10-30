@@ -14,13 +14,13 @@ public class Concert implements Comparable<Concert>, Serializable{
 	private static final long serialVersionUID = 1L;
 
 
-	public enum Nombre{
+	public enum Logo{
 		ADELELIVE, BELIEVETOUR, BORNTODIE, ERASTOUR, FUTURENOSTALGIA, GUTSWORLTOUR, LOVEONTOUR, MUSICOFTHESPHERE, ONTHEROADAGAIN, THEMATHEMATICSTOUR;
 	}
 
-	private Nombre imagen;//logo del tour
+	private Logo imagen;//logo del tour
 	private String code; // codigo del concierto
-	private Nombre name; //nombre del conciert
+	private String name; //nombre del conciert
 	private int duration; //duracion del concierto
 	private int seats; //asientos del concierto
 	private float price; //precio de los tickets del conierto
@@ -28,7 +28,7 @@ public class Concert implements Comparable<Concert>, Serializable{
 
 
 	
-	public Concert(Nombre imagen, String code, Nombre name,int duration, int seats, float price) {
+	public Concert(Logo imagen, String code, String name,int duration, int seats, float price) {
 		this.imagen = imagen;
 		this.code = code;
 		this.name = name;
@@ -38,7 +38,7 @@ public class Concert implements Comparable<Concert>, Serializable{
 
 	}
 
-	public Nombre getImagen() {
+	public Logo getImagen() {
 		return imagen;
 	}
 
@@ -46,7 +46,7 @@ public class Concert implements Comparable<Concert>, Serializable{
 		return code;
 	}
 
-	public Nombre name() {
+	public String getName() {
 		return name;
 	}
 
