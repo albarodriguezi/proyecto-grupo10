@@ -14,13 +14,13 @@ public class Concert implements Comparable<Concert>, Serializable{
 	private static final long serialVersionUID = 1L;
 
 
-	public enum Nombre{
+	public enum Logo{
 		ADELELIVE, BELIEVETOUR, BORNTODIE, ERASTOUR, FUTURENOSTALGIA, GUTSWORLTOUR, LOVEONTOUR, MUSICOFTHESPHERE, ONTHEROADAGAIN, THEMATHEMATICSTOUR;
 	}
 
-	private String imagen;//logo del tour
+	private Logo imagen;//logo del tour
 	private String code; // codigo del concierto
-	private Nombre name; //nombre del conciert
+	private String name; //nombre del conciert
 	private int duration; //duracion del concierto
 	private int seats; //asientos del concierto
 	private float price; //precio de los tickets del conierto
@@ -28,7 +28,7 @@ public class Concert implements Comparable<Concert>, Serializable{
 
 
 	
-	public Concert(String imagen, String code, Nombre name,int duration, int seats, float price) {
+	public Concert(Logo imagen, String code, String name,int duration, int seats, float price) {
 		this.imagen = imagen;
 		this.code = code;
 		this.name = name;
@@ -38,7 +38,7 @@ public class Concert implements Comparable<Concert>, Serializable{
 
 	}
 
-	public String getImagen() {
+	public Logo getImagen() {
 		return imagen;
 	}
 
@@ -46,7 +46,7 @@ public class Concert implements Comparable<Concert>, Serializable{
 		return code;
 	}
 
-	public Nombre name() {
+	public String getName() {
 		return name;
 	}
 
@@ -73,18 +73,17 @@ public class Concert implements Comparable<Concert>, Serializable{
 	}
 	
 
+
 	@Override
 	public String toString() {
-		return "Concert [imagen=\" + imagen + \", code=" + code + ", name=" + name + ", duration=" + duration + ", seats=" + seats + ", price="
-				+ price + " ]";
+		return "Concert [imagen=" + imagen + ", code=" + code + ", name=" + name + ", duration=" + duration + ", seats="
+				+ seats + ", price=" + price + ", reserva=" + reserva + "]";
 	}
-
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(imagen, code, duration, name, price, seats);
+		return Objects.hash(code, duration, imagen, name, price, reserva, seats);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -95,9 +94,9 @@ public class Concert implements Comparable<Concert>, Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Concert other = (Concert) obj;
-		return Objects.equals(code, other.code) && duration == other.duration && Objects.equals(imagen, other.imagen)
+		return Objects.equals(code, other.code) && duration == other.duration && imagen == other.imagen
 				&& name == other.name && Float.floatToIntBits(price) == Float.floatToIntBits(other.price)
-				&& seats == other.seats;
+				&& Objects.equals(reserva, other.reserva) && seats == other.seats;
 	}
 
 

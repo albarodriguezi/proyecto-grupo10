@@ -5,17 +5,22 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.TitledBorder;
 
-import es.ingenieria.prog3.swing.p2.Calculadora;
+
 
 
 
@@ -60,11 +65,20 @@ import es.ingenieria.prog3.swing.p2.Calculadora;
 	        	mainPanel.add(fondo);
 	        }
 	        
+	        AnadirConcierto add = new AnadirConcierto();
+	        add.setVisible(false);
 	        
 	        
+	      
+	        addConcert.addActionListener(new ActionListener() { 
+	        	  public void actionPerformed(ActionEvent e) { 
+	        		      
+	        		    add.setVisible(true);
+	        		    } 
+	        		} );
+	        	
 	        
 	        
-
 	        add(mainPanel);
 	        
 	        // Definir el título
@@ -88,6 +102,11 @@ import es.ingenieria.prog3.swing.p2.Calculadora;
 	        
 	    }
 		
+		
+		
+		
+		
+		
 		public static void main(String[] args) {
 	        // Crear la ventana en el hilo de eventos de Swing para no bloquear
 	    	// el hilo de ejecución principal
@@ -95,6 +114,10 @@ import es.ingenieria.prog3.swing.p2.Calculadora;
 	    		// Crear una instancia de EjemploLayouts y hacerla visible
 	    		AdminChoice cal = new AdminChoice();
 	    		cal.setVisible(true);
+	    		
+	    		//AnadirConcierto add = new AnadirConcierto();
+	    		//add.setVisible(true);
+	    		
 	        });
 	    }
 	
