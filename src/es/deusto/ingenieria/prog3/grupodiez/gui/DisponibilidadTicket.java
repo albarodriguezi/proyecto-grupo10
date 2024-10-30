@@ -8,12 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 
-//TAREA 4.A: Modifica el renderer de la tabla de vuelos
-//Añade una nueva columna a la tabla de aviones para mostrar el porcentaje de 
-//asientos disponibles en el vuelo. La nueva columna se llamará DISPONIBILIDAD 
-//y se ubicará justo a la derecha de la columna ASIENTOS LIBRES. Los asientos 
-//libres se representan mediante un valor decimal que resulta de dividir el 
-//número de asientos ocupados entre el número total de asientos del vuelo.
 public class DisponibilidadTicket extends DefaultTableModel {
 
 	private static final long serialVersionUID = 1L;
@@ -22,7 +16,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 	private final List<String> headers = Arrays.asList(
 			"FECHA", //fecha del concierto
 			"DISPONIBILIDAD", //AÑADIR DISPONIBILIDAD DE LOS TICKETS EN CADA FECHA
-			"ASIENTOS LIBRES", //número de asientos libres
+			"TICKETS RESTANTES", //número de asientos libres
 			"DURACIÓN", //duración del concierto
 			"PRECIO", //precio del concierto
 			"RESERVAR" //botón de reservar
@@ -73,12 +67,12 @@ public class DisponibilidadTicket extends DefaultTableModel {
 		
 		switch (columnIndex) {
 			case 0: return fecha.getFecha(); //la fecha de la clase Fecha
-			//disponibilidad --> número de tickets --> número máximo de personas que entran en el recinto
-			case 1: return Float.valueOf((float) concert.getRemainingSeats()/concert.getSeats()); 
-			case 2: return Integer.valueOf(concert.getRemainingSeats());
-			case 3: return Integer.valueOf(concert.getDuration());
-			case 4: return Float.valueOf(concert.getPrice());
-			case 5: return concerts;
+			//disponibilidad --> número de tickets --> número máximo de personas que entran en el recinto (nº seats)
+			case 1: return Float.valueOf((float) concert.getRemainingSeats()/concert.getSeats()); //calcular disponibilidad
+			case 2: return Integer.valueOf(concert.getRemainingSeats()); //asientos libres
+			case 3: return Integer.valueOf(concert.getDuration()); //duración
+			case 4: return Float.valueOf(concert.getPrice()); //precio
+			case 5: return concerts; //conciertos
 			default: return null;
 		}
 	}
