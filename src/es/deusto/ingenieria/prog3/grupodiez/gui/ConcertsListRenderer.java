@@ -178,7 +178,7 @@ public class ConcertsListRenderer extends JFrame {
 			return result;
 		};*/
 		//Se crea un CellEditor a partir de un JComboBox()
-		JComboBox<Nombre> jComboEditorial = new JComboBox<>(Nombre.values());		
+		JComboBox<Logo> jComboEditorial = new JComboBox<>(Logo.values());		
 		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
 		
 		
@@ -209,7 +209,7 @@ public class ConcertsListRenderer extends JFrame {
 		this.modeloDatosConcerts.setRowCount(0);
 		//Se añaden los comics uno a uno al modelo de datos
 		this.concerts.forEach(c -> this.modeloDatosConcerts.addRow(
-				new Object[] {c.getImagen(), c.getCode(), c.name(), c.getDuration(), c.getSeats(), c.getPrice()} )
+				new Object[] {c.getImagen(), c.getCode(), c.getName(), c.getDuration(), c.getSeats(), c.getPrice()} )
 		);
     }
 
