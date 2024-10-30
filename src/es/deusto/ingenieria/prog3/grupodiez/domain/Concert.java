@@ -1,29 +1,35 @@
 package es.deusto.ingenieria.prog3.grupodiez.domain;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 
-public class Concert {
+public class Concert implements Comparable<Concert>, Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	public enum Nombre{
+		ADELELIVE, BELIEVETOUR, BORNTODIE, ERASTOUR, FUTURENOSTALGIA, GUTSWORLTOUR, LOVEONTOUR, MUSICOFTHESPHERE, ONTHEROADAGAIN, THEMATHEMATICSTOUR;
+	}
 
 	private String code; // codigo del concierto
-	private String name; //nombre del conciert
-	private List<Reserva> reservations; //lista de reservas del concierto
+	private Nombre name; //nombre del conciert
 	private int duration; //duracion del concierto
 	private int seats; //asientos del concierto
 	private float price; //precio de los tickets del conierto
-	private double disponibilidad; //disponibilidad del concierto
+
 	
-	public Concert(String code, String name, List<Reserva> reservations,
-				  int duration, int seats, float price, double disponibilidad) {
+	public Concert(String code, Nombre name,int duration, int seats, float price) {
 		this.code = code;
 		this.name = name;
 		this.duration = duration;		
 		this.seats = seats;
 		this.price = price;
-		this.reservations = new ArrayList<>();
-		this.disponibilidad = disponibilidad;
 	}
 
 
@@ -31,7 +37,7 @@ public class Concert {
 		return code;
 	}
 
-	public String name() {
+	public Nombre name() {
 		return name;
 	}
 
@@ -42,45 +48,17 @@ public class Concert {
 	public int getSeats() {
 		return seats;
 	}
-	
-	public int getRemainingSeats() {
-		int occupied = 0;
-		
-		for(Reserva r : reservations) {
-			occupied += r.getPassengers().size();
-		}
-		
-		return (seats - occupied);
-	}
+
 	
 	public float getPrice() {
 		return price;
 	}
-	
-	public double getDiponibilidad() {
-		return disponibilidad;
-		
-	}
-	
-	public List<Reserva> getReserva() {
-		return reservations;
-	}
-	
-	
-	public void setReserva(List<Reserva> reservations) {
-		this.reservations = reservations;
-	}
-	
 
-	public void addReserva(Reserva reservation) {
-		if (reservation != null && !reservations.contains(reservation)) {
-			reservations.add(reservation);
-		}
-	}
+
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(code, disponibilidad, duration, name, price, seats);
+		return Objects.hash(code, duration, name, price, seats);
 	}
 
 
@@ -93,17 +71,23 @@ public class Concert {
 		if (getClass() != obj.getClass())
 			return false;
 		Concert other = (Concert) obj;
-		return Objects.equals(code, other.code)
-				&& Double.doubleToLongBits(disponibilidad) == Double.doubleToLongBits(other.disponibilidad)
-				&& duration == other.duration && Objects.equals(name, other.name)
+		return Objects.equals(code, other.code) && duration == other.duration && name == other.name
 				&& Float.floatToIntBits(price) == Float.floatToIntBits(other.price) && seats == other.seats;
 	}
+
 
 
 	@Override
 	public String toString() {
 		return "Concert [code=" + code + ", name=" + name + ", duration=" + duration + ", seats=" + seats + ", price="
-				+ price + ", disponibilidad=" + disponibilidad + "]";
+				+ price + "]";
+	}
+
+
+	@Override
+	public int compareTo(Concert o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 
