@@ -90,7 +90,7 @@ public class AnadirConcierto extends JFrame {
 				jPanelAddConcert.add(buttonPanel);
 				add(jPanelAddConcert);
 				
-				setSize(500,500);
+				setSize(500,400);
 				
 				
 				
