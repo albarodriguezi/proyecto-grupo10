@@ -31,7 +31,7 @@ public class AnadirConcierto extends JFrame {
 				JPanel jPanelAddConcert = new JPanel();
 				jPanelAddConcert.setBackground(new Color(255,150,200));
 				jPanelAddConcert.setBorder(new TitledBorder("Datos del concierto"));
-				jPanelAddConcert.setLayout(new GridLayout(5, 1));
+				jPanelAddConcert.setLayout(new GridLayout(6, 1));
 				jPanelAddConcert.setSize(500, 500);
 				
 				JPanel iconPanel = new JPanel(new BorderLayout());
@@ -74,12 +74,23 @@ public class AnadirConcierto extends JFrame {
 				jPanelAddConcert.add(pricePanel);
 				
 
+				JPanel durationPanel = new JPanel(new BorderLayout());
+				JLabel durationText = new JLabel("Duracion");
+				JTextField duracion = new JTextField();
+				duracion.setEditable(true);
+				durationPanel.add(durationText,BorderLayout.NORTH);
+				durationPanel.add(duracion,BorderLayout.CENTER);
+				duracion.setBackground(new Color(255,233,244));
+				duracion.setSize(WIDTH, 30);
+				jPanelAddConcert.add(durationPanel);
 				
-				
-				jPanelAddConcert.add(jButtonConfirm);
+				JPanel buttonPanel = new JPanel(new GridLayout(1,2));
+				buttonPanel.add(jButtonConfirm);
+				buttonPanel.add(jButtonCancel);
+				jPanelAddConcert.add(buttonPanel);
 				add(jPanelAddConcert);
 				
-				setSize(500,400);
+				setSize(500,500);
 				
 				
 				
