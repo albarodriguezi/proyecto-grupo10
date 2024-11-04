@@ -5,6 +5,10 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -115,9 +119,14 @@ public class AnadirConcierto extends JFrame {
 		        		    String code = codigo.getText();
 		        		    
 		        		    Concert concierto = new Concert(icon,code,name,duration,92000,price);
-		        		    ArrayList<Concert> lista= new ArrayList<Concert>();
-		        		    lista.add(concierto);
-		        		    ConcertsListRenderer concertRenderer = new ConcertsListRenderer(lista);
+		        		    try{
+		        		        
+		        		        FileWriter fw = new FileWriter("resources\\data\\Concerts.csv",true);
+		        		        fw.append("\n"+icon+";"+code+";"+name+";"+duration.toString()+";"+"92000"+";"+price.toString());
+		        		        fw.close();
+		        		    }catch (Exception e1){
+
+		        		    }
 		        		    
 		        		    
 		        		    
@@ -128,6 +137,7 @@ public class AnadirConcierto extends JFrame {
 			}
 			
 			public static void main(String[] args) {
+				
 		        // Crear la ventana en el hilo de eventos de Swing para no bloquear
 		    	// el hilo de ejecución principal
 		    	SwingUtilities.invokeLater(() -> {
@@ -135,6 +145,7 @@ public class AnadirConcierto extends JFrame {
 		    		
 		    		AnadirConcierto add = new AnadirConcierto();
 		    		add.setVisible(true);
+		    		
 		    		
 		        });
 		    }
