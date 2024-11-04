@@ -44,7 +44,7 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 		button.addActionListener((e) -> {
 			//Se crea el cuadro de diálogo para confirmar la reserva
 			TicketBookingDialog dialog = new TicketBookingDialog(concert, fecha);
-			
+			/////
 			//Si hay datos de personas
 			if (dialog.getAttendees() != null && !dialog.getAttendees().isEmpty()) {
 				//Se realiza la reserva a través del servicio de la alianza de aerolíneas
