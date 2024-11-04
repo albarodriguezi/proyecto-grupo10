@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
+
+import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 
 public class AnadirConcierto extends JFrame {
 			
@@ -101,6 +104,25 @@ public class AnadirConcierto extends JFrame {
 		        		    } 
 		        		} );
 				
+				
+				jButtonConfirm.addActionListener(new ActionListener() { 
+		        	  public void actionPerformed(ActionEvent e) { 
+		        		      
+		        		    String icon = icono.getText();
+		        		    String name = nombre.getText();
+		        		    Float price = Float.parseFloat(precio.getText());
+		        		    Integer duration = Integer.parseInt(duracion.getText());
+		        		    String code = codigo.getText();
+		        		    
+		        		    Concert concierto = new Concert(icon,code,name,duration,92000,price);
+		        		    ArrayList<Concert> lista= new ArrayList<Concert>();
+		        		    lista.add(concierto);
+		        		    ConcertsListRenderer concertRenderer = new ConcertsListRenderer(lista);
+		        		    
+		        		    
+		        		    
+		        		    } 
+		        		} );
 				
 				
 			}
