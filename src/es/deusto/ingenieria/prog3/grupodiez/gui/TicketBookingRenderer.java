@@ -50,17 +50,17 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 				
 				JOptionPane.showMessageDialog(main, 
 						String.format("El localizador de la reserva es: %s", locator),
-						String.format("Confirmación de la reserva del vuelo %s", flight.getCode()),
+						String.format("Confirmación de la reserva del vuelo %s", concert.getCode()),
 						JOptionPane.INFORMATION_MESSAGE,
 						new ImageIcon("resources/images/confirm.png"));
 								
 				//Se actualiza la lista de vuelos en la ventana principal
-				mainWindow.updateFlights();
+				main.updateConcerts();
 			} else {
 			//Si no hay datos de personas se muestra un mensaje de error
-				JOptionPane.showMessageDialog(mainWindow, 
+				JOptionPane.showMessageDialog(main, 
 						"No se ha realizado la reserva. Faltan los datos de alguna persona.",
-						String.format("Reserva del vuelo %s no confirmada", flight.getCode()),
+						String.format("Reserva del vuelo %s no confirmada", concert.getCode()),
 						JOptionPane.INFORMATION_MESSAGE,
 						new ImageIcon("resources/images/confirm.png"));
 			}
@@ -85,7 +85,7 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 	
 	@Override
 	public Object getCellEditorValue() {
-		return flight;
+		return concert;
 	}
 	
     @Override
