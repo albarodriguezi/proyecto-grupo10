@@ -195,16 +195,20 @@ public class ConcertsListRenderer extends JFrame {
 		this.tablaConcert.getColumnModel().getColumn(2).setPreferredWidth(500);
 		
 //-----------------------------------------------------------------------------como al seleccionar una fila se va a la pagina de fechas-----------------------------
-		//Se modifica el modelo de selección de la tabla para que se pueda selecciona únicamente una fila
-		//this.tablaConcert.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		//Se define el comportamiento el evento de selección de una fila de la tabla
-		//this.tablaConcert.getSelectionModel().addListSelectionListener(e -> {/////////////////////////////////////////AQUI HAY QUE HACER QUE TE LLEVE A LA PAGINA DE FECHAS
-			//Se obtiene el ID del comic de la fila seleccionada si es distinta de -1
-			//if (tablaConcert.getSelectedRow() != -1) {
-				//this.loadPersonajes(this.concerts.get((int) tablaConcert.getValueAt(tablaConcert.getSelectedRow(), 0) - 1)); // Se cambió a concerts
-			//}
-		//});
-    } //
+		this.tablaConcert.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.tablaConcert.getSelectionModel().addListSelectionListener(e -> {
+		    // Verifica que la selección no esté vacía
+		    if (tablaConcert.getSelectedRow() != -1) {
+		        // Obtiene el ID o el objeto necesario de la fila seleccionada
+		        int selectedRow = tablaConcert.getSelectedRow();
+		        int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 0); // Ejemplo: obtiene el ID desde la primera columna
+
+		        // Crea y muestra la ventana de DisponibilidadTocket pasando el ID del concierto
+		        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(concerts); 
+		        disponibilidadTicket.setVisible(true);
+		    }
+		});
+    } 
 
     
     private void loadConcert() {
@@ -222,5 +226,7 @@ public class ConcertsListRenderer extends JFrame {
         this.tablaConcert.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
     }
+    
+    
 } 
 

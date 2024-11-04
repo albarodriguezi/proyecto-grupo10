@@ -54,11 +54,17 @@ public class DisponibilidadTicket extends DefaultTableModel {
 	
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-    	return (columnIndex == 2); //para que DISPONIBILIDAD (índice 2) sea editable
+    	return (columnIndex == 5); //para que DISPONIBILIDAD (índice 2) sea editable
     }
     
     @Override 
     public void setValueAt(Object aValue, int row, int column) { //para cambiar los valores
+    	if (column == 5 && aValue.equals("Reservar")) { 
+            Concert concert = concerts.get(row);
+            // Lógica de reserva del concierto, e.g., reducir el número de asientos
+            concert.getRemainingSeats();
+            fireTableDataChanged(); // Notificar a la tabla de los cambios
+        }
     }
 	
 	@Override
@@ -75,5 +81,10 @@ public class DisponibilidadTicket extends DefaultTableModel {
 			case 5: return concerts; //conciertos
 			default: return null;
 		}
+	}
+
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 }
