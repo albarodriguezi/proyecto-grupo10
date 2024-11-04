@@ -66,6 +66,11 @@ public class Concert implements Comparable<Concert>, Serializable{
 		}
 		return (seats - occupied);
 	}
+	
+	public void setRemainingSeats(int i) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 	public float getPrice() {
@@ -105,6 +110,8 @@ public class Concert implements Comparable<Concert>, Serializable{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 
 }

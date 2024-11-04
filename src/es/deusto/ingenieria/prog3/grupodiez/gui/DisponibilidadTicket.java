@@ -3,6 +3,7 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
@@ -87,4 +88,15 @@ public class DisponibilidadTicket extends DefaultTableModel {
 		// TODO Auto-generated method stub
 		
 	}
+	 public void setValueAt1(Object aValue, int row, int column) { 
+	        if (column == 5 && "Reservar".equals(aValue)) { 
+	            Concert concert = concerts.get(row);
+	            if (concert.getRemainingSeats() > 0) {
+	                // Reducir un asiento y actualizar tabla
+	                concert.setRemainingSeats(concert.getRemainingSeats() - 1);
+	                fireTableDataChanged(); 
+	                JOptionPane.showMessageDialog(null, "¡Reserva realizada exitosamente!");//se te tiene qeu abrir la pestaña de la reserva
+	            }
+	        }
+	    }
 }

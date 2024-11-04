@@ -82,7 +82,7 @@ public class ConcertsListRenderer extends JFrame {
 		TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
 			JLabel result = new JLabel(value.toString());
 						
-			//Si el valor es de tipo Nombre: se renderiza con la imagen centrada
+			//Si el valor es de tipo Logo: se renderiza con la imagen centrada
 			if (value instanceof Logo) {
 				Logo e = (Logo) value;
 				
@@ -201,7 +201,7 @@ public class ConcertsListRenderer extends JFrame {
 		    if (tablaConcert.getSelectedRow() != -1) {
 		        // Obtiene el ID o el objeto necesario de la fila seleccionada
 		        int selectedRow = tablaConcert.getSelectedRow();
-		        int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 0); // Ejemplo: obtiene el ID desde la primera columna
+		        int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Ejemplo: obtiene el ID desde la primera columna
 
 		        // Crea y muestra la ventana de DisponibilidadTocket pasando el ID del concierto
 		        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(concerts); 
@@ -210,6 +210,7 @@ public class ConcertsListRenderer extends JFrame {
 		});
     } 
 
+   
     
     private void loadConcert() {
 		//Se borran los datos del modelo de datos
