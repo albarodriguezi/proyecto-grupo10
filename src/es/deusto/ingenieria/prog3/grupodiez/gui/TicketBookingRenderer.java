@@ -13,15 +13,17 @@ import javax.swing.table.TableCellRenderer;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Reserva;
 import es.deusto.ingenieria.prog3.grupodiez.main.Main;
 
 
 public class TicketBookingRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
-	private Fecha fecha;
+	private Reserva reserva;
 	private Concert concert;
 	private Main main;
+	private Fecha fecha;
 	
 	public TicketBookingRenderer(Main main) {
 		this.main = main;
@@ -44,13 +46,13 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 			TicketBookingDialog dialog = new TicketBookingDialog(concert, fecha);
 			
 			//Si hay datos de personas
-			if (dialog.getPassengers() != null && !dialog.getPassengers().isEmpty()) {
+			if (dialog.getAttendees() != null && !dialog.getAttendees().isEmpty()) {
 				//Se realiza la reserva a través del servicio de la alianza de aerolíneas
 				String locator = main.getService(concert).book(concert.getCode(), dialog.getPassengers());
 				
 				JOptionPane.showMessageDialog(main, 
 						String.format("El localizador de la reserva es: %s", locator),
-						String.format("Confirmación de la reserva del vuelo %s", concert.getCode()),
+						String.format("Confirmación de la reserva del vuelo %s", main.getCode()),
 						JOptionPane.INFORMATION_MESSAGE,
 						new ImageIcon("resources/images/confirm.png"));
 								

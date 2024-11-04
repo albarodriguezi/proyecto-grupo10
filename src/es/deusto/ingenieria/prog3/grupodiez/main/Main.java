@@ -33,34 +33,35 @@ public class Main{
 
 	
 		//se crean dos o tres fecha por 
-		/*
+		
 		Fecha fechau1 = new Fecha(10,10,2024);
-		Fecha fecha2 = new Fecha(10,10,2024);
-		Fecha fecha3 = new Fecha(10,10,2024);
-		Fecha fecha4 = new Fecha(10,10,2024);
-		Fecha fecha5 = new Fecha(10,10,2024);
-		Fecha fecha6 = new Fecha(10,10,2024);
-		Fecha fecha7 = new Fecha(10,10,2024);
-		Fecha fecha9 = new Fecha(10,10,2024);
-		Fecha fecha10 = new Fecha(10,10,2024);
-		Fecha fecha11= new Fecha(10,10,2024);
-		Fecha fecha12= new Fecha(10,10,2024);
-		Fecha fecha13= new Fecha(10,10,2024);
-		Fecha fecha14= new Fecha(10,10,2024);
-		Fecha fecha15= new Fecha(10,10,2024);
-		Fecha fecha16 = new Fecha(10,10,2024);
-		Fecha fecha26 = new Fecha(10,10,2024);
-		Fecha fecha17 = new Fecha(10,10,2024);
-		Fecha fecha18 = new Fecha(10,10,2024);
-		Fecha fecha19 = new Fecha(10,10,2024);
-		Fecha fecha20 = new Fecha(10,10,2024);
-		Fecha fecha21  = new Fecha(10,10,2024);
-		Fecha fecha22 = new Fecha(10,10,2024);
-		Fecha fecha23 = new Fecha(10,10,2024);
-		Fecha fecha24 = new Fecha(10,10,2024);
-		Fecha fecha25 = new Fecha(10,10,2024);
-		*/
+		Fecha fecha2 = new Fecha(8,11,2024);
+		Fecha fecha3 = new Fecha(23,12,2024);
+		Fecha fecha4 = new Fecha(18,1,2024);
+		Fecha fecha5 = new Fecha(20,2,2024);
+		Fecha fecha6 = new Fecha(30,3,2024);
+		Fecha fecha7 = new Fecha(14,4,2024);
+		Fecha fecha9 = new Fecha(19,5,2024);
+		Fecha fecha10 = new Fecha(15,6,2024);
+		Fecha fecha11= new Fecha(12,7,2024);
+		Fecha fecha12= new Fecha(10,9,2024);
+		Fecha fecha13= new Fecha(11,1,2024);
+		Fecha fecha14= new Fecha(20,2,2024);
+		Fecha fecha15= new Fecha(22,3,2024);
+		Fecha fecha16 = new Fecha(15,4,2024);
+		Fecha fecha26 = new Fecha(9,5,2024);
+		Fecha fecha17 = new Fecha(7,6,2024);
+		Fecha fecha18 = new Fecha(23,7,2024);
+		Fecha fecha19 = new Fecha(25,8,2024);
+		Fecha fecha20 = new Fecha(30,9,2024);
+		Fecha fecha21  = new Fecha(6,10,2024);
+		Fecha fecha22 = new Fecha(8,11,2024);
+		Fecha fecha23 = new Fecha(19,12,2024);
+		Fecha fecha24 = new Fecha(24,1,2024);
+		Fecha fecha25 = new Fecha(14,2,2024);
+
 		List<Concert> concerts = new ArrayList<>();
+		List<Fecha> fechas = new ArrayList<>();
 		
 		concerts.add(AdeleLive);
 		concerts.add(BelieveTour);

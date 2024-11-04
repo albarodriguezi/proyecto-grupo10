@@ -82,7 +82,7 @@ public class ConcertsListRenderer extends JFrame {
 		TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
 			JLabel result = new JLabel(value.toString());
 						
-			//Si el valor es de tipo Nombre: se renderiza con la imagen centrada
+			//Si el valor es de tipo Logo: se renderiza con la imagen centrada
 			if (value instanceof Logo) {
 				Logo e = (Logo) value;
 				
@@ -93,10 +93,10 @@ public class ConcertsListRenderer extends JFrame {
 				if (column == 0) {
 					switch (e) { 
 						case ADELELIVE:
-							result.setIcon(new ImageIcon("resources/images/adelelive.jpg"));
+							result.setIcon(new ImageIcon("resources\\images\\adelelive.jpg"));
 							break;
 						case BELIEVETOUR:
-							result.setIcon(new ImageIcon("resources/images/Believetour.jpg"));
+							result.setIcon(new ImageIcon("resources\\images\\Believetour.jpg"));
 							break;
 						case BORNTODIE:
 							result.setIcon(new ImageIcon("resources/images/borntodie.jpg"));
@@ -157,29 +157,6 @@ public class ConcertsListRenderer extends JFrame {
 			
 			return result;
 		};
-
-		//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
-		/*TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
-			JLabel result = new JLabel(value.toString());			
-			result.setHorizontalAlignment(JLabel.CENTER);
-			
-			switch (value.toString()) {
-				case "CODIGO":
-				case "NOMBRE":
-				case "DURACION":
-				case "TICKETS":
-				case "PRECIO":
-					result.setHorizontalAlignment(JLabel.LEFT);
-					break; 
-			}
-			
-			result.setBackground(table.getBackground());
-			result.setForeground(table.getForeground());
-			
-			result.setOpaque(true);
-			
-			return result;
-		};*/
 		//Se crea un CellEditor a partir de un JComboBox()
 		JComboBox<Logo> jComboEditorial = new JComboBox<>(Logo.values());		
 		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
@@ -201,7 +178,7 @@ public class ConcertsListRenderer extends JFrame {
 		    if (tablaConcert.getSelectedRow() != -1) {
 		        // Obtiene el ID o el objeto necesario de la fila seleccionada
 		        int selectedRow = tablaConcert.getSelectedRow();
-		        int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 0); // Ejemplo: obtiene el ID desde la primera columna
+		        int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Ejemplo: obtiene el ID desde la primera columna
 
 		        // Crea y muestra la ventana de DisponibilidadTocket pasando el ID del concierto
 		        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(concerts); 
@@ -210,6 +187,7 @@ public class ConcertsListRenderer extends JFrame {
 		});
     } 
 
+   
     
     private void loadConcert() {
 		//Se borran los datos del modelo de datos
