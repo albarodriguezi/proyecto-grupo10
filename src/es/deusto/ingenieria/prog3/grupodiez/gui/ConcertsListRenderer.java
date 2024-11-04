@@ -93,10 +93,10 @@ public class ConcertsListRenderer extends JFrame {
 				if (column == 0) {
 					switch (e) { 
 						case ADELELIVE:
-							result.setIcon(new ImageIcon("resources/images/adelelive.jpg"));
+							result.setIcon(new ImageIcon("resources\\images\\adelelive.jpg"));
 							break;
 						case BELIEVETOUR:
-							result.setIcon(new ImageIcon("resources/images/Believetour.jpg"));
+							result.setIcon(new ImageIcon("resources\\images\\Believetour.jpg"));
 							break;
 						case BORNTODIE:
 							result.setIcon(new ImageIcon("resources/images/borntodie.jpg"));
