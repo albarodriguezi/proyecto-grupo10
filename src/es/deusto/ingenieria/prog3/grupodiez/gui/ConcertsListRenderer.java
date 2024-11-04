@@ -157,29 +157,6 @@ public class ConcertsListRenderer extends JFrame {
 			
 			return result;
 		};
-
-		//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
-		/*TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
-			JLabel result = new JLabel(value.toString());			
-			result.setHorizontalAlignment(JLabel.CENTER);
-			
-			switch (value.toString()) {
-				case "CODIGO":
-				case "NOMBRE":
-				case "DURACION":
-				case "TICKETS":
-				case "PRECIO":
-					result.setHorizontalAlignment(JLabel.LEFT);
-					break; 
-			}
-			
-			result.setBackground(table.getBackground());
-			result.setForeground(table.getForeground());
-			
-			result.setOpaque(true);
-			
-			return result;
-		};*/
 		//Se crea un CellEditor a partir de un JComboBox()
 		JComboBox<Logo> jComboEditorial = new JComboBox<>(Logo.values());		
 		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);

@@ -44,23 +44,23 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 			TicketBookingDialog dialog = new TicketBookingDialog(concert, fecha);
 			
 			//Si hay datos de personas
-			if (dialog.getPassengers() != null && !dialog.getPassengers().isEmpty()) {
+			if (dialog.getAttendees() != null && !dialog.getAttendees().isEmpty()) {
 				//Se realiza la reserva a través del servicio de la alianza de aerolíneas
 				String locator = main.getService(concert).book(concert.getCode(), dialog.getPassengers());
 				
 				JOptionPane.showMessageDialog(main, 
 						String.format("El localizador de la reserva es: %s", locator),
-						String.format("Confirmación de la reserva del vuelo %s", flight.getCode()),
+						String.format("Confirmación de la reserva del concierto %s", concert.getCode()),
 						JOptionPane.INFORMATION_MESSAGE,
 						new ImageIcon("resources/images/confirm.png"));
 								
 				//Se actualiza la lista de vuelos en la ventana principal
-				mainWindow.updateFlights();
+				main.updateConcert();
 			} else {
 			//Si no hay datos de personas se muestra un mensaje de error
-				JOptionPane.showMessageDialog(mainWindow, 
+				JOptionPane.showMessageDialog(main, 
 						"No se ha realizado la reserva. Faltan los datos de alguna persona.",
-						String.format("Reserva del vuelo %s no confirmada", flight.getCode()),
+						String.format("Reserva del vuelo %s no confirmada", concert.getCode()),
 						JOptionPane.INFORMATION_MESSAGE,
 						new ImageIcon("resources/images/confirm.png"));
 			}
@@ -75,17 +75,17 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 	
 	@Override
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-		return prepare(table, value, isSelected, row, column);
+		return prepare(table, (Concert) value , isSelected, row, column);
 	}
 
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-		return prepare(table, value, isSelected, row, column);		
+		return prepare(table, (Concert) value, isSelected, row, column);		
 	}
 	
 	@Override
 	public Object getCellEditorValue() {
-		return flight;
+		return concert;
 	}
 	
     @Override
