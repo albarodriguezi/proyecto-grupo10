@@ -43,7 +43,7 @@ public class Main{
 		Fecha fecha7 = new Fecha(14,4,2024);
 		Fecha fecha9 = new Fecha(19,5,2024);
 		Fecha fecha10 = new Fecha(15,6,2024);
-		Fecha fecha11= new Fecha(12,7,2024);
+		Fecha fecha11= new Fecha(1,7,2024);
 		Fecha fecha12= new Fecha(10,9,2024);
 		Fecha fecha13= new Fecha(11,1,2024);
 		Fecha fecha14= new Fecha(20,2,2024);

@@ -28,7 +28,7 @@ import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 public class DisponibilidadTicket extends DefaultTableModel {
 
 	private static final long serialVersionUID = 1L;
-	private List<Concert> concerts;
+	private String name;
 	private JTable tablaFechas;
     private DefaultTableModel modeloDatosFechas;
     private JTextField txtFiltro;
@@ -77,9 +77,8 @@ public class DisponibilidadTicket extends DefaultTableModel {
     	return (columnIndex == 5); //para que DISPONIBILIDAD (índice 2) sea editable
     }
     
-    @Override 
-    public void setValueAt(Object aValue, int row, int column) { //para cambiar los valores
-    	if (column == 5 && aValue.equals("Reservar")) { 
+    public void setValueOf(Object value, int row, int column) { //para cambiar los valores
+    	if (column == 5 && value.equals("Reservar")) { 
             Concert concert = concerts.get(row);
             // Lógica de reserva del concierto, e.g., reducir el número de asientos
             concert.getRemainingSeats();
@@ -185,6 +184,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
     }
     
+
     
 } 
 
