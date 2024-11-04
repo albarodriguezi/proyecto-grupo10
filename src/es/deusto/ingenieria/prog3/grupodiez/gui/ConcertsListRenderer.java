@@ -4,8 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -93,7 +97,7 @@ public class ConcertsListRenderer extends JFrame {
 				if (column == 0) {
 					switch (e) { 
 						case ADELELIVE:
-							result.setIcon(new ImageIcon("resources/images/adelelive.jpg"));
+							result.setIcon(new ImageIcon("resources\\images\\adelelive.jpg"));
 							break;
 						case BELIEVETOUR:
 							result.setIcon(new ImageIcon("resources/images/Believetour.jpg"));
@@ -201,7 +205,7 @@ public class ConcertsListRenderer extends JFrame {
 		    if (tablaConcert.getSelectedRow() != -1) {
 		        // Obtiene el ID o el objeto necesario de la fila seleccionada
 		        int selectedRow = tablaConcert.getSelectedRow();
-		        int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 0); // Ejemplo: obtiene el ID desde la primera columna
+		        int idConcierto = Integer.parseInt((String)tablaConcert.getValueAt(selectedRow, 1)); // Ejemplo: obtiene el ID desde la primera columna
 
 		        // Crea y muestra la ventana de DisponibilidadTocket pasando el ID del concierto
 		        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(concerts); 
@@ -212,10 +216,27 @@ public class ConcertsListRenderer extends JFrame {
 
     
     private void loadConcert() {
+    	ArrayList<Concert> conciertos = new ArrayList<Concert>();
+    	try {
+			Scanner sc = new Scanner(new File("resources\\data\\Concerts.csv"));
+			while(sc.hasNextLine()){
+		        String linea=sc.nextLine();
+		        String[] campos=linea.split(";");
+		        Logo logo = Logo.valueOf(campos[0]);
+		        Integer duracion = Integer.parseInt(campos[3]);
+		        Integer sitios = Integer.parseInt(campos[4]);
+		        Float precio = Float.parseFloat(campos[5]);
+		        conciertos.add(new Concert(logo,campos[1],campos[2],duracion,sitios,precio));
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//Se borran los datos del modelo de datos
 		this.modeloDatosConcerts.setRowCount(0);
 		//Se añaden los comics uno a uno al modelo de datos
-		this.concerts.forEach(c -> this.modeloDatosConcerts.addRow(
+		conciertos.forEach(c -> this.modeloDatosConcerts.addRow(
 				new Object[] {c.getImagen(), c.getCode(), c.getName(), c.getDuration(), c.getSeats(), c.getPrice()} )
 		);
     }
