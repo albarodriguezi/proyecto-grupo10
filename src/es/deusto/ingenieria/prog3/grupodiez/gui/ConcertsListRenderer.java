@@ -3,6 +3,7 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -77,6 +78,18 @@ public class ConcertsListRenderer extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
+    
+    // Método para redimensionar las imágenes
+
+    private ImageIcon redimensionarImagen (ImageIcon icono, int ancho, int alto) {
+
+        Image imagen = icono.getImage(); // Obtener la imagen del ImageIcon
+
+        Image imagenRedimensionada = imagen.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH); // Redimensionar la imagen
+
+        return new ImageIcon(imagenRedimensionada); // Devolver la imagen redimensionada como ImageIcon
+
+    }
 
     private void initTables() {
         Vector<String> cabeceraConcert = new Vector<>(Arrays.asList("LOGO","CODIGO", "NOMBRE", "DURACION", "TICKETS", "PRECIO"));
@@ -95,6 +108,9 @@ public class ConcertsListRenderer extends JFrame {
 				result.setText(e.toString());		
 				result.setToolTipText(e.toString());
 				result.setHorizontalAlignment(JLabel.CENTER);
+
+			
+			    
 				if (column == 0) {
 					switch (e) { 
 						case ADELELIVE:
