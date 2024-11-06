@@ -1,189 +1,72 @@
 package es.deusto.ingenieria.prog3.grupodiez.gui;
 
-import java.awt.Color;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 
-import javax.swing.DefaultCellEditor;
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableRowSorter;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
-import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 
-
-public class DisponibilidadTicket extends DefaultTableModel {
-
+public class DisponibilidadTicket extends DefaultTableModel{
+	
 	private static final long serialVersionUID = 1L;
-	private Concert concert;
-	private JTable tablaFechas;
-    private DefaultTableModel modeloDatosFechas;
-    private JTextField txtFiltro;
-	private Fecha fecha;
+	
+	private List<Fecha> fechas;
+	private Concert concerts;
 	private final List<String> headers = Arrays.asList(
-			"FECHA", //fecha del concierto
-			"DISPONIBILIDAD", //AÑADIR DISPONIBILIDAD DE LOS TICKETS EN CADA FECHA
-			"TICKETS RESTANTES", //número de asientos libres
-			"DURACIÓN", //duración del concierto
-			"PRECIO", //precio del concierto
-			"RESERVAR" //botón de reservar
-			);
-
-	//para añadir la disponibilidad:
+			"FECHA",
+			"DURACION",
+			"PRECIO",
+			"TICKETS RESTANTES",
+			"DISPONIBILIDAD",
+			"RESERVAR");
 	
-	//constructor con acceso a la lista de conciertos
-	public DisponibilidadTicket (List<Concert> concerts) {
-		this.concert = concerts;
+	public DisponibilidadTicket(List<Fecha> fechas) {
+		this.fechas = fechas;
 	}
 	
-	public DisponibilidadTicket (Fecha fecha) {
-		this.fecha = fecha;
-	}
-
 	@Override
-	public String getColumnName(int column) { //obtener el nombre de cada columna
+	public String getColumnName(int column) {
 		return headers.get(column);
 	}
-
+	
 	@Override
-	public int getRowCount() { //cuantas filas tiene la tabla (número de conciertos)
-		if (concert != null) { //si no está vacia
-			return concert.size(); //devuelve la cantidad de elementos
-		} else { 
-			return 0; //no aparece nada
+	public int getRowCount() {
+		if (fechas != null) {
+			return fechas.size();
+		}else {
+			return 0;
 		}
 	}
-
+	
 	@Override
 	public int getColumnCount() {
-		return headers.size(); //devuelve el número de columnas (títulos de arriba)
+		return headers.size();
 	}
-	
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-    	return (columnIndex == 5); //para que DISPONIBILIDAD (índice 2) sea editable
-    }
-    
-    public void setValueOf(Object value, int row, int column) { //para cambiar los valores
-    	if (column == 5 && value.equals("Reservar")) { 
-            Concert concert = concerts.get(row);
-            // Lógica de reserva del concierto, e.g., reducir el número de asientos
-            concert.getRemainingSeats();
-            fireTableDataChanged(); // Notificar a la tabla de los cambios
-        }
-    }
 	
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		Concert concert = concerts.get(rowIndex);
-		
-		switch (columnIndex) {
-			case 0: return fecha.getFecha(); //la fecha de la clase Fecha
-			//disponibilidad --> número de tickets --> número máximo de personas que entran en el recinto (nº seats)
-			case 1: return Float.valueOf((float) concert.getRemainingSeats()/concert.getSeats()); //calcular disponibilidad
-			case 2: return Integer.valueOf(concert.getRemainingSeats()); //asientos libres
-			case 3: return Integer.valueOf(concert.getDuration()); //duración
-			case 4: return Float.valueOf(concert.getPrice()); //precio
-			case 5: return concerts; //conciertos
-			default: return null;
-		}
-	}
-
-	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
-		
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return (columnIndex ==5);
 	}
 	
-	//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
-	private void initTables() {
-        Vector<String> cabeceraConcert = new Vector<>(Arrays.asList("FECHA","DISPONIBILIDAD", "TICKETS RESTANTES", "DURACION", "PRECIO", "RESERVCAR"));
-        this.modeloDatosFechas = new DefaultTableModel(new Vector<>(), cabeceraConcert);
-        this.tablaFechas = new JTable(this.modeloDatosFechas);
-
-		//Se define un CellRenderer para las celdas de las dos tabla usando una expresión lambda
-		TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
-			JLabel result = new JLabel(value.toString());
-
-			
-			//La filas pares e impares se renderizan de colores diferentes de la tabla de comics			
-			if (table.equals(tablaFechas)) {
-				if (row % 2 == 0) {
-					result.setBackground(new Color(230, 250, 250));
-				} else {
-					result.setBackground(new Color(190, 230, 220));
-				}
-			} 
-			
-			//Si la celda está seleccionada se renderiza con el color de selección por defecto
-			if (isSelected) {
-				result.setBackground(table.getSelectionBackground());
-				result.setForeground(table.getSelectionForeground());			
-			}
-			
-			result.setOpaque(true);
-			
-			return result;
-		};
-		//Se crea un CellEditor a partir de un JComboBox()
-		JComboBox<Logo> jComboEditorial = new JComboBox<>(Logo.values());		
-		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
+	@Override
+	public void setValueAt(Object aValue, int row, int column) {
+	}
+	
+	@Override
+	public Object getValueAt(int rowindex, int columnIndex) {
+		Fecha fecha = fechas.get(rowindex);
 		
-		
-		this.tablaFechas.setRowHeight(40);//altira de las fila
-		this.tablaFechas.getTableHeader().setReorderingAllowed(false);//Se deshabilita la reordenación de columnas
-		this.tablaFechas.getTableHeader().setResizingAllowed(false);//Se deshabilita el redimensionado de las columna
-		this.tablaFechas.setAutoCreateRowSorter(true);//Se definen criterios de ordenación por defecto para cada columna
-		//Se establecen los renderers al la cabecera y el contenido	
-		this.tablaFechas.setDefaultRenderer(Object.class, cellRenderer);
-		//Se define la anchura de la columna Título
-		this.tablaFechas.getColumnModel().getColumn(2).setPreferredWidth(500);
-		
-//-----------------------------------------------------------------------------como al seleccionar una fila se va a la pagina con los datos de al reserva-----------------------------
-		this.tablaFechas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//seleccionamos solo una fila
-		this.tablaFechas.getSelectionModel().addListSelectionListener(e -> {//para seleccionar la fila
-		    if (tablaFechas.getSelectedRow() != -1) {//// Verifica que la selección no esté vacía
-		        // Obtiene el ID o el objeto necesario de la fila seleccionada
-		        int selectedRow = tablaFechas.getSelectedRow();//definimos la fila seleccionda
-		        int idConcierto = (int) tablaFechas.getValueAt(selectedRow, 1); // Ejemplo: obtiene el ID desde la primera columna
-
-		        // Crea y muestra la ventana de los datos de la reserva de los asientos-----> hay que identificar a que frame se va a abrir (frame de mireia)
-		        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(concerts); 
-		        disponibilidadTicket.setVisible(true);
-		    }
-		});
-    } 
-   
-    
-    private void loadFechas() {
-		//Se borran los datos del modelo de datos
-		this.modeloDatosFechas.setRowCount(0);
-		//Se añaden los comics uno a uno al modelo de datos
-		this.fechas.forEach(f -> this.modeloDatosFechas.addRow(//crear lista de fechas--> en ficheros
-				new Object[] {f.getFecha(), f.getRemainingSeats(), f.getSeats(), f.getDuration(), f.Price(), f.getReserva()} )
-		);
-    }
-
-    //hacemos que se puedan filtrar(creamos el buscador)
-    private void filterConcerts(String text) {
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(this.modeloDatosFechas);
-        this.tablaFechas.setRowSorter(sorter);
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
-    }
-    
-
-    
-} 
-
+		switch (columnIndex) {
+			case 0: return fecha.getFecha();
+			case 1: return Integer.valueOf(concerts.getDuration());
+			case 2:return Float.valueOf(concerts.getPrice());
+			case 3: return Integer.valueOf(concerts.getRemainingSeats());
+			case 4: return Double.valueOf(concerts.getRemainingSeats()/Double.valueOf(concerts.getSeats())*100);
+			case 5: return fechas;
+			default: return null;
+			
+		}
+	}
+}
