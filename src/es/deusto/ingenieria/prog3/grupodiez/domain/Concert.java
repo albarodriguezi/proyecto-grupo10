@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import javax.swing.JOptionPane;
+
 
 
 public class Concert implements Comparable<Concert>, Serializable{
@@ -15,11 +17,10 @@ public class Concert implements Comparable<Concert>, Serializable{
 
 
 	public enum Logo{
-		ADELELIVE, BELIEVETOUR, BORNTODIE, ERASTOUR, FUTURENOSTALGIA, GUTSWORLTOUR, LOVEONTOUR, MUSICOFTHESPHERE, ONTHEROADAGAIN, THEMATHEMATICSTOUR,OTHER;
+		ADELELIVE, BELIEVETOUR, BORNTODIE, ERASTOUR, FUTURENOSTALGIA, GUTSWORLTOUR, LOVEONTOUR, MUSICOFTHESPHERE, ONTHEROADAGAIN, THEMATHEMATICSTOUR;
 	}
 
 	private Logo imagen;//logo del tour
-	private String imagenAnadir;
 	private String code; // codigo del concierto
 	private String name; //nombre del conciert
 	private int duration; //duracion del concierto
@@ -36,18 +37,6 @@ public class Concert implements Comparable<Concert>, Serializable{
 		this.duration = duration;		
 		this.seats = seats;
 		this.price = price;
-		this.setImagenAnadir("");
-
-	}
-	
-	public Concert(String imagen, String code, String name,int duration, int seats, float price) {
-		this.imagen = Logo.OTHER;
-		this.code = code;
-		this.name = name;
-		this.duration = duration;		
-		this.seats = seats;
-		this.price = price;
-		this.imagenAnadir = imagen;
 
 	}
 
@@ -79,6 +68,11 @@ public class Concert implements Comparable<Concert>, Serializable{
 		}
 		return (seats - occupied);
 	}
+	
+	public void setRemainingSeats(int i) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 	public float getPrice() {
@@ -89,7 +83,6 @@ public class Concert implements Comparable<Concert>, Serializable{
 
 	@Override
 	public String toString() {
-		
 		return "Concert [imagen=" + imagen + ", code=" + code + ", name=" + name + ", duration=" + duration + ", seats="
 				+ seats + ", price=" + price + ", reserva=" + reserva + "]";
 	}
@@ -120,13 +113,7 @@ public class Concert implements Comparable<Concert>, Serializable{
 		return 0;
 	}
 
-	public String getImagenAnadir() {
-		return imagenAnadir;
-	}
 
-	public void setImagenAnadir(String imagenAnadir) {
-		this.imagenAnadir = imagenAnadir;
-	}
 
 
 }

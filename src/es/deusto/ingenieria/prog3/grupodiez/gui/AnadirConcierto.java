@@ -5,11 +5,6 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,8 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
-
-import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 
 public class AnadirConcierto extends JFrame {
 			
@@ -109,35 +102,10 @@ public class AnadirConcierto extends JFrame {
 		        		} );
 				
 				
-				jButtonConfirm.addActionListener(new ActionListener() { 
-		        	  public void actionPerformed(ActionEvent e) { 
-		        		      
-		        		    String icon = icono.getText();
-		        		    String name = nombre.getText();
-		        		    Float price = Float.parseFloat(precio.getText());
-		        		    Integer duration = Integer.parseInt(duracion.getText());
-		        		    String code = codigo.getText();
-		        		    
-		        		    Concert concierto = new Concert(icon,code,name,duration,92000,price);
-		        		    try{
-		        		        
-		        		        FileWriter fw = new FileWriter("resources\\data\\Concerts.csv",true);
-		        		        fw.append("\n"+icon+";"+code+";"+name+";"+duration.toString()+";"+"92000"+";"+price.toString());
-		        		        fw.close();
-		        		    }catch (Exception e1){
-
-		        		    }
-		        		    
-		        		    
-		        		    
-		        		    } 
-		        		} );
-				
 				
 			}
 			
 			public static void main(String[] args) {
-				
 		        // Crear la ventana en el hilo de eventos de Swing para no bloquear
 		    	// el hilo de ejecución principal
 		    	SwingUtilities.invokeLater(() -> {
@@ -145,7 +113,6 @@ public class AnadirConcierto extends JFrame {
 		    		
 		    		AnadirConcierto add = new AnadirConcierto();
 		    		add.setVisible(true);
-		    		
 		    		
 		        });
 		    }
