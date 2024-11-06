@@ -21,11 +21,12 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+import es.deusto.ingenieria.prog3.grupodiez.gui.DisponibilidadTicket;
+import es.deusto.ingenieria.prog3.grupodiez.gui.DisponibilidadticketRenderer;
 
 public class MainDisponibilidadTicket extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
-	private List<Fecha> fechas = new ArrayList<>();//lista de las fechas que sera vista en la ventana
 	private Concert concerts;
 	
 	private JTable jTableFechas =  new JTable();
@@ -37,7 +38,37 @@ public class MainDisponibilidadTicket extends JFrame{
 	public MainDisponibilidadTicket() {
 		
 		jComboConcerts.setPrototypeDisplayValue("Selecciona un concierto");
-		jComboConcerts.addActionListener((e) -> {
+		List<Fecha> fechas = new ArrayList<>(); // Este es el lugar donde deberías añadir las fechas
+        DisponibilidadTicket model = new DisponibilidadTicket(fechas);
+        jTableFechas.setModel(model);
+
+        // Asignar renderers a las columnas necesarias
+        jTableFechas.getColumnModel().getColumn(0).setCellRenderer(new DisponibilidadticketRenderer());
+        jTableFechas.getColumnModel().getColumn(4).setCellRenderer(new DisponibilidadticketRenderer());
+        jTableFechas.getColumnModel().getColumn(5).setCellRenderer(new DisponibilidadticketRenderer());
+
+        // Configurar la tabla
+        jTableFechas.setRowHeight(40);
+        jTableFechas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ((DefaultTableCellRenderer) jTableFechas.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        
+        // Configurar el JPanel para la búsqueda
+        JPanel pSearch = new JPanel();
+        pSearch.setBorder(new TitledBorder("Busqueda de fechas"));
+        pSearch.setLayout(new GridLayout(1,1));
+
+        // Añadir componentes al JFrame
+        add(pSearch, BorderLayout.NORTH);
+        add(new JScrollPane(jTableFechas), BorderLayout.CENTER);
+        add(jLabelInfo, BorderLayout.SOUTH);
+        
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Fechas conciertos");
+        setSize(1400,800);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+		/*jComboConcerts.addActionListener((e) -> {
 			Object fromItem = ((JComboBox<?>) e.getSource()).getSelectedItem();
 			
 			if (fromItem != null && !fromItem.toString().isEmpty()) {
@@ -83,7 +114,7 @@ public class MainDisponibilidadTicket extends JFrame{
 				 		String.format("itinerarios en %2", concert),
 				 		JOptionPane.PLAIN_MESSAGE,
 			}).start();
-		});*/
+		});
 		
 		
 		jTableFechas.setRowHeight(40);
@@ -106,11 +137,39 @@ public class MainDisponibilidadTicket extends JFrame{
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
+	*/
 		
 		
 		public static void main(String[] args) {
-			SwingUtilities.invokeLater(() -> new MainDisponibilidadTicket());
+			
+			Fecha fecha1 = new Fecha(1, 1, 2024,Concert.Logo.ADELELIVE, 92567 );
+			Fecha fecha2 = new Fecha(2,2,2024,Concert.Logo.BELIEVETOUR, 92567 );
+			Fecha fecha3 = new Fecha(3,3,2024, Concert.Logo.BORNTODIE,92567 );
+			Fecha fecha4 = new Fecha(4,4,2024, Concert.Logo.ERASTOUR, 92567);
+			Fecha fecha5 = new Fecha(5,5,2024, Concert.Logo.FUTURENOSTALGIA, 92567);
+			Fecha fecha6 = new Fecha(6,6,2024,Concert.Logo.GUTSWORLTOUR, 92567);
+			Fecha fecha7 = new Fecha(7,7,2024,Concert.Logo.LOVEONTOUR, 92567);
+			Fecha fecha8 = new Fecha(8,8,2024,Concert.Logo.MUSICOFTHESPHERE, 92567);
+			Fecha fecha9 = new Fecha(9,9,2024,Concert.Logo.ONTHEROADAGAIN, 92567);
+			Fecha fecha10 = new Fecha(10,10,2024,Concert.Logo.THEMATHEMATICSTOUR, 92567);	
+			
+			List<Fecha> fechas = new ArrayList<>();
+			
+			fechas.add(fecha1);
+			fechas.add(fecha2);
+			fechas.add(fecha3);
+			fechas.add(fecha4);
+			fechas.add(fecha5);
+			fechas.add(fecha6);
+			fechas.add(fecha7);
+			fechas.add(fecha8);
+			fechas.add(fecha9);
+			fechas.add(fecha10);
+			
+					
+			SwingUtilities.invokeLater(() -> {
+				new MainDisponibilidadTicket();
+		    });
 		}
-		
-	}
+}
 	

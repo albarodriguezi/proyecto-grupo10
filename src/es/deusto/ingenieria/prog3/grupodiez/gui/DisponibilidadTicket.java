@@ -13,7 +13,6 @@ public class DisponibilidadTicket extends DefaultTableModel{
 	private static final long serialVersionUID = 1L;
 	
 	private List<Fecha> fechas;
-	private Concert concerts;
 	private final List<String> headers = Arrays.asList(
 			"FECHA",
 			"DURACION",
@@ -54,19 +53,19 @@ public class DisponibilidadTicket extends DefaultTableModel{
 	public void setValueAt(Object aValue, int row, int column) {
 	}
 	
-	@Override
-	public Object getValueAt(int rowindex, int columnIndex) {
-		Fecha fecha = fechas.get(rowindex);
-		
-		switch (columnIndex) {
-			case 0: return fecha.getFecha();
-			case 1: return Integer.valueOf(concerts.getDuration());
-			case 2:return Float.valueOf(concerts.getPrice());
-			case 3: return Integer.valueOf(concerts.getRemainingSeats());
-			case 4: return Double.valueOf(concerts.getRemainingSeats()/Double.valueOf(concerts.getSeats())*100);
-			case 5: return fechas;
-			default: return null;
-			
-		}
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        Fecha fecha = fechas.get(rowIndex);
+        
+        
+        switch (columnIndex) {
+        case 0: return fecha.getFecha(); // Mostramos la fecha.
+        case 1: return 120; // Si la duración no está en Fecha, usar un valor fijo por ahora, o modificar según la lógica.
+        case 2: return 50.0f; // Si el precio no está en Fecha, usar un valor fijo por ahora, o modificar según la lógica.
+        case 3: return fecha.getSeats(); // Asumimos que 'seats' es el número de asientos disponibles.
+        case 4: return (double) fecha.getSeats() / 100; // Calculamos la disponibilidad como porcentaje.
+        case 5: return "Reservar"; // Podemos personalizar con un botón de reserva si se necesita.
+        default: return null;
+    }
 	}
 }
