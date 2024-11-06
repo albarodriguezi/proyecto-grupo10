@@ -46,31 +46,30 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 			TicketBookingDialog dialog = new TicketBookingDialog(concert, fecha);
 			//////
 			//Si hay datos de personas
-			if (dialog.getPassengers() != null && !dialog.getPassengers().isEmpty()) {
+			if (dialog.getAttendees() != null && !dialog.getAttendees().isEmpty()) {
 				//Se realiza la reserva a través del servicio de la alianza de aerolíneas
-				String locator = main.getService(concert).book(concert.getCode(), dialog.getPassengers());
+				String locator = main.getService(concert).book(concert.getCode(), dialog.getAttendees());
 				
 				JOptionPane.showMessageDialog(main, 
 						String.format("El localizador de la reserva es: %s", locator),
-<<<<<<< HEAD
+
 						String.format("Confirmación de la reserva del vuelo %s", main.getCode()),
-=======
-						String.format("Confirmación de la reserva del vuelo %s", flight.getCode()),
->>>>>>> branch 'master' of git@github.com:albarodriguezi/proyecto-grupo10.git
-						JOptionPane.INFORMATION_MESSAGE,
+
+						String.format("Confirmación de la reserva del vuelo %s", concert.getCode()),
+
 						new ImageIcon("resources/images/confirm.png"));
 								
 				//Se actualiza la lista de vuelos en la ventana principal
-<<<<<<< HEAD
+
 				main.updateConcerts();
-=======
-				mainWindow.updateFlights();
->>>>>>> branch 'master' of git@github.com:albarodriguezi/proyecto-grupo10.git
+
+				main.updateConcerts();
+
 			} else {
 			//Si no hay datos de personas se muestra un mensaje de error
-				JOptionPane.showMessageDialog(mainWindow, 
+				JOptionPane.showMessageDialog(main, 
 						"No se ha realizado la reserva. Faltan los datos de alguna persona.",
-						String.format("Reserva del vuelo %s no confirmada", flight.getCode()),
+						String.format("Reserva del vuelo %s no confirmada", concert.getCode()),
 						JOptionPane.INFORMATION_MESSAGE,
 						new ImageIcon("resources/images/confirm.png"));
 			}
@@ -95,7 +94,7 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 	
 	@Override
 	public Object getCellEditorValue() {
-		return flight;
+		return concert;
 	}
 	
     @Override
