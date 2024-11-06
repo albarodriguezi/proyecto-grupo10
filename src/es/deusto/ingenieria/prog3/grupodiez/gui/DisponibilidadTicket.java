@@ -28,7 +28,7 @@ import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 public class DisponibilidadTicket extends DefaultTableModel {
 
 	private static final long serialVersionUID = 1L;
-	private String name;
+	private Concert concert;
 	private JTable tablaFechas;
     private DefaultTableModel modeloDatosFechas;
     private JTextField txtFiltro;
@@ -45,8 +45,8 @@ public class DisponibilidadTicket extends DefaultTableModel {
 	//para añadir la disponibilidad:
 	
 	//constructor con acceso a la lista de conciertos
-	public DisponibilidadTicket (List<Concert> concerts) {
-		this.concerts = concerts;
+	public DisponibilidadTicket (Concert concert) {
+		this.concert = concert;
 	}
 	
 	public DisponibilidadTicket (Fecha fecha) {
@@ -60,8 +60,8 @@ public class DisponibilidadTicket extends DefaultTableModel {
 
 	@Override
 	public int getRowCount() { //cuantas filas tiene la tabla (número de conciertos)
-		if (concerts != null) { //si no está vacia
-			return concerts.size(); //devuelve la cantidad de elementos
+		if (concert != null) { //si no está vacia
+			return concert.size(); //devuelve la cantidad de elementos
 		} else { 
 			return 0; //no aparece nada
 		}
@@ -143,24 +143,23 @@ public class DisponibilidadTicket extends DefaultTableModel {
 		
 		
 		this.tablaFechas.setRowHeight(40);//altira de las fila
-		this.tablaFechas.getTableHeader().setReorderingAllowed(false);		//Se deshabilita la reordenación de columnas
-		this.tablaFechas.getTableHeader().setResizingAllowed(false);		//Se deshabilita el redimensionado de las columna
-		this.tablaFechas.setAutoCreateRowSorter(true);		//Se definen criterios de ordenación por defecto para cada columna
+		this.tablaFechas.getTableHeader().setReorderingAllowed(false);//Se deshabilita la reordenación de columnas
+		this.tablaFechas.getTableHeader().setResizingAllowed(false);//Se deshabilita el redimensionado de las columna
+		this.tablaFechas.setAutoCreateRowSorter(true);//Se definen criterios de ordenación por defecto para cada columna
 		//Se establecen los renderers al la cabecera y el contenido	
 		this.tablaFechas.setDefaultRenderer(Object.class, cellRenderer);
 		//Se define la anchura de la columna Título
 		this.tablaFechas.getColumnModel().getColumn(2).setPreferredWidth(500);
 		
-//-----------------------------------------------------------------------------como al seleccionar una fila se va a la pagina de fechas-----------------------------
-		this.tablaFechas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.tablaFechas.getSelectionModel().addListSelectionListener(e -> {
-		    // Verifica que la selección no esté vacía
-		    if (tablaFechas.getSelectedRow() != -1) {
+//-----------------------------------------------------------------------------como al seleccionar una fila se va a la pagina con los datos de al reserva-----------------------------
+		this.tablaFechas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//seleccionamos solo una fila
+		this.tablaFechas.getSelectionModel().addListSelectionListener(e -> {//para seleccionar la fila
+		    if (tablaFechas.getSelectedRow() != -1) {//// Verifica que la selección no esté vacía
 		        // Obtiene el ID o el objeto necesario de la fila seleccionada
-		        int selectedRow = tablaFechas.getSelectedRow();
+		        int selectedRow = tablaFechas.getSelectedRow();//definimos la fila seleccionda
 		        int idConcierto = (int) tablaFechas.getValueAt(selectedRow, 1); // Ejemplo: obtiene el ID desde la primera columna
 
-		        // Crea y muestra la ventana de DisponibilidadTocket pasando el ID del concierto
+		        // Crea y muestra la ventana de los datos de la reserva de los asientos-----> hay que identificar a que frame se va a abrir (frame de mireia)
 		        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(concerts); 
 		        disponibilidadTicket.setVisible(true);
 		    }
@@ -172,7 +171,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 		//Se borran los datos del modelo de datos
 		this.modeloDatosFechas.setRowCount(0);
 		//Se añaden los comics uno a uno al modelo de datos
-		this.fechas.forEach(f -> this.modeloDatosFechas.addRow(
+		this.fechas.forEach(f -> this.modeloDatosFechas.addRow(//crear lista de fechas--> en ficheros
 				new Object[] {f.getFecha(), f.getRemainingSeats(), f.getSeats(), f.getDuration(), f.Price(), f.getReserva()} )
 		);
     }
