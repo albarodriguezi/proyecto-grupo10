@@ -13,15 +13,17 @@ import javax.swing.table.TableCellRenderer;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Reserva;
 import es.deusto.ingenieria.prog3.grupodiez.main.Main;
 
 
 public class TicketBookingRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
-	private Fecha fecha;
+	private Reserva reserva;
 	private Concert concert;
 	private Main main;
+	private Fecha fecha;
 	
 	public TicketBookingRenderer(Main main) {
 		this.main = main;
@@ -42,25 +44,32 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 		button.addActionListener((e) -> {
 			//Se crea el cuadro de diálogo para confirmar la reserva
 			TicketBookingDialog dialog = new TicketBookingDialog(concert, fecha);
-			
+			//////
 			//Si hay datos de personas
-			if (dialog.getPassengers() != null && !dialog.getPassengers().isEmpty()) {
+			if (dialog.getAttendees() != null && !dialog.getAttendees().isEmpty()) {
 				//Se realiza la reserva a través del servicio de la alianza de aerolíneas
-				String locator = main.getService(concert).book(concert.getCode(), dialog.getPassengers());
+				String locator = main.getService(concert).book(concert.getCode(), dialog.getAttendees());
 				
 				JOptionPane.showMessageDialog(main, 
 						String.format("El localizador de la reserva es: %s", locator),
-						String.format("Confirmación de la reserva del vuelo %s", flight.getCode()),
-						JOptionPane.INFORMATION_MESSAGE,
+
+						String.format("Confirmación de la reserva del vuelo %s", main.getCode()),
+
+						String.format("Confirmación de la reserva del vuelo %s", concert.getCode()),
+
 						new ImageIcon("resources/images/confirm.png"));
 								
 				//Se actualiza la lista de vuelos en la ventana principal
-				mainWindow.updateFlights();
+
+				main.updateConcerts();
+
+				main.updateConcerts();
+
 			} else {
 			//Si no hay datos de personas se muestra un mensaje de error
-				JOptionPane.showMessageDialog(mainWindow, 
+				JOptionPane.showMessageDialog(main, 
 						"No se ha realizado la reserva. Faltan los datos de alguna persona.",
-						String.format("Reserva del vuelo %s no confirmada", flight.getCode()),
+						String.format("Reserva del vuelo %s no confirmada", concert.getCode()),
 						JOptionPane.INFORMATION_MESSAGE,
 						new ImageIcon("resources/images/confirm.png"));
 			}
@@ -85,7 +94,7 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 	
 	@Override
 	public Object getCellEditorValue() {
-		return flight;
+		return concert;
 	}
 	
     @Override

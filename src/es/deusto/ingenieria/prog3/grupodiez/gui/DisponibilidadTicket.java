@@ -1,17 +1,37 @@
 package es.deusto.ingenieria.prog3.grupodiez.gui;
 
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
+import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableRowSorter;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
+
 
 public class DisponibilidadTicket extends DefaultTableModel {
 
 	private static final long serialVersionUID = 1L;
 	private List<Concert> concerts;
+	private JTable tablaFechas;
+    private DefaultTableModel modeloDatosFechas;
+    private JTextField txtFiltro;
 	private Fecha fecha;
 	private final List<String> headers = Arrays.asList(
 			"FECHA", //fecha del concierto
@@ -87,4 +107,84 @@ public class DisponibilidadTicket extends DefaultTableModel {
 		// TODO Auto-generated method stub
 		
 	}
-}
+	
+	//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
+	private void initTables() {
+        Vector<String> cabeceraConcert = new Vector<>(Arrays.asList("FECHA","DISPONIBILIDAD", "TICKETS RESTANTES", "DURACION", "PRECIO", "RESERVCAR"));
+        this.modeloDatosFechas = new DefaultTableModel(new Vector<>(), cabeceraConcert);
+        this.tablaFechas = new JTable(this.modeloDatosFechas);
+
+		//Se define un CellRenderer para las celdas de las dos tabla usando una expresión lambda
+		TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
+			JLabel result = new JLabel(value.toString());
+
+			
+			//La filas pares e impares se renderizan de colores diferentes de la tabla de comics			
+			if (table.equals(tablaFechas)) {
+				if (row % 2 == 0) {
+					result.setBackground(new Color(230, 250, 250));
+				} else {
+					result.setBackground(new Color(190, 230, 220));
+				}
+			} 
+			
+			//Si la celda está seleccionada se renderiza con el color de selección por defecto
+			if (isSelected) {
+				result.setBackground(table.getSelectionBackground());
+				result.setForeground(table.getSelectionForeground());			
+			}
+			
+			result.setOpaque(true);
+			
+			return result;
+		};
+		//Se crea un CellEditor a partir de un JComboBox()
+		JComboBox<Logo> jComboEditorial = new JComboBox<>(Logo.values());		
+		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
+		
+		
+		this.tablaFechas.setRowHeight(40);//altira de las fila
+		this.tablaFechas.getTableHeader().setReorderingAllowed(false);		//Se deshabilita la reordenación de columnas
+		this.tablaFechas.getTableHeader().setResizingAllowed(false);		//Se deshabilita el redimensionado de las columna
+		this.tablaFechas.setAutoCreateRowSorter(true);		//Se definen criterios de ordenación por defecto para cada columna
+		//Se establecen los renderers al la cabecera y el contenido	
+		this.tablaFechas.setDefaultRenderer(Object.class, cellRenderer);
+		//Se define la anchura de la columna Título
+		this.tablaFechas.getColumnModel().getColumn(2).setPreferredWidth(500);
+		
+//-----------------------------------------------------------------------------como al seleccionar una fila se va a la pagina de fechas-----------------------------
+		this.tablaFechas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.tablaFechas.getSelectionModel().addListSelectionListener(e -> {
+		    // Verifica que la selección no esté vacía
+		    if (tablaFechas.getSelectedRow() != -1) {
+		        // Obtiene el ID o el objeto necesario de la fila seleccionada
+		        int selectedRow = tablaFechas.getSelectedRow();
+		        int idConcierto = (int) tablaFechas.getValueAt(selectedRow, 1); // Ejemplo: obtiene el ID desde la primera columna
+
+		        // Crea y muestra la ventana de DisponibilidadTocket pasando el ID del concierto
+		        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(concerts); 
+		        disponibilidadTicket.setVisible(true);
+		    }
+		});
+    } 
+   
+    
+    private void loadFechas() {
+		//Se borran los datos del modelo de datos
+		this.modeloDatosFechas.setRowCount(0);
+		//Se añaden los comics uno a uno al modelo de datos
+		this.fechas.forEach(f -> this.modeloDatosFechas.addRow(
+				new Object[] {f.getFecha(), f.getRemainingSeats(), f.getSeats(), f.getDuration(), f.Price(), f.getReserva()} )
+		);
+    }
+
+    //hacemos que se puedan filtrar(creamos el buscador)
+    private void filterConcerts(String text) {
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(this.modeloDatosFechas);
+        this.tablaFechas.setRowSorter(sorter);
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
+    }
+    
+    
+} 
+

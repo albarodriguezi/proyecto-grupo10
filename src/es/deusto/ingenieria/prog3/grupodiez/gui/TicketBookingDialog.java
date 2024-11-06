@@ -210,7 +210,7 @@ public class TicketBookingDialog extends JDialog { //para interactuar con el usu
 		}		
 	}
 	
-	public List<String> getPassengers() {
+	public List<String> getAttendees() {
 		return passengers;
 	}
 }

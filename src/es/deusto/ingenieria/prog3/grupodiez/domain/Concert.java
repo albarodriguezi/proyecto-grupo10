@@ -113,7 +113,36 @@ public class Concert implements Comparable<Concert>, Serializable{
 		return 0;
 	}
 
+	public void setValueAt(Object aValue, int row, int column) { 
+        if (column == 5 && "Reservar".equals(aValue)) { 
+            Concert concert = concert.get(row);
+            if (concert.getRemainingSeats() > 0) {
+                // Lógica para confirmar la reserva
+                String attendeeInfo = showAttendeeDialog(concert); // Método para capturar información del asistente
+                if (attendeeInfo != null) {
+                    concert.setRemainingSeats(concert.getRemainingSeats() - 1);
+                    fireTableDataChanged(); 
+                    showConfirmationDialog(concert, attendeeInfo); // Mostrar la confirmación de la reserva
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No quedan asientos disponibles.");
+            }
+        }
+    }
 
+    private String showAttendeeDialog(Concert concert) {
+        // Aquí se puede implementar un cuadro de diálogo para capturar los detalles del asistente
+        String attendeeName = JOptionPane.showInputDialog(null, "Ingrese el nombre del asistente:");
+        return attendeeName; // Retornar el nombre ingresado
+    }
+
+    private void showConfirmationDialog(Concert concert, String attendeeInfo) {
+        JOptionPane.showMessageDialog(null, 
+            String.format("¡Reserva realizada exitosamente!\nAsistente: %s\nConcierto: %s", 
+                attendeeInfo, concert.getCode()), 
+            "Confirmación de Reserva", 
+            JOptionPane.INFORMATION_MESSAGE);
+    }
 
 
 }

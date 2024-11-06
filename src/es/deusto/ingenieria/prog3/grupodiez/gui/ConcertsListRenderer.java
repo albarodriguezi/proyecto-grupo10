@@ -3,6 +3,7 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -77,6 +78,18 @@ public class ConcertsListRenderer extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
+    
+    // Método para redimensionar las imágenes
+
+    private ImageIcon redimensionarImagen (ImageIcon icono, int ancho, int alto) {
+
+        Image imagen = icono.getImage(); // Obtener la imagen del ImageIcon
+
+        Image imagenRedimensionada = imagen.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH); // Redimensionar la imagen
+
+        return new ImageIcon(imagenRedimensionada); // Devolver la imagen redimensionada como ImageIcon
+
+    }
 
     private void initTables() {
         Vector<String> cabeceraConcert = new Vector<>(Arrays.asList("LOGO","CODIGO", "NOMBRE", "DURACION", "TICKETS", "PRECIO"));
@@ -95,37 +108,40 @@ public class ConcertsListRenderer extends JFrame {
 				result.setText(e.toString());		
 				result.setToolTipText(e.toString());
 				result.setHorizontalAlignment(JLabel.CENTER);
+
+			
+			    
 				if (column == 0) {
 					switch (e) { 
 						case ADELELIVE:
-							result.setIcon(new ImageIcon("resources\\images\\adelelive.jpg"));
+							result.setIcon(new ImageIcon("resources/images/adele live.jpg"));
 							break;
 						case BELIEVETOUR:
-							result.setIcon(new ImageIcon("resources\\images\\Believetour.jpg"));
+							result.setIcon(new ImageIcon("resources/images/Believe Tour.jpg"));
 							break;
 						case BORNTODIE:
-							result.setIcon(new ImageIcon("resources/images/borntodie.jpg"));
+							result.setIcon(new ImageIcon("resources/images/born to die.jpg"));
 							break;
 						case ERASTOUR:
-							result.setIcon(new ImageIcon("resources/images/Erastour.jpg"));
+							result.setIcon(new ImageIcon("resources/images/Eras Tour.jpg"));
 							break;
 						case FUTURENOSTALGIA:
-							result.setIcon(new ImageIcon("resources/images/futurenostalgia.jpg"));
+							result.setIcon(new ImageIcon("resources/images/future nostalgia.jpg"));
 							break;
 						case GUTSWORLTOUR:
-							result.setIcon(new ImageIcon("/proyecto-grupo10/resources/images/gutsworldtour.jpg"));
+							result.setIcon(new ImageIcon("resources/images/guts world tour.jpg"));
 							break;
 						case MUSICOFTHESPHERE:
-							result.setIcon(new ImageIcon("resources/images/loveontour.png"));
+							result.setIcon(new ImageIcon("resources/images/music of the sphere.jpg"));
 							break;
 						case ONTHEROADAGAIN:
-							result.setIcon(new ImageIcon("resources/images/musicofthesphere.jpg"));
+							result.setIcon(new ImageIcon("resources/images/on the road again.png"));
 							break;
 						case LOVEONTOUR:
-							result.setIcon(new ImageIcon("resources/images/ontheroadagain.png"));
+							result.setIcon(new ImageIcon("resources/images/love on tour.png"));
 							break;
 						case THEMATHEMATICSTOUR:
-							result.setIcon(new ImageIcon("resources/images/themathematicstour.jpg"));
+							result.setIcon(new ImageIcon("resources/images/the mathematics tour.jpg"));
 							break;
 						default:
 				}
