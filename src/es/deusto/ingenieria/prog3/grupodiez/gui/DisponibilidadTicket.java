@@ -45,8 +45,8 @@ public class DisponibilidadTicket extends DefaultTableModel {
 	//para añadir la disponibilidad:
 	
 	//constructor con acceso a la lista de conciertos
-	public DisponibilidadTicket (Concert concert) {
-		this.concert = concert;
+	public DisponibilidadTicket (List<Concert> concerts) {
+		this.concert = concerts;
 	}
 	
 	public DisponibilidadTicket (Fecha fecha) {
