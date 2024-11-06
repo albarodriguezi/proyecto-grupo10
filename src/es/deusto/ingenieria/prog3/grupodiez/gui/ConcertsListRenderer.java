@@ -21,6 +21,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 
 
@@ -86,7 +87,7 @@ public class ConcertsListRenderer extends JFrame {
 		TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
 			JLabel result = new JLabel(value.toString());
 						
-			//Si el valor es de tipo Nombre: se renderiza con la imagen centrada
+			//Si el valor es de tipo Logo: se renderiza con la imagen centrada
 			if (value instanceof Logo) {
 				Logo e = (Logo) value;
 				
@@ -100,7 +101,7 @@ public class ConcertsListRenderer extends JFrame {
 							result.setIcon(new ImageIcon("resources\\images\\adelelive.jpg"));
 							break;
 						case BELIEVETOUR:
-							result.setIcon(new ImageIcon("resources/images/Believetour.jpg"));
+							result.setIcon(new ImageIcon("resources\\images\\Believetour.jpg"));
 							break;
 						case BORNTODIE:
 							result.setIcon(new ImageIcon("resources/images/borntodie.jpg"));
@@ -161,29 +162,6 @@ public class ConcertsListRenderer extends JFrame {
 			
 			return result;
 		};
-
-		//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
-		/*TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
-			JLabel result = new JLabel(value.toString());			
-			result.setHorizontalAlignment(JLabel.CENTER);
-			
-			switch (value.toString()) {
-				case "CODIGO":
-				case "NOMBRE":
-				case "DURACION":
-				case "TICKETS":
-				case "PRECIO":
-					result.setHorizontalAlignment(JLabel.LEFT);
-					break; 
-			}
-			
-			result.setBackground(table.getBackground());
-			result.setForeground(table.getForeground());
-			
-			result.setOpaque(true);
-			
-			return result;
-		};*/
 		//Se crea un CellEditor a partir de un JComboBox()
 		JComboBox<Logo> jComboEditorial = new JComboBox<>(Logo.values());		
 		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
@@ -205,17 +183,19 @@ public class ConcertsListRenderer extends JFrame {
 		    if (tablaConcert.getSelectedRow() != -1) {
 		        // Obtiene el ID o el objeto necesario de la fila seleccionada
 		        int selectedRow = tablaConcert.getSelectedRow();
-		        int idConcierto = Integer.parseInt((String)tablaConcert.getValueAt(selectedRow, 1)); // Ejemplo: obtiene el ID desde la primera columna
+		        int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Ejemplo: obtiene el ID desde la primera columna
 
 		        // Crea y muestra la ventana de DisponibilidadTocket pasando el ID del concierto
-		        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(concerts); 
-		        disponibilidadTicket.setVisible(true);
+		       // DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(concerts); 
+		        //disponibilidadTicket.setVisible(true);
 		    }
 		});
     } 
 
+   
     
     private void loadConcert() {
+		//Se borran los datos del modelo de datos
     	ArrayList<Concert> conciertos = new ArrayList<Concert>();
     	try {
 			Scanner sc = new Scanner(new File("resources\\data\\Concerts.csv"));
@@ -223,17 +203,20 @@ public class ConcertsListRenderer extends JFrame {
 		        String linea=sc.nextLine();
 		        String[] campos=linea.split(";");
 		        Logo logo = Logo.valueOf(campos[0]);
-		        Integer duracion = Integer.parseInt(campos[3]);
-		        Integer sitios = Integer.parseInt(campos[4]);
-		        Float precio = Float.parseFloat(campos[5]);
-		        conciertos.add(new Concert(logo,campos[1],campos[2],duracion,sitios,precio));
+		        String code = campos[1];
+		        String name = campos[2];
+		        Integer duration = Integer.parseInt(campos[3]);
+		        Float price = Float.parseFloat(campos[4]);
+		        conciertos.add(new Concert(logo,code,name,duration,92000,price));
+		        
 			}
+			
+			sc.close();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Se borran los datos del modelo de datos
 		this.modeloDatosConcerts.setRowCount(0);
 		//Se añaden los comics uno a uno al modelo de datos
 		conciertos.forEach(c -> this.modeloDatosConcerts.addRow(
