@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -112,8 +113,9 @@ public class AnadirConcierto extends JFrame {
 		        		  	String price = precio.getText();
 		        		    try {
 								FileWriter fw=new FileWriter("resources\\data\\Concerts.csv",true);
-								fw.append("\n"+icon+";"+code+";"+name+";"+duration+";"+price+";");
+								fw.append("\nresources/images/"+icon+";"+code+";"+name+";"+duration+";"+price+";");
 								fw.close();
+								JOptionPane.showMessageDialog(null, "Successfull import");
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();

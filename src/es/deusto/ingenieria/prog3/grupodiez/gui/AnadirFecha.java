@@ -139,6 +139,7 @@ public class AnadirFecha extends JFrame {
 								FileWriter fw=new FileWriter("resources\\data\\Fecha.csv",true);
 								fw.append("\n"+day+";"+month+";"+year+";"+code+";"+seat+";");
 								fw.close();
+								JOptionPane.showMessageDialog(null, "Succesfull import");
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -163,7 +164,7 @@ public class AnadirFecha extends JFrame {
 					while(sc.hasNextLine()){
 				        String linea=sc.nextLine();
 				        String[] campos=linea.split(";");
-				        Logo logo = Logo.valueOf(campos[0]);
+				        String logo = campos[0];
 				        String code = campos[1];
 				        String name = campos[2];
 				        Integer duration = Integer.parseInt(campos[3]);

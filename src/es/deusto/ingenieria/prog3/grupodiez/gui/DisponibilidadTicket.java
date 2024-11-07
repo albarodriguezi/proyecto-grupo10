@@ -1,6 +1,8 @@
 package es.deusto.ingenieria.prog3.grupodiez.gui;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
@@ -198,7 +200,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 		        String code = campos[3];
 		        Integer seats = Integer.parseInt(campos[4]);
 		        if (code.equals(concierto.getCode())) {
-		        	System.out.println("a");
+		        	//System.out.println("a");
 		        	fechasc.add(new Fecha(dia,mes,ano,Logo.ADELELIVE,seats));
 		        }
 		        
@@ -214,14 +216,14 @@ public class DisponibilidadTicket extends DefaultTableModel {
     	
 		//Se borran los datos del modelo de datos
 		this.modeloDatosFechas.setRowCount(0);
-		System.out.println(fechasc);
+		//System.out.println(fechasc);
 		//Se añaden los comics uno a uno al modelo de datos
 		for (Fecha f:fechasc) {
-			System.out.println("b");
+			//System.out.println("b");
 			this.modeloDatosFechas.addRow(
 					new Object[] {f.getFecha(), f.getSeats(), f.getSeats(), concierto.getDuration(), concierto.getPrice()} );
 		}
-		System.out.println(modeloDatosFechas.getRowCount());
+		//System.out.println(modeloDatosFechas.getRowCount());
 		
 		
     }

@@ -2,6 +2,8 @@ package es.deusto.ingenieria.prog3.grupodiez.main;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +45,8 @@ public class MainDisponibilidadTicket extends JFrame{
 		//jComboConcerts.setPrototypeDisplayValue("Selecciona un concierto");
 		List<Fecha> fechas = new ArrayList<>(); // Este es el lugar donde deberías añadir las fechas
         DefaultTableModel model = new DisponibilidadTicket(concerts).getModeloDatosFechas();
-        System.out.println(model.getRowCount());
-        System.out.println(model.getRowCount());
+        //System.out.println(model.getRowCount());
+        //System.out.println(model.getRowCount());
         jTableFechas.setModel(model);
         jTableFechas.setVisible(true);;
 
@@ -63,6 +65,34 @@ public class MainDisponibilidadTicket extends JFrame{
         pSearch.setBorder(new TitledBorder("Busqueda de fechas"));
         pSearch.setLayout(new GridLayout(1,1));
 
+        KeyListener refresh = new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getKeyCode() == KeyEvent.VK_G && e.isControlDown()) {
+					System.out.println("a");
+					new DisponibilidadTicket(concerts).loadFechas();
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
+		
+		this.jTableFechas.addKeyListener(refresh);
+        
+        
         // Añadir componentes al JFrame
         add(pSearch, BorderLayout.NORTH);
         add(new JScrollPane(jTableFechas), BorderLayout.CENTER);

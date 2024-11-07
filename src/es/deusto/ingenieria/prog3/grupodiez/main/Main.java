@@ -20,7 +20,7 @@ public class Main{
 	public static void main(String[] args) {
 		//se crean 10 conciertos 
 		
-		Concert AdeleLive = new Concert(Concert.Logo.ADELELIVE, "123456", "Adele Live", 3, 92567, 150);
+		/*Concert AdeleLive = new Concert(Concert.Logo.ADELELIVE, "123456", "Adele Live", 3, 92567, 150);
 		Concert BelieveTour = new Concert(Concert.Logo.BELIEVETOUR, "456789", "Believe Tour", 3, 92567, 150);
 		Concert BornToDie = new Concert(Concert.Logo.BORNTODIE, "789123", "Born To Die", 3, 92567, 150);
 		Concert ErasTour = new Concert(Concert.Logo.ERASTOUR, "789456", "Eras Tour", 3, 92567, 150);
@@ -30,7 +30,7 @@ public class Main{
 		Concert MusicOfTheSphere = new Concert(Concert.Logo.MUSICOFTHESPHERE, "147369", "Music Of Thw Sphere", 3, 92567, 150);
 		Concert OnTheRoadAgain = new Concert(Concert.Logo.ONTHEROADAGAIN, "258147", "on the Road Again", 3, 92567, 150);
 		Concert TheMathematicsTour = new Concert(Concert.Logo.THEMATHEMATICSTOUR, "369258", "the Mathematics Tour", 3, 92567, 150);
-
+		*/
 	
 		//se crean dos o tres fecha por 
 		
@@ -63,7 +63,7 @@ public class Main{
 		List<Concert> concerts = new ArrayList<>();
 		List<Fecha> fechas = new ArrayList<>();
 		
-		concerts.add(AdeleLive);
+		/*concerts.add(AdeleLive);
 		concerts.add(BelieveTour);
 		concerts.add(BornToDie);
 		concerts.add(ErasTour);
@@ -72,7 +72,7 @@ public class Main{
 		concerts.add(LoveOnTour);
 		concerts.add(MusicOfTheSphere);
 		concerts.add(OnTheRoadAgain);
-		concerts.add(TheMathematicsTour);
+		concerts.add(TheMathematicsTour);*/
 		
 		SwingUtilities.invokeLater(() -> new ConcertsListRenderer(concerts));
 	}	

@@ -65,15 +65,25 @@ import javax.swing.border.TitledBorder;
 	        	mainPanel.add(fondo);
 	        }
 	        
-	        AnadirConcierto add = new AnadirConcierto();
-	        add.setVisible(false);
+	        AnadirConcierto addC = new AnadirConcierto();
+	        addC.setVisible(false);
+	        
+	        AnadirFecha addD = new AnadirFecha();
+	        addD.setVisible(false);
 	        
 	        
 	      
 	        addConcert.addActionListener(new ActionListener() { 
 	        	  public void actionPerformed(ActionEvent e) { 
 	        		      
-	        		    add.setVisible(true);
+	        		    addC.setVisible(true);
+	        		    } 
+	        		} );
+	        
+	        addDate.addActionListener(new ActionListener() { 
+	        	  public void actionPerformed(ActionEvent e) { 
+	        		      
+	        		    addD.setVisible(true);
 	        		    } 
 	        		} );
 	        	

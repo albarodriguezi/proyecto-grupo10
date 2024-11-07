@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -82,6 +84,60 @@ public class ConcertsListRenderer extends JFrame {
         this.setVisible(true);
     }
     
+    KeyListener refresh = new KeyListener() {
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getKeyCode() == KeyEvent.VK_G && e.isControlDown()) {
+				System.out.println("a");
+				loadConcert();
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
+	
+	KeyListener admin = new KeyListener() {
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			
+			// TODO Auto-generated method stub
+			if(e.getKeyCode() == KeyEvent.VK_A && e.isControlDown()&&e.isAltDown()) {
+				System.out.println("b");
+				AdminChoice cal = new AdminChoice();
+	    		cal.setVisible(true);
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
+	
+	
+    
     // Método para redimensionar las imágenes
 
     private ImageIcon redimensionarImagen (ImageIcon icono, int ancho, int alto) {
@@ -114,51 +170,16 @@ public class ConcertsListRenderer extends JFrame {
 			JLabel result = new JLabel(value.toString());
 			
 			//Si el valor es de tipo Logo: se renderiza con la imagen centrada
-			if (value instanceof Logo) {
-				Logo e = (Logo) value;
+			
 				
 				
-				result.setText(e.toString());		
-				result.setToolTipText(e.toString());
-				result.setHorizontalAlignment(JLabel.CENTER);
+			
 
 			
 			    
-				if (column == 0) {
-					switch (e) { 
-						case ADELELIVE:
-							result.setIcon(new ImageIcon("resources/images/adele live.jpg"));
-							break;
-						case BELIEVETOUR:
-							result.setIcon(new ImageIcon("resources/images/Believe Tour.jpg"));
-							break;
-						case BORNTODIE:
-							result.setIcon(new ImageIcon("resources/images/born to die.jpg"));
-							break;
-						case ERASTOUR:
-							result.setIcon(new ImageIcon("resources/images/Eras Tour.jpg"));
-							break;
-						case FUTURENOSTALGIA:
-							result.setIcon(new ImageIcon("resources/images/future nostalgia.jpg"));
-							break;
-						case GUTSWORLTOUR:
-							result.setIcon(new ImageIcon("resources/images/guts world tour.jpg"));
-							break;
-						case MUSICOFTHESPHERE:
-							result.setIcon(new ImageIcon("resources/images/music of the sphere.jpg"));
-							break;
-						case ONTHEROADAGAIN:
-							result.setIcon(new ImageIcon("resources/images/on the road again.png"));
-							break;
-						case LOVEONTOUR:
-							result.setIcon(new ImageIcon("resources/images/love on tour.png"));
-							break;
-						case THEMATHEMATICSTOUR:
-							result.setIcon(new ImageIcon("resources/images/the mathematics tour.jpg"));
-							break;
-						default:
-				}
-				}
+			if (column == 0) {
+				result.setIcon(new ImageIcon(value.toString()));
+				
 			//Si el valor es numérico se renderiza centrado
 			} else if (value instanceof Number) {
 				result.setHorizontalAlignment(JLabel.CENTER);
@@ -195,7 +216,8 @@ public class ConcertsListRenderer extends JFrame {
 		JComboBox<Logo> jComboEditorial = new JComboBox<>(Logo.values());		
 		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
 		
-		
+		this.tablaConcert.addKeyListener(refresh);
+		this.tablaConcert.addKeyListener(admin);
 		this.tablaConcert.setRowHeight(40);//altira de las fila
 		this.tablaConcert.getTableHeader().setReorderingAllowed(false);		//Se deshabilita la reordenación de columnas
 		this.tablaConcert.getTableHeader().setResizingAllowed(false);//Se deshabilita el redimensionado de las columna
@@ -232,7 +254,7 @@ public class ConcertsListRenderer extends JFrame {
 			while(sc.hasNextLine()){
 		        String linea=sc.nextLine();
 		        String[] campos=linea.split(";");
-		        Logo logo = Logo.valueOf(campos[0]);
+		        String logo = campos[0];
 		        String code = campos[1];
 		        String name = campos[2];
 		        Integer duration = Integer.parseInt(campos[3]);
