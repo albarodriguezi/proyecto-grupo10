@@ -3,6 +3,7 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 import java.awt.Component;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
@@ -18,9 +19,9 @@ public class DisponibilidadticketRenderer implements TableCellRenderer{
 		label.setBackground(table.getBackground());
 		label.setHorizontalAlignment(JLabel.CENTER);
 		
-		if (value.getClass().equals(Concert.class)) {
+		/*if (value.getClass().equals(Concert.class)) {
 			label.setIcon(new ImageIcon(String.format("resources/images/%s.png", ((Concert) value).getImagen())));
-		}
+		}*/
 		
 		if (column == 1 || column == 4) {
 			label.setText(value.toString());
@@ -31,18 +32,18 @@ public class DisponibilidadticketRenderer implements TableCellRenderer{
 			label.setHorizontalAlignment(JLabel.RIGHT);
 		}
 		
-		if (column == 3) {
+		if (column == 4) {
 			label.setText(String.format("%.2f €", value));
 			label.setHorizontalAlignment(JLabel.RIGHT);
 		}
 		
 		if (column == 5) {
-			double disponibilidad = (Double)value;
-			JProgressBar pb = new JProgressBar(0,100);
-			pb.setValue((int) Math.round(disponibilidad));
-			pb.setStringPainted(true);
-			
-			return pb;
+			//double disponibilidad = (Double)value;
+			//JProgressBar pb = new JProgressBar(0,100);
+			//pb.setValue((int) Math.round(disponibilidad));
+			//pb.setStringPainted(true);
+			JButton reserva = new JButton((String)value);
+			return reserva;
 		}
 		
 		if (isSelected) {
