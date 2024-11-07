@@ -207,6 +207,18 @@ public class ConcertsListRenderer extends JFrame {
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
     }
     
+    //hacemos que no se puedan editar las filas
+    private class ConcertTableModel extends DefaultTableModel {
+        public ConcertTableModel(Vector<String> columnNames) {
+            super(new Vector<>(), columnNames);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // Todas las celdas no son editables
+        }
+    }
+    
     
 } 
 
