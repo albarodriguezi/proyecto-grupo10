@@ -67,7 +67,7 @@ public class Main{
 		concerts.add(BornToDie);
 		concerts.add(ErasTour);
 		concerts.add(FutureNostalgia);
-		concerts.add(GutSWorldTour);
+		concerts.add(GutsWorldTour);
 		concerts.add(LoveOnTour);
 		concerts.add(MusicOfTheSphere);
 		concerts.add(OnTheRoadAgain);
