@@ -65,6 +65,7 @@ public class MainDisponibilidadTicket extends JFrame{
         pSearch.setBorder(new TitledBorder("Busqueda de fechas"));
         pSearch.setLayout(new GridLayout(1,1));
 
+        
         KeyListener refresh = new KeyListener() {
 
 			@Override
@@ -78,7 +79,9 @@ public class MainDisponibilidadTicket extends JFrame{
 				// TODO Auto-generated method stub
 				if(e.getKeyCode() == KeyEvent.VK_G && e.isControlDown()) {
 					System.out.println("a");
-					new DisponibilidadTicket(concerts).loadFechas();
+					DefaultTableModel newModel=new DisponibilidadTicket(concerts).getModeloDatosFechas();
+					jTableFechas.setModel(newModel);
+					setRenderer(jTableFechas);
 				}
 			}
 
@@ -92,7 +95,6 @@ public class MainDisponibilidadTicket extends JFrame{
 		
 		this.jTableFechas.addKeyListener(refresh);
         
-        
         // Añadir componentes al JFrame
         add(pSearch, BorderLayout.NORTH);
         add(new JScrollPane(jTableFechas), BorderLayout.CENTER);
@@ -105,6 +107,20 @@ public class MainDisponibilidadTicket extends JFrame{
         setLocationRelativeTo(null);//definimos que la ventana se encuentre en el centro de la pantalla del ordenador
         setVisible(true);//definimos que se pueda ver la pantalla
     }
+	
+	
+	public void setRenderer(JTable t) {
+		
+	     t.setVisible(true);
+	     t.getColumnModel().getColumn(0).setCellRenderer(new DisponibilidadticketRenderer());
+	     t.getColumnModel().getColumn(4).setCellRenderer(new DisponibilidadticketRenderer());
+	     t.getColumnModel().getColumn(5).setCellRenderer(new DisponibilidadticketRenderer());
+	     t.setRowHeight(40);
+	     t.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	     ((DefaultTableCellRenderer) t.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+
+	}
+	
 		/*jComboConcerts.addActionListener((e) -> {
 			Object fromItem = ((JComboBox<?>) e.getSource()).getSelectedItem();
 			
