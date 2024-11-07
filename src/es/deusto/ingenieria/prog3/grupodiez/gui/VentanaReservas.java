@@ -45,22 +45,22 @@ public class VentanaReservas extends JFrame {
         //para hacer busquedas o filtrar entre la lista de reservas
         this.textoBusqueda = new JTextField(30);
         
+        
       //para que el texto que escribamos en la busqueda funcione
+        //igual hacer algun cambio o en esta parte o en la del filtro para q cuando se borre el texto vuelvan a aparecer todas las reservas xq a veces no va
         DocumentListener documentListener = new DocumentListener() {
         	@Override
             public void insertUpdate(DocumentEvent e) {
-                actualizarFiltro();
+        		filtroReservas(textoBusqueda.getText());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                actualizarFiltro();
-            }
+            	filtroReservas(textoBusqueda.getText());            }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                actualizarFiltro();
-            }
+            	filtroReservas(textoBusqueda.getText());            }
 
             private void actualizarFiltro() {
                 String texto = textoBusqueda.getText().trim(); // Elimina espacios en blanco
@@ -169,7 +169,7 @@ public class VentanaReservas extends JFrame {
         
         //podremos filtrar tanto por el codigo de la reserva, como por el nombre del concierto
         this.reservas.forEach(reserva -> {;
-            if (reserva.getLocator().contains(filtro) || reserva.getNombreConcierto().contains(filtro)) {
+            if (reserva.getLocator().contains(filtro) || reserva.getConcert().getName().contains(filtro)) {
             	
                 this.modeloDatosReservas.addRow(new Object[] {
                     reserva.getLocator(),
@@ -195,11 +195,11 @@ public class VentanaReservas extends JFrame {
 		Concert BornToDie = new Concert(Concert.Logo.BORNTODIE, "789123", "Born To Die", 3, 92567, 150);
 		Concert ErasTour = new Concert(Concert.Logo.ERASTOUR, "789456", "Eras Tour", 3, 92567, 150);
 		Concert FutureNostalgia = new Concert(Concert.Logo.FUTURENOSTALGIA, "123123", "future Nostalgia", 3, 92567, 150);
-		Concert GutSWorldTour = new Concert(Concert.Logo.GUTSWORLTOUR, "456456", "Guts World Tour", 3, 92567, 150);
+		Concert GutsWorldTour = new Concert(Concert.Logo.GUTSWORLTOUR, "456456", "Guts World Tour", 3, 92567, 150);
 		Concert LoveOnTour = new Concert(Concert.Logo.LOVEONTOUR, "789789", "Love on Tour", 3, 92567, 150);
-		Concert MusicOfTheSphere = new Concert(Concert.Logo.MUSICOFTHESPHERE, "147369", "Music Of Thw Sphere", 3, 92567, 150);
-		Concert OnTheRoadAgain = new Concert(Concert.Logo.ONTHEROADAGAIN, "258147", "on the Road Again", 3, 92567, 150);
-		Concert TheMathematicsTour = new Concert(Concert.Logo.THEMATHEMATICSTOUR, "369258", "the Mathematics Tour", 3, 92567, 150);
+		Concert MusicOfTheSphere = new Concert(Concert.Logo.MUSICOFTHESPHERE, "147369", "Music Of The Sphere", 3, 92567, 150);
+		Concert OnTheRoadAgain = new Concert(Concert.Logo.ONTHEROADAGAIN, "258147", "On the Road Again", 3, 92567, 150);
+		Concert TheMathematicsTour = new Concert(Concert.Logo.THEMATHEMATICSTOUR, "369258", "The Mathematics Tour", 3, 92567, 150);
 		
 		
 		//crear unas fechas locales para meter en el constructor de las fecha
@@ -221,9 +221,9 @@ public class VentanaReservas extends JFrame {
 		Fecha fecha2 = new Fecha(Lfecha2, BornToDie, 60000);
 		Fecha fecha3 = new Fecha(Lfecha3, AdeleLive, 75000);
 		Fecha fecha4 = new Fecha(Lfecha4, MusicOfTheSphere, 50000);
-		Fecha fecha5 = new Fecha(Lfecha5, GutSWorldTour, 29500);
+		Fecha fecha5 = new Fecha(Lfecha5, GutsWorldTour, 29500);
 		Fecha fecha6 = new Fecha(Lfecha6, LoveOnTour, 38000);
-		Fecha fecha7 = new Fecha(Lfecha7, GutSWorldTour, 27000);
+		Fecha fecha7 = new Fecha(Lfecha7, GutsWorldTour, 27000);
 		Fecha fecha8 = new Fecha(Lfecha8, BelieveTour, 16000);
 		Fecha fecha9 = new Fecha(Lfecha9, FutureNostalgia, 30000);
 		Fecha fecha10 = new Fecha(Lfecha10, MusicOfTheSphere, 41000);
@@ -273,24 +273,28 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
     }  
 }
 
-//la accion del boton
 
+
+
+//desde aqui con ayuda de ia generativa aunq he tenido q cambiar cosas xq me estoy volviendo loca no puc més
 class ButtonEditor extends DefaultCellEditor {
-    private JButton button;
+    private JButton botonMasInformacion;
     private List<Reserva> reservas;
     private int rowIndex;
 
+    
     public ButtonEditor(JCheckBox checkBox, List<Reserva> reservas) {
         super(checkBox);
         this.reservas = reservas;
-        button = new JButton();
-        button.setOpaque(true);
-        button.addActionListener(new ActionListener() {
+        botonMasInformacion = new JButton();
+
+        botonMasInformacion.setOpaque(true);
+        botonMasInformacion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Reserva reserva = reservas.get(rowIndex);
                 
-                JOptionPane.showMessageDialog(button, "Código:"+ reserva.getLocator() +"\n" 
+                JOptionPane.showMessageDialog(botonMasInformacion, "Código:"+ reserva.getLocator() +"\n" 
                 + "Concierto: " + reserva.getFecha().getConcert().getName() + "\n" 
                 + "Fecha: " + reserva.getFecha().getFecha() + "\n" 
                 + "Asistentes: " +  String.join(", ", reserva.getAttendees()),
@@ -302,13 +306,15 @@ class ButtonEditor extends DefaultCellEditor {
     }
 
     
+    
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         rowIndex = row;
-        button.setText((value == null) ? "Ver Detalles" : value.toString());
-        return button;
+        botonMasInformacion.setText((value == null) ? "Ver Detalles" : value.toString());
+        return botonMasInformacion;
     }
     
+    
     @Override
-    public Object getCellEditorValue() { return button.getText(); }
+    public Object getCellEditorValue() { return botonMasInformacion.getText(); }
 }
