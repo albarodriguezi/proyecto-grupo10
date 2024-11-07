@@ -3,12 +3,9 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +16,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import java.time.LocalDate;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Reserva;
 
@@ -29,7 +25,7 @@ public class VentanaReservas extends JFrame {
     private JTable tablaReservas;
     private JTextField textoBusqueda;
     private DefaultTableModel modeloDatosReservas;
-    private int reservaSeleccionada = -1;
+
 
     public VentanaReservas(List<Reserva> reservas) {
     	
@@ -101,35 +97,17 @@ public class VentanaReservas extends JFrame {
     
         this.tablaReservas = new JTable(this.modeloDatosReservas);
 
-        //borrar
-        TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
-
-			JLabel result = new JLabel(value.toString());
-
-			//las filas pares e impares estan renderizadas con distintos colores pero ahora misomjo no hace nada		
-
-			if (table.equals(tablaReservas)) {
-				if (row % 2 == 0) {
-					result.setBackground(new Color(240, 249, 249));
-				} else {
-					result.setBackground(new Color(180, 227, 219));
-				}
-
-			} else {
-				result.setBackground(table.getBackground());
-				result.setForeground(table.getForeground());
-			}
-			
-
-			result.setOpaque(true);
-
-
-			return result;
-			//parar d borrar
-
-		};
         
+		//tamaños
+		this.tablaReservas.setRowHeight(35);
+		this.tablaReservas.getColumnModel().getColumn(0).setPreferredWidth(100);
+		this.tablaReservas.getColumnModel().getColumn(1).setPreferredWidth(300);
+		this.tablaReservas.getColumnModel().getColumn(2).setPreferredWidth(100);
+		this.tablaReservas.getColumnModel().getColumn(3).setPreferredWidth(50);
         
+		//añadir el renderer
+		
+		
         //config del renderizador y de lo d editar el boton
         this.tablaReservas.getColumn("").setCellRenderer(new ButtonRenderer());
         this.tablaReservas.getColumn("").setCellEditor(new ButtonEditor(new JCheckBox(), reservas));
