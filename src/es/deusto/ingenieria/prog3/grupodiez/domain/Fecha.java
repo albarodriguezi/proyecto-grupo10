@@ -12,6 +12,12 @@ public class Fecha {
 		this.concert = concert;
 		this.seats = seats;
 	}
+	
+	public Fecha (LocalDate fecha, Concert concert, int seats) {
+		this.fecha = fecha;
+		this.concert = concert;
+		this.seats = seats;
+	}
 
 	public LocalDate getFecha() {
 		return fecha;
