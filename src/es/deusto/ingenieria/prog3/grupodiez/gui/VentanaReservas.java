@@ -112,7 +112,9 @@ public class VentanaReservas extends JFrame {
         Vector<String> cabecera = new Vector<>(Arrays.asList("Código Reserva", "Concierto", "Fecha", ""));
         
         this.modeloDatosReservas = new DefaultTableModel(new Vector<>(), cabecera) {
-            @Override
+			
+
+			@Override
             public boolean isCellEditable(int row, int column) {
                 return column == 3; //solo la columna d ver los detalles, porque las otras no queremos editarlas
             }
@@ -127,7 +129,8 @@ public class VentanaReservas extends JFrame {
 		this.tablaReservas.getColumnModel().getColumn(1).setPreferredWidth(300);
 		this.tablaReservas.getColumnModel().getColumn(2).setPreferredWidth(100);
 		this.tablaReservas.getColumnModel().getColumn(3).setPreferredWidth(50);
-        
+
+		
 		//añadir el renderer
 		
 		
