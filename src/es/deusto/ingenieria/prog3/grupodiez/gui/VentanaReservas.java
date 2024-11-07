@@ -197,7 +197,7 @@ public class VentanaReservas extends JFrame {
 		Concert BelieveTour = new Concert(Concert.Logo.BELIEVETOUR, "456789", "Believe Tour", 3, 92567, 150);
 		Concert BornToDie = new Concert(Concert.Logo.BORNTODIE, "789123", "Born To Die", 3, 92567, 150);
 		Concert ErasTour = new Concert(Concert.Logo.ERASTOUR, "789456", "Eras Tour", 3, 92567, 150);
-		Concert FutureNostalgia = new Concert(Concert.Logo.FUTURENOSTALGIA, "123123", "future Nostalgia", 3, 92567, 150);
+		Concert FutureNostalgia = new Concert(Concert.Logo.FUTURENOSTALGIA, "123123", "Future Nostalgia", 3, 92567, 150);
 		Concert GutsWorldTour = new Concert(Concert.Logo.GUTSWORLTOUR, "456456", "Guts World Tour", 3, 92567, 150);
 		Concert LoveOnTour = new Concert(Concert.Logo.LOVEONTOUR, "789789", "Love on Tour", 3, 92567, 150);
 		Concert MusicOfTheSphere = new Concert(Concert.Logo.MUSICOFTHESPHERE, "147369", "Music Of The Sphere", 3, 92567, 150);
