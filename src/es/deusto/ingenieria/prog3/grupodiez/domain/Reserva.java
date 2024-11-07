@@ -24,10 +24,10 @@ public class Reserva implements Serializable {
 	
 	//constructor para probar que las reservas van bien
 	public Reserva(String locator, String nombreConcierto) {
-		super();
 		this.locator = locator;
-		this.nombreConcierto = nombreConcierto;
+		this.setNombreConcierto(nombreConcierto);
 	}
+
 
 	public String getLocator() {
 		return locator;
@@ -78,8 +78,16 @@ public class Reserva implements Serializable {
 		return Objects.equals(attendees, other.attendees) && Objects.equals(concert, other.concert)
 				&& Objects.equals(locator, other.locator);
 	}
-	
-	
+
+	public String getNombreConcierto() {
+		return nombreConcierto;
+	}
+
+	public void setNombreConcierto(String nombreConcierto) {
+		this.nombreConcierto = nombreConcierto;
+	}
+
+
 	
 	
 	
