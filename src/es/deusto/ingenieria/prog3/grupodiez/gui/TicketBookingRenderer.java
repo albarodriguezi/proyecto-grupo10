@@ -20,65 +20,54 @@ import es.deusto.ingenieria.prog3.grupodiez.main.Main;
 public class TicketBookingRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
-	private Reserva reserva;
 	private Concert concert;
 	private Main main;
 	private Fecha fecha;
-	
+
 	public TicketBookingRenderer(Main main) {
 		this.main = main;
 	}
 	
 	private JButton prepare(JTable table, Object value, boolean isSelected, int row, int column) {
 		concert = (Concert) value;
-		
+
+		// Create the "Reserve" button
 		JButton button = new JButton("Reservar");
 		button.setEnabled(true);
-		button.setToolTipText(String.format("Reservar - %s", concert.getCode()));				
+		button.setToolTipText(String.format("Reservar - %s", concert.getCode()));
 		button.setBackground(table.getBackground());
 		
-		if (isSelected) {
-			button.setBackground(table.getSelectionBackground());
-		}
-		
 		button.addActionListener((e) -> {
-			//Se crea el cuadro de diálogo para confirmar la reserva
+			// Create and show the booking dialog
 			TicketBookingDialog dialog = new TicketBookingDialog(concert, fecha);
-			//////
-			//Si hay datos de personas
+
+			// Get the attendees if the user provided the data
 			if (dialog.getAttendees() != null && !dialog.getAttendees().isEmpty()) {
-				//Se realiza la reserva a través del servicio de la alianza de aerolíneas
-				String locator = main.getService(concert).book(concert.getCode(), dialog.getAttendees());
+				// Process the booking with the main method
+				String locator = main.bookConcertTickets(concert.getCode(), dialog.getAttendees());
 				
+				// Show a confirmation message
 				JOptionPane.showMessageDialog(main, 
 						String.format("El localizador de la reserva es: %s", locator),
-
-						String.format("Confirmación de la reserva del vuelo %s", main.getCode()),
-
-						String.format("Confirmación de la reserva del vuelo %s", concert.getCode()),
-
-						new ImageIcon("resources/images/confirm.png"));
-								
-				//Se actualiza la lista de vuelos en la ventana principal
-
-				main.updateConcerts();
-
-				main.updateConcerts();
-
-			} else {
-			//Si no hay datos de personas se muestra un mensaje de error
-				JOptionPane.showMessageDialog(main, 
-						"No se ha realizado la reserva. Faltan los datos de alguna persona.",
-						String.format("Reserva del vuelo %s no confirmada", concert.getCode()),
+						String.format("Confirmación de la reserva del concierto %s", concert.getCode()),
 						JOptionPane.INFORMATION_MESSAGE,
 						new ImageIcon("resources/images/confirm.png"));
+				
+				// Update the concert list in the main window
+				main.updateConcerts();
+			} else {
+				// If attendee data is missing, show an error message
+				JOptionPane.showMessageDialog(main, 
+						"No se ha realizado la reserva. Faltan los datos de alguna persona.",
+						String.format("Reserva del concierto %s no confirmada", concert.getCode()),
+						JOptionPane.ERROR_MESSAGE,
+						new ImageIcon("resources/images/error.png"));
 			}
 			
-			dialog.dispose();
+			dialog.dispose();  // Close the dialog after processing
 		});
 		
 		button.setOpaque(true);
-		
 		return button;
 	}
 	
