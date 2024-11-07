@@ -8,8 +8,8 @@ import java.util.Objects;
 public class Reserva implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private String locator;
-	private Concert concert;
+	private String locator; 
+	private Concert concert; 
 	private Fecha fecha;
 	private List<String> attendees;
 	private String nombreConcierto;
@@ -22,7 +22,7 @@ public class Reserva implements Serializable {
 		this.attendees = attendees;
 	}
 	
-	//constructor para probar que las reservas van bien
+	//constructor para probar que las reservas van bien, borrar cuando las otras reservas funcionen
 	public Reserva(String locator, String nombreConcierto) {
 		this.locator = locator;
 		this.setNombreConcierto(nombreConcierto);
