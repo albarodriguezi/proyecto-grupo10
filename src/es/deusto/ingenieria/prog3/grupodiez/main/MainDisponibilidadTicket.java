@@ -17,6 +17,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
@@ -29,18 +30,23 @@ public class MainDisponibilidadTicket extends JFrame{
 	
 	private Concert concerts;
 	
-	private JTable jTableFechas =  new JTable();
-	private JLabel jLabelInfo = new JLabel(" Selecciona un concierto");
-	private JComboBox<String> jComboConcerts = new JComboBox<>();
-	private JButton jBtnSearch = new JButton("Busqueda de fechas por concierto");
+	private JTable jTableFechas =  new JTable();//creamos una nueva JTable para las fehcas de los conciertos
+	private JLabel jLabelInfo = new JLabel(" Selecciona un concierto");//definimos el titulo de la JTable 
+	private JComboBox<String> jComboConcerts = new JComboBox<>();//no la necesitamos
+	private JButton jBtnSearch = new JButton("Busqueda de fechas por concierto");//no lo necesitamos
 
 	
-	public MainDisponibilidadTicket() {
+	public MainDisponibilidadTicket(Concert c) {
 		
-		jComboConcerts.setPrototypeDisplayValue("Selecciona un concierto");
+		this.concerts = c;//definimos la lista de los conciertos
+		
+		//jComboConcerts.setPrototypeDisplayValue("Selecciona un concierto");
 		List<Fecha> fechas = new ArrayList<>(); // Este es el lugar donde deberías añadir las fechas
-        DisponibilidadTicket model = new DisponibilidadTicket(fechas);
+        DefaultTableModel model = new DisponibilidadTicket(concerts).getModeloDatosFechas();
+        System.out.println(model.getRowCount());
+        System.out.println(model.getRowCount());
         jTableFechas.setModel(model);
+        jTableFechas.setVisible(true);;
 
         // Asignar renderers a las columnas necesarias
         jTableFechas.getColumnModel().getColumn(0).setCellRenderer(new DisponibilidadticketRenderer());
@@ -62,11 +68,12 @@ public class MainDisponibilidadTicket extends JFrame{
         add(new JScrollPane(jTableFechas), BorderLayout.CENTER);
         add(jLabelInfo, BorderLayout.SOUTH);
         
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Fechas conciertos");
-        setSize(1400,800);
-        setLocationRelativeTo(null);
-        setVisible(true);
+        
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//definimos que se cierre al pesataña al salir de ella
+        setTitle("Fechas conciertos");//definimos el titulo de la ventana
+        setSize(1400,800);//definimos el tamaño de la ventana
+        setLocationRelativeTo(null);//definimos que la ventana se encuentre en el centro de la pantalla del ordenador
+        setVisible(true);//definimos que se pueda ver la pantalla
     }
 		/*jComboConcerts.addActionListener((e) -> {
 			Object fromItem = ((JComboBox<?>) e.getSource()).getSelectedItem();
@@ -141,6 +148,7 @@ public class MainDisponibilidadTicket extends JFrame{
 		
 		
 		public static void main(String[] args) {
+			//lista de las fechas de los conciertos
 			
 			Fecha fecha1 = new Fecha(1, 1, 2024,Concert.Logo.ADELELIVE, 92567 );
 			Fecha fecha2 = new Fecha(2,2,2024,Concert.Logo.BELIEVETOUR, 92567 );
@@ -153,9 +161,9 @@ public class MainDisponibilidadTicket extends JFrame{
 			Fecha fecha9 = new Fecha(9,9,2024,Concert.Logo.ONTHEROADAGAIN, 92567);
 			Fecha fecha10 = new Fecha(10,10,2024,Concert.Logo.THEMATHEMATICSTOUR, 92567);	
 			
-			List<Fecha> fechas = new ArrayList<>();
+			List<Fecha> fechas = new ArrayList<>();//creamos la lista de los conciertos
 			
-			fechas.add(fecha1);
+			fechas.add(fecha1);//añadimos a la lista de la fechas cada una de las fehcas de los conciertos
 			fechas.add(fecha2);
 			fechas.add(fecha3);
 			fechas.add(fecha4);
@@ -168,7 +176,8 @@ public class MainDisponibilidadTicket extends JFrame{
 			
 					
 			SwingUtilities.invokeLater(() -> {
-				new MainDisponibilidadTicket();
+				new MainDisponibilidadTicket(new Concert(Concert.Logo.ADELELIVE, "123456", "Adele Live", 3, 92567, 150));
+				
 		    });
 		}
 }
