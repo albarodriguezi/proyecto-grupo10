@@ -2,14 +2,16 @@ package es.deusto.ingenieria.prog3.grupodiez.domain;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
+
 public class Fecha {
 	private LocalDate fecha;
-	private Concert concert;
+	private Logo imagen;
 	private int seats;
 	
-	public Fecha (int dia, int mes, int ano, Concert concert, int seats) {
+	public Fecha (int dia, int mes, int ano, Logo imagen, int seats) {
 		this.fecha = LocalDate.of(dia, mes, ano);
-		this.concert = concert;
+		this.imagen = imagen;
 		this.seats = seats;
 	}
 
@@ -29,8 +31,8 @@ public class Fecha {
 		return fecha.getYear();
 	}
 	
-	public Concert getConcert() {
-		return concert;
+	public Logo getImagen() {
+		return imagen;
 	}
 	
 	public int getSeats() {
