@@ -47,17 +47,33 @@ public class VentanaReservas extends JFrame {
         
       //para que el texto que escribamos en la busqueda funcione
         DocumentListener documentListener = new DocumentListener() {
-            
         	@Override
-            public void insertUpdate(DocumentEvent e) { filtroReservas(textoBusqueda.getText()); }
-            
+            public void insertUpdate(DocumentEvent e) {
+                actualizarFiltro();
+            }
+
             @Override
-            public void removeUpdate(DocumentEvent e) { filtroReservas(textoBusqueda.getText()); }
-            
+            public void removeUpdate(DocumentEvent e) {
+                actualizarFiltro();
+            }
+
             @Override
-            public void changedUpdate(DocumentEvent e) {}
-        };
-        
+            public void changedUpdate(DocumentEvent e) {
+                actualizarFiltro();
+            }
+
+            private void actualizarFiltro() {
+                String texto = textoBusqueda.getText().trim(); // Elimina espacios en blanco
+                if (!texto.isEmpty()) {
+                    filtroReservas(texto);
+                } else {
+                    // Si el campo de búsqueda está vacío, mostramos todas las reservas
+                    
+                }
+            }
+			
+		};
+		
         
         this.textoBusqueda.getDocument().addDocumentListener(documentListener);
 
@@ -278,7 +294,7 @@ class ButtonEditor extends DefaultCellEditor {
                 + "Concierto: " + reserva.getFecha().getConcert().getName() + "\n" 
                 + "Fecha: " + reserva.getFecha().getFecha(),  
                 "Detalles de Reserva",  
-                JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.PLAIN_MESSAGE); //se podria poner con el information message q queda parecido pero con la tipica i d info
             }
         });
     }
