@@ -181,6 +181,7 @@ public class VentanaReservas extends JFrame {
 
     
     public static void main(String[] args) {
+    	
     	//hacer unas reservas de prueba. habra q cambiarlo en un futuro para q cuando hagamos una reserva tambien se nos añada y porque tendran otros atributos
         ArrayList<Reserva> reservas = new ArrayList<>();
         reservas.add(new Reserva("AM061", "Guts Tour"));
@@ -188,11 +189,13 @@ public class VentanaReservas extends JFrame {
         reservas.add(new Reserva("CO453", "Guts Tour"));
         reservas.add(new Reserva("DP953", "Eras Tour"));
         SwingUtilities.invokeLater(() -> new VentanaReservas(reservas).setVisible(true));
+   
     }
 }
 
 
 //el boton d la tabla
+
 class ButtonRenderer extends JButton implements TableCellRenderer {
     public ButtonRenderer() { setOpaque(true); }
     
@@ -205,6 +208,7 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
 }
 
 //la accion del boton
+
 class ButtonEditor extends DefaultCellEditor {
     private JButton button;
     private List<Reserva> reservas;
