@@ -2,249 +2,206 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import java.time.LocalDate;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Reserva;
 
 public class VentanaReservas extends JFrame {
-	
-	private static final long serialVersionUID = 1L;
-	
-	private static List<Reserva> reservas;
-	private JTable tablaReservas;
-	private JTextField textoBusqueda;
-	private DefaultTableModel modeloDatosReservas;
-	private int reservaSeleccionada = -1;
-	
-	public VentanaReservas(List<Reserva> reservas) {
-		
-		this.reservas = reservas;
-		this.initTables();
-		this.filtroR("");
-		
-		
-		//tabla d reservas en un panel con scroll
-		JScrollPane SPReservas = new JScrollPane(this.tablaReservas);
-		SPReservas.setBorder(new TitledBorder("Reservas"));
-		this.tablaReservas.setFillsViewportHeight(true);
-		
-		//para hacer busquedas o filtrar entre la lista de reservas
-				this.textoBusqueda = new JTextField(20);
-				
-		//para que el texto que escribamos en la busqueda funcione
-		DocumentListener documentListener = new DocumentListener() {
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				filtroR(textoBusqueda.getText());
-			}
+    private static final long serialVersionUID = 1L;
+    private List<Reserva> reservas;
+    private JTable tablaReservas;
+    private JTextField textoBusqueda;
+    private DefaultTableModel modeloDatosReservas;
+    private int reservaSeleccionada = -1;
 
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				filtroR(textoBusqueda.getText());				
-			}
+    public VentanaReservas(List<Reserva> reservas) {
+    	
+        this.reservas = reservas;
+        this.initTables();
+        this.filtroReservas("");
 
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				System.out.println("Texto modificado:" + textoBusqueda.getText());				
-			}
-			
-		};
-		this.textoBusqueda.getDocument().addDocumentListener(documentListener);
-		
-		//la parte del panel para buscar
-		JPanel panelBusqueda = new JPanel();
-		panelBusqueda.add(new JLabel("Buscar: "));
-		panelBusqueda.add(textoBusqueda);
-		
-		//el layout 
-		JPanel panelPrincipal = new JPanel();
-		panelPrincipal.setLayout(new BorderLayout());
-		panelPrincipal.add(BorderLayout.CENTER, SPReservas); //añadirle la tabla de reservas con scroll en medio
-		panelPrincipal.add(BorderLayout.NORTH, panelBusqueda); //la parte de busqueda al principio
-		
-		
-		this.getContentPane().setLayout(new GridLayout(1, 1));
-		this.getContentPane().add(panelPrincipal);
-		
-		this.setTitle("Reservas");		
-		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		this.setSize(800, 600);
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
-		
-		
-	}
+        
+        //tabla d reservas en un panel con scroll
+        JScrollPane SPReservas = new JScrollPane(this.tablaReservas);
+        SPReservas.setBorder(new TitledBorder("Reservas"));
+        this.tablaReservas.setFillsViewportHeight(true);
+
+        //para hacer busquedas o filtrar entre la lista de reservas
+        this.textoBusqueda = new JTextField(30);
+        
+      //para que el texto que escribamos en la busqueda funcione
+        DocumentListener documentListener = new DocumentListener() {
+            
+        	@Override
+            public void insertUpdate(DocumentEvent e) { filtroReservas(textoBusqueda.getText()); }
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) { filtroReservas(textoBusqueda.getText()); }
+            
+            @Override
+            public void changedUpdate(DocumentEvent e) {}
+        };
+        
+        
+        this.textoBusqueda.getDocument().addDocumentListener(documentListener);
+
+        
+        //la parte del panel para buscar
+        JPanel panelBusqueda = new JPanel();
+        panelBusqueda.add(new JLabel("Buscar: "));
+        panelBusqueda.add(textoBusqueda);
+
+        
+        //el layout del panel princilap
+        JPanel panelPrincipal = new JPanel(new BorderLayout());
+        panelPrincipal.add(BorderLayout.CENTER, SPReservas); //añadirle la tabla de reservas en medio
+        panelPrincipal.add(BorderLayout.NORTH, panelBusqueda); //la parte de la busqueda al principio
+
+        
+        this.getContentPane().setLayout(new GridLayout(1, 1));
+        this.getContentPane().add(panelPrincipal);
+        
+        this.setTitle("Reservas");
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setSize(800, 600);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }
 
     
-	
-	
-	
-	
     
     
-	
-	private void initTables() {
-		//titulos en la cabecera
-		Vector<String> cabecera = new Vector<String>(Arrays.asList( "Código Reserva", "Concierto", "Fecha", ""));	
-		this.modeloDatosReservas = new DefaultTableModel(new Vector<Vector<Object>>(), cabecera) {
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-		
-		this.tablaReservas = new JTable(this.modeloDatosReservas);
-		
-		
-		TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
-			JLabel result = new JLabel(value.toString());
-			
-			//las filas pares e impares estan renderizadas con distintos colore			
-			if (table.equals(tablaReservas)) {
-				if (row % 2 == 0) {
-					result.setBackground(new Color(240, 249, 249));
-				} else {
-					result.setBackground(new Color(180, 227, 219));
-				}
-				
-			} else {
-				result.setBackground(table.getBackground());
-				result.setForeground(table.getForeground());
-			}
+    private void initTables() {
+        //configurar las columnas d la tabla
+        Vector<String> cabecera = new Vector<>(Arrays.asList("Código Reserva", "Concierto", "Fecha", ""));
+        
+        this.modeloDatosReservas = new DefaultTableModel(new Vector<>(), cabecera) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 3; //solo la columna d ver los detalles, porque las otras no queremos editarlas
+            }
+        };
+        
+        this.tablaReservas = new JTable(this.modeloDatosReservas);
 
-			
-			if (isSelected) {
-				result.setBackground(table.getSelectionBackground());
-				result.setForeground(table.getSelectionForeground());			
-			}
-			
-			
-			//para poder ver que reserva estamos seleccionando
-			if (reservaSeleccionada != -1 && table.equals(tablaReservas) && row == reservaSeleccionada) {
-				result.setBackground(new Color(255, 204, 255));
-			}
-			
-			MouseMotionAdapter mouseMoveAdapter = new MouseMotionAdapter() {
-				public void mouseMoved(MouseEvent e) {
-
-					reservaSeleccionada = tablaReservas.rowAtPoint(e.getPoint());
-					tablaReservas.repaint();
-				}
-			};
-			
-			result.setOpaque(true);
-			
-			return result;
-		};
-		
-		
-		
-		//titulos
-		Vector<String> cabeceraPersonajes = new Vector<String>(Arrays.asList( "Código Reserva", "Concierto", "Fecha", "")); //el ultimo para lo d "ver detalles"
-		//otro renderer, esta vez para los titulos d la tabla
-		TableCellRenderer titulosRenderer = (table, value, isSelected, hasFocus, row, column) -> {
-			JLabel result = new JLabel(value.toString());			
-			result.setHorizontalAlignment(JLabel.CENTER);
-			
-			switch (value.toString()) {
-				case "Código Reserva":
-				case "Concierto":
-				case "Fecha":
-					result.setHorizontalAlignment(JLabel.LEFT);
-			}
-			
-			result.setBackground(table.getBackground());
-			result.setForeground(table.getForeground());
-			
-			result.setOpaque(true);
-			
-			return result;
-		};
-		
-		
-		this.tablaReservas.setDefaultRenderer(Object.class, cellRenderer);
-		this.tablaReservas.setRowHeight(30);
-		this.tablaReservas.getTableHeader().setReorderingAllowed(false);
-		this.tablaReservas.getTableHeader().setResizingAllowed(false);
-		
-		
-		
-		this.tablaReservas.getTableHeader().setDefaultRenderer(titulosRenderer);	
-		
-		//tamaños d las columnas d la tabla
-		this.tablaReservas.getColumnModel().getColumn(0).setPreferredWidth(100);
-		this.tablaReservas.getColumnModel().getColumn(1).setPreferredWidth(300);
-		this.tablaReservas.getColumnModel().getColumn(2).setPreferredWidth(100);
-
-		//especificar q solo se puede seleccionar una fila porque luego pondremos q se enseñen los detalles de una reserva
-		this.tablaReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		/*
-		//para cuando seleccinonemos una reserva el evento que queremos q suceda
-		this.tablaReservas.getSelectionModel().addListSelectionListener(e -> {
-			if (tablaReservas.getSelectedRow() != -1) { //sin contar -1 porque eso no es una reserva, es porque hay q darle un valor cuando no hay nada seleccionado
-				this.loadPersonajes(this.comics.get((int) tablaComics.getValueAt(tablaComics.getSelectedRow(), 0) - 1));
-			}
-		});
-		*/
-		
-
-	}
-
-	//
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	private void filtroR(String string) {
-		// TODO Auto-generated method stub	
-	}
-
-
-    public static void main(String[] args) {
-        // Crear algunas reservas de ejemplo
-        ArrayList<Reserva> reservas = new ArrayList<>();
-        reservas.add(new Reserva("Anton Martin", "Guts Tour"));
-        reservas.add(new Reserva("Berta Nogal", "Eras Tour"));
-        reservas.add(new Reserva("Cecilia Olabarria", "Guts Tour"));
-        reservas.add(new Reserva("David Perez", "Eras Tour"));
+        
+        //config del renderizador y de lo d editar el boton
+        this.tablaReservas.getColumn("").setCellRenderer(new ButtonRenderer());
+        this.tablaReservas.getColumn("").setCellEditor(new ButtonEditor(new JCheckBox(), reservas));
         
 
-        // Mostrar la ventana
-        SwingUtilities.invokeLater(() -> {
-            VentanaReservas ventana = new VentanaReservas(reservas);
-            ventana.setVisible(true);
+        // cargar las reservas
+        cargarReservas(this.reservas);
+        
+        
+			
+    }
+
+    
+    
+    
+    
+    private void cargarReservas(List<Reserva> reservas) {
+    	
+        this.modeloDatosReservas.setRowCount(0); //borrar todo lo q habia antes
+        for (Reserva reserva : reservas) {
+            modeloDatosReservas.addRow(new Object[] {
+                reserva.getLocator(), 
+                reserva.getNombreConcierto(), 
+                reserva.getFecha(), 
+                "Ver Detalles" //la ultima columna, la que no tenia titulo, sera la del boton de ver los detalles
+            });
+            
+        }
+    }
+
+    
+    
+    private void filtroReservas(String filtro) {
+        this.modeloDatosReservas.setRowCount(0); //otra vez borrar porqye estamos filtrando y queremos q solo salgan los q cumplan la condicion
+        
+        //podremos filtrar tanto por el codigo de la reserva, como por el nombre del concierto
+        for (Reserva reserva : reservas) {
+            if (reserva.getLocator().contains(filtro) || reserva.getNombreConcierto().contains(filtro)) {
+                this.modeloDatosReservas.addRow(new Object[] {
+                    reserva.getLocator(),
+                    reserva.getNombreConcierto(),
+                    reserva.getFecha(),
+                    "Ver Detalles"
+                });
+                
+            }
+        }
+    }
+
+    
+    public static void main(String[] args) {
+    	//hacer unas reservas de prueba. habra q cambiarlo en un futuro para q cuando hagamos una reserva tambien se nos añada y porque tendran otros atributos
+        ArrayList<Reserva> reservas = new ArrayList<>();
+        reservas.add(new Reserva("AM061", "Guts Tour"));
+        reservas.add(new Reserva("BN218", "Eras Tour"));
+        reservas.add(new Reserva("CO453", "Guts Tour"));
+        reservas.add(new Reserva("DP953", "Eras Tour"));
+        SwingUtilities.invokeLater(() -> new VentanaReservas(reservas).setVisible(true));
+    }
+}
+
+
+//el boton d la tabla
+class ButtonRenderer extends JButton implements TableCellRenderer {
+    public ButtonRenderer() { setOpaque(true); }
+    
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        setText((value == null) ? "Ver Detalles" : value.toString());
+        return this;
+        
+    }  
+}
+
+//la accion del boton
+class ButtonEditor extends DefaultCellEditor {
+    private JButton button;
+    private List<Reserva> reservas;
+    private int rowIndex;
+
+    public ButtonEditor(JCheckBox checkBox, List<Reserva> reservas) {
+        super(checkBox);
+        this.reservas = reservas;
+        button = new JButton();
+        button.setOpaque(true);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Reserva reserva = reservas.get(rowIndex);
+                JOptionPane.showMessageDialog(button, "Detalles de la Reserva:\n" + "Código: " + reserva.getLocator() + "\n" + "Concierto: " + reserva.getNombreConcierto() + "\n" + "Fecha: " + reserva.getFecha(),  "Detalles de Reserva",  JOptionPane.INFORMATION_MESSAGE);
+            }
         });
     }
-	
 
+    
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+        rowIndex = row;
+        button.setText((value == null) ? "Ver Detalles" : value.toString());
+        return button;
+    }
+    
+    @Override
+    public Object getCellEditorValue() { return button.getText(); }
 }
