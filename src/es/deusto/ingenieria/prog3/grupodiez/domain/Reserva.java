@@ -12,6 +12,7 @@ public class Reserva implements Serializable {
 	private Concert concert;
 	private Fecha fecha;
 	private List<String> attendees;
+	private String nombreConcierto;
 	
 	public Reserva(String locator, Concert concert, Fecha fecha, List<String> attendees) {
 		super();
@@ -19,6 +20,13 @@ public class Reserva implements Serializable {
 		this.concert = concert;
 		this.fecha = fecha;
 		this.attendees = attendees;
+	}
+	
+	//constructor para probar que las reservas van bien
+	public Reserva(String locator, String nombreConcierto) {
+		super();
+		this.locator = locator;
+		this.nombreConcierto = nombreConcierto;
 	}
 
 	public String getLocator() {

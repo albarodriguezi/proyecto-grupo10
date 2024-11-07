@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.prog3.grupodiez.gui;
+	package es.deusto.ingenieria.prog3.grupodiez.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -82,7 +82,7 @@ import javax.swing.border.TitledBorder;
 	        add(mainPanel);
 	        
 	        // Definir el título
-	        setTitle("AdminChoise");
+	        setTitle("AdminChoice");
 	        // Definir la operación por defecto al cerrar la ventana (terminar la aplicación)
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        // Ajustar el tamaño de la ventana (ancho, alto en píxeles)
