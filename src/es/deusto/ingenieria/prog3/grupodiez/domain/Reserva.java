@@ -22,11 +22,7 @@ public class Reserva implements Serializable {
 		this.attendees = attendees;
 	}
 	
-	//constructor para probar que las reservas van bien, borrar cuando las otras reservas funcionen
-	public Reserva(String locator, String nombreConcierto) {
-		this.locator = locator;
-		this.setNombreConcierto(nombreConcierto);
-	}
+
 
 
 	public String getLocator() {
