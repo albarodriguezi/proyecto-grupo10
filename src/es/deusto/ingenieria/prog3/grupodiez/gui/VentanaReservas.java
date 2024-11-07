@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -96,9 +98,37 @@ public class VentanaReservas extends JFrame {
                 return column == 3; //solo la columna d ver los detalles, porque las otras no queremos editarlas
             }
         };
-        
+    
         this.tablaReservas = new JTable(this.modeloDatosReservas);
 
+        //borrar
+        TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
+
+			JLabel result = new JLabel(value.toString());
+
+			//las filas pares e impares estan renderizadas con distintos colores pero ahora misomjo no hace nada		
+
+			if (table.equals(tablaReservas)) {
+				if (row % 2 == 0) {
+					result.setBackground(new Color(240, 249, 249));
+				} else {
+					result.setBackground(new Color(180, 227, 219));
+				}
+
+			} else {
+				result.setBackground(table.getBackground());
+				result.setForeground(table.getForeground());
+			}
+			
+
+			result.setOpaque(true);
+
+
+			return result;
+			//parar d borrar
+
+		};
+        
         
         //config del renderizador y de lo d editar el boton
         this.tablaReservas.getColumn("").setCellRenderer(new ButtonRenderer());
