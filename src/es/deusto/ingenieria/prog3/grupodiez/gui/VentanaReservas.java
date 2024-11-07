@@ -300,7 +300,8 @@ class ButtonEditor extends DefaultCellEditor {
                 + "Asistentes: " +  String.join(", ", reserva.getAttendees()),
                 
                 "Detalles de Reserva", 
-                JOptionPane.PLAIN_MESSAGE); //se podria poner con el information message q queda parecido pero con la tipica i d info
+                JOptionPane.PLAIN_MESSAGE
+                ); //se podria poner con el information message q queda parecido pero con la tipica i d info
             }
         });
     }
