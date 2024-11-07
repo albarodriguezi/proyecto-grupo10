@@ -289,11 +289,13 @@ class ButtonEditor extends DefaultCellEditor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Reserva reserva = reservas.get(rowIndex);
-                JOptionPane.showMessageDialog(button, "Detalles de la Reserva:\n" + "Código: " 
-                + reserva.getLocator() + "\n" 
+                
+                JOptionPane.showMessageDialog(button, "Código:"+ reserva.getLocator() +"\n" 
                 + "Concierto: " + reserva.getFecha().getConcert().getName() + "\n" 
-                + "Fecha: " + reserva.getFecha().getFecha(),  
-                "Detalles de Reserva",  
+                + "Fecha: " + reserva.getFecha().getFecha() + "\n" 
+                + "Asistentes: " +  String.join(", ", reserva.getAttendees()),
+                
+                "Detalles de Reserva", 
                 JOptionPane.PLAIN_MESSAGE); //se podria poner con el information message q queda parecido pero con la tipica i d info
             }
         });
