@@ -36,7 +36,10 @@ public class DisponibilidadticketRenderer implements TableCellRenderer{
 			label.setText(String.format("%.2f €", value));
 			label.setHorizontalAlignment(JLabel.RIGHT);
 		}
-		
+		if (column == 0) {
+			label.setText(value.toString());
+			label.setHorizontalAlignment(JLabel.CENTER);
+		}
 		if (column == 5) {
 			//double disponibilidad = (Double)value;
 			//JProgressBar pb = new JProgressBar(0,100);

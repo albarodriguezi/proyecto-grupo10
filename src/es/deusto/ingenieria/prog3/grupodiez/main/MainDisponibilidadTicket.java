@@ -69,7 +69,7 @@ public class MainDisponibilidadTicket extends JFrame{
         add(jLabelInfo, BorderLayout.SOUTH);
         
         
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//definimos que se cierre al pesataña al salir de ella
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//definimos que se cierre al pesataña al salir de ella
         setTitle("Fechas conciertos");//definimos el titulo de la ventana
         setSize(1400,800);//definimos el tamaño de la ventana
         setLocationRelativeTo(null);//definimos que la ventana se encuentre en el centro de la pantalla del ordenador
@@ -176,7 +176,7 @@ public class MainDisponibilidadTicket extends JFrame{
 			
 					
 			SwingUtilities.invokeLater(() -> {
-				new MainDisponibilidadTicket(new Concert(Concert.Logo.ADELELIVE, "123456", "Adele Live", 3, 92567, 150));
+				new MainDisponibilidadTicket(new Concert("123456"));
 				
 		    });
 		}

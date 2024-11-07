@@ -34,7 +34,7 @@ public class Main{
 	
 		//se crean dos o tres fecha por 
 		
-		Fecha fechau1 = new Fecha(10,10,2024);
+		/*Fecha fechau1 = new Fecha(10,10,2024);
 		Fecha fecha2 = new Fecha(8,11,2024);
 		Fecha fecha3 = new Fecha(23,12,2024);
 		Fecha fecha4 = new Fecha(18,1,2024);
@@ -58,7 +58,7 @@ public class Main{
 		Fecha fecha22 = new Fecha(8,11,2024);
 		Fecha fecha23 = new Fecha(19,12,2024);
 		Fecha fecha24 = new Fecha(24,1,2024);
-		Fecha fecha25 = new Fecha(14,2,2024);
+		Fecha fecha25 = new Fecha(14,2,2024);*/
 
 		List<Concert> concerts = new ArrayList<>();
 		List<Fecha> fechas = new ArrayList<>();

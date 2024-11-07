@@ -1,10 +1,15 @@
 package es.deusto.ingenieria.prog3.grupodiez.domain;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
+
+import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 
 
 
@@ -37,6 +42,39 @@ public class Concert implements Comparable<Concert>, Serializable{
 		this.duration = duration;		
 		this.seats = seats;
 		this.price = price;
+
+	}
+	
+	public Concert(String code) {
+		this.code = code;
+		try {
+			Scanner sc = new Scanner(new File("resources\\data\\Concerts.csv"));
+			while(sc.hasNextLine()){
+		        String linea=sc.nextLine();
+		        String[] campos=linea.split(";");
+		        Logo logo = Logo.valueOf(campos[0]);
+		        String coder = campos[1];
+		        String name = campos[2];
+		        Integer duration = Integer.parseInt(campos[3]);
+		        Float price = Float.parseFloat(campos[5]);
+		        if (coder.equals(code)) {
+		        	this.imagen = logo;
+		        	this.name = name;
+		        	this.duration = duration;
+		        	this.seats= 92000;
+		        	this.price= price;
+		        }
+		        
+		        
+			}
+			
+			sc.close();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
 
