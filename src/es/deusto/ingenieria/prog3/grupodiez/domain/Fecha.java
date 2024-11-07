@@ -2,11 +2,17 @@ package es.deusto.ingenieria.prog3.grupodiez.domain;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
+
 public class Fecha {
 	private LocalDate fecha;
-	
-	public Fecha (int dia, int mes, int ano) {
-		this.fecha = LocalDate.of(dia, mes, ano);
+	private Logo imagen;
+	private int seats;
+
+	public Fecha (int dia, int mes, int ano, Logo imagen, int seats) {
+	this.fecha = LocalDate.of(ano, mes, dia);
+	this.setImagen(imagen);
+	this.setSeats(seats);
 	}
 
 	public LocalDate getFecha() {
@@ -45,5 +51,21 @@ public class Fecha {
 	@Override
 	public String toString() {
 		return "Fecha [fecha=" + fecha + "]";
+	}
+
+	public Logo getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(Logo imagen) {
+		this.imagen = imagen;
+	}
+
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(int seats) {
+		this.seats = seats;
 	}
 }
