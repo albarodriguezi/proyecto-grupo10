@@ -13,6 +13,9 @@ public class Reserva implements Serializable {
 	private Fecha fecha;
 	private List<String> attendees;
 	private String nombreConcierto;
+	//por si se necesita para restarlos a los asientos totales de un concierto, para ver cuantos quedan
+	private int cantidadAsientos; 
+	
 	
 	public Reserva(String locator, Concert concert, Fecha fecha, List<String> attendees) {
 		super();
@@ -23,7 +26,10 @@ public class Reserva implements Serializable {
 	}
 	
 
-
+	public int getCantidadAsientos() {
+		return attendees.size();
+		
+	}
 
 	public String getLocator() {
 		return locator;
