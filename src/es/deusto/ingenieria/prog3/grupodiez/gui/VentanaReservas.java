@@ -137,8 +137,8 @@ public class VentanaReservas extends JFrame {
         for (Reserva reserva : reservas) {
         
             modeloDatosReservas.addRow(new Object[] {
-                reserva.getLocator(), 
-                reserva.getNombreConcierto(), 
+            	reserva.getLocator(), 
+                reserva.getFecha().getConcert().getName(), 
                 reserva.getFecha(), 
                 "Ver Detalles" //la ultima columna, la que no tenia titulo, sera la del boton de ver los detalles
             });
@@ -158,7 +158,7 @@ public class VentanaReservas extends JFrame {
                 this.modeloDatosReservas.addRow(new Object[] {
                     reserva.getLocator(),
                     reserva.getConcert().getName(),
-                    reserva.getFecha(),
+                    reserva.getFecha().getFecha(),
                     "Ver Detalles"
                 });
                 
@@ -273,7 +273,12 @@ class ButtonEditor extends DefaultCellEditor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Reserva reserva = reservas.get(rowIndex);
-                JOptionPane.showMessageDialog(button, "Detalles de la Reserva:\n" + "Código: " + reserva.getLocator() + "\n" + "Concierto: " + reserva.getNombreConcierto() + "\n" + "Fecha: " + reserva.getFecha(),  "Detalles de Reserva",  JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(button, "Detalles de la Reserva:\n" + "Código: " 
+                + reserva.getLocator() + "\n" 
+                + "Concierto: " + reserva.getFecha().getConcert().getName() + "\n" 
+                + "Fecha: " + reserva.getFecha().getFecha(),  
+                "Detalles de Reserva",  
+                JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
