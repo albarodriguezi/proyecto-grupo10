@@ -3,13 +3,10 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -21,8 +18,9 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
-import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+import es.deusto.ingenieria.prog3.grupodiez.main.MainDisponibilidadTicket;
 
 
 public class ConcertsListRenderer extends JFrame {
@@ -177,49 +175,27 @@ public class ConcertsListRenderer extends JFrame {
 		this.tablaConcert.getColumnModel().getColumn(2).setPreferredWidth(500);
 		
 //-----------------------------------------------------------------------------como al seleccionar una fila se va a la pagina de fechas-----------------------------
-		this.tablaConcert.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.tablaConcert.getSelectionModel().addListSelectionListener(e -> {
-		    // Verifica que la selección no esté vacía
-		    if (tablaConcert.getSelectedRow() != -1) {
-		        // Obtiene el ID o el objeto necesario de la fila seleccionada
-		        int selectedRow = tablaConcert.getSelectedRow();
-		        int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Ejemplo: obtiene el ID desde la primera columna
+        this.tablaConcert.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.tablaConcert.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { // Detecta doble clic
+                    int selectedRow = tablaConcert.getSelectedRow();
+                    if (selectedRow != -1) {
+                    	int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Obtiene el ID de la fila seleccionada
+                    	MainDisponibilidadTicket maindisponibilidad = new MainDisponibilidadTicket();
+                        maindisponibilidad.setVisible(true);
+                    }
+                }
+            }
+        });
+    }
 
-		        // Crea y muestra la ventana de DisponibilidadTocket pasando el ID del concierto
-		       // DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(concerts); 
-		        //disponibilidadTicket.setVisible(true);
-		    }
-		});
-    } 
-
-   
     
     private void loadConcert() {
 		//Se borran los datos del modelo de datos
-    	ArrayList<Concert> conciertos = new ArrayList<Concert>();
-    	try {
-			Scanner sc = new Scanner(new File("resources\\data\\Concerts.csv"));
-			while(sc.hasNextLine()){
-		        String linea=sc.nextLine();
-		        String[] campos=linea.split(";");
-		        Logo logo = Logo.valueOf(campos[0]);
-		        String code = campos[1];
-		        String name = campos[2];
-		        Integer duration = Integer.parseInt(campos[3]);
-		        Float price = Float.parseFloat(campos[4]);
-		        conciertos.add(new Concert(logo,code,name,duration,92000,price));
-		        
-			}
-			
-			sc.close();
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		this.modeloDatosConcerts.setRowCount(0);
 		//Se añaden los comics uno a uno al modelo de datos
-		conciertos.forEach(c -> this.modeloDatosConcerts.addRow(
+		this.concerts.forEach(c -> this.modeloDatosConcerts.addRow(
 				new Object[] {c.getImagen(), c.getCode(), c.getName(), c.getDuration(), c.getSeats(), c.getPrice()} )
 		);
     }
