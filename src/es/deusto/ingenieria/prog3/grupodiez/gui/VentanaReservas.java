@@ -166,7 +166,7 @@ public class VentanaReservas extends JFrame {
         this.modeloDatosReservas.setRowCount(0); //otra vez borrar porqye estamos filtrando y queremos q solo salgan los q cumplan la condicion
         
         //podremos filtrar tanto por el codigo de la reserva, como por el nombre del concierto
-        for (Reserva reserva : reservas) {
+        this.reservas.forEach(reserva -> {;
             if (reserva.getLocator().contains(filtro) || reserva.getNombreConcierto().contains(filtro)) {
                 this.modeloDatosReservas.addRow(new Object[] {
                     reserva.getLocator(),
@@ -176,7 +176,7 @@ public class VentanaReservas extends JFrame {
                 });
                 
             }
-        }
+        });
     }
 
     
