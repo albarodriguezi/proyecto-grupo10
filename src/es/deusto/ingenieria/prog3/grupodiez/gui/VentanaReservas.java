@@ -114,10 +114,7 @@ public class VentanaReservas extends JFrame {
         this.modeloDatosReservas = new DefaultTableModel(new Vector<>(), cabecera) {
 			
 
-			@Override
-            public boolean isCellEditable(int row, int column) {
-                return column == 3; //solo la columna d ver los detalles, porque las otras no queremos editarlas
-            }
+			
         };
     
         this.tablaReservas = new JTable(this.modeloDatosReservas);
@@ -131,10 +128,9 @@ public class VentanaReservas extends JFrame {
 		this.tablaReservas.getColumnModel().getColumn(3).setPreferredWidth(50);
 
 		
-		//añadir el renderer
 		
 		
-        //config del renderizador y de lo d editar el boton
+        //
         this.tablaReservas.getColumn("").setCellRenderer(new ButtonRenderer());
         this.tablaReservas.getColumn("").setCellEditor(new ButtonEditor(new JCheckBox(), reservas));
         
