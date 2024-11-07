@@ -3,8 +3,12 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Vector;
 
 import javax.swing.DefaultCellEditor;
@@ -28,11 +32,11 @@ import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 public class DisponibilidadTicket extends DefaultTableModel {
 
 	private static final long serialVersionUID = 1L;
-	private List<Concert> concerts;
+	private List<Fecha> fechas;
 	private JTable tablaFechas;
-    private DefaultTableModel modeloDatosFechas;
+    private DefaultTableModel modeloDatosFechas = new DefaultTableModel();
     private JTextField txtFiltro;
-	private Fecha fecha;
+	private Concert concierto;
 	private final List<String> headers = Arrays.asList(
 			"FECHA", //fecha del concierto
 			"DISPONIBILIDAD", //AÑADIR DISPONIBILIDAD DE LOS TICKETS EN CADA FECHA
@@ -45,12 +49,15 @@ public class DisponibilidadTicket extends DefaultTableModel {
 	//para añadir la disponibilidad:
 	
 	//constructor con acceso a la lista de conciertos
-	public DisponibilidadTicket (List<Concert> concerts) {
-		this.concerts = concerts;
+	public DisponibilidadTicket (List<Fecha> concerts) {
+		this.fechas = concerts;
+		loadFechas();
 	}
 	
-	public DisponibilidadTicket (Fecha fecha) {
-		this.fecha = fecha;
+	public DisponibilidadTicket (Concert fecha) {
+		this.concierto = fecha;
+		initTables();
+		loadFechas();
 	}
 
 	@Override
@@ -60,8 +67,8 @@ public class DisponibilidadTicket extends DefaultTableModel {
 
 	@Override
 	public int getRowCount() { //cuantas filas tiene la tabla (número de conciertos)
-		if (concerts != null) { //si no está vacia
-			return concerts.size(); //devuelve la cantidad de elementos
+		if (fechas != null) { //si no está vacia
+			return fechas.size(); //devuelve la cantidad de elementos
 		} else { 
 			return 0; //no aparece nada
 		}
@@ -80,25 +87,24 @@ public class DisponibilidadTicket extends DefaultTableModel {
     @Override 
     public void setValueAt(Object aValue, int row, int column) { //para cambiar los valores
     	if (column == 5 && aValue.equals("Reservar")) { 
-            Concert concert = concerts.get(row);
+            Fecha concert = fechas.get(row);
             // Lógica de reserva del concierto, e.g., reducir el número de asientos
-            concert.getRemainingSeats();
+            concert.getSeats();
             fireTableDataChanged(); // Notificar a la tabla de los cambios
         }
     }
 	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Concert concert = concerts.get(rowIndex);
+		Fecha concert = fechas.get(rowIndex);
 		
 		switch (columnIndex) {
-			case 0: return fecha.getFecha(); //la fecha de la clase Fecha
+			case 0: return concert.getFecha(); //la fecha de la clase Fecha
 			//disponibilidad --> número de tickets --> número máximo de personas que entran en el recinto (nº seats)
-			case 1: return Float.valueOf((float) concert.getRemainingSeats()/concert.getSeats()); //calcular disponibilidad
-			case 2: return Integer.valueOf(concert.getRemainingSeats()); //asientos libres
-			case 3: return Integer.valueOf(concert.getDuration()); //duración
-			case 4: return Float.valueOf(concert.getPrice()); //precio
-			case 5: return concerts; //conciertos
+			case 1: return Float.valueOf((float) concert.getSeats()/concierto.getSeats()); //calcular disponibilidad
+			case 2: return Integer.valueOf(concert.getSeats()); //asientos libres
+			case 3: return Integer.valueOf(concierto.getDuration()); //duración
+			case 4: return Float.valueOf(concierto.getPrice()); //precio
 			default: return null;
 		}
 	}
@@ -110,7 +116,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 	
 	//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
 	private void initTables() {
-        Vector<String> cabeceraConcert = new Vector<>(Arrays.asList("FECHA","DISPONIBILIDAD", "TICKETS RESTANTES", "DURACION", "PRECIO", "RESERVCAR"));
+        Vector<String> cabeceraConcert = new Vector<>(Arrays.asList("FECHA","DISPONIBILIDAD", "TICKETS RESTANTES", "DURACION", "PRECIO"));
         this.modeloDatosFechas = new DefaultTableModel(new Vector<>(), cabeceraConcert);
         this.tablaFechas = new JTable(this.modeloDatosFechas);
 
@@ -162,7 +168,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 		        int idConcierto = (int) tablaFechas.getValueAt(selectedRow, 1); // Ejemplo: obtiene el ID desde la primera columna
 
 		        // Crea y muestra la ventana de DisponibilidadTocket pasando el ID del concierto
-		        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(concerts); 
+		        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(fechas); 
 		        disponibilidadTicket.setVisible(true);
 		    }
 		});
@@ -170,12 +176,47 @@ public class DisponibilidadTicket extends DefaultTableModel {
    
     
     private void loadFechas() {
+    	
+    	ArrayList<Fecha> fechasc = new ArrayList<Fecha>();
+    	try {
+			Scanner sc = new Scanner(new File("resources\\data\\Fecha.csv"));
+			while(sc.hasNextLine()){
+		        String linea=sc.nextLine();
+		        String[] campos=linea.split(";");
+		        Integer dia = Integer.parseInt(campos[0]);
+		        Integer mes = Integer.parseInt(campos[1]);
+		        Integer ano = Integer.parseInt(campos[2]);
+		        String code = campos[3];
+		        Integer seats = Integer.parseInt(campos[4]);
+		        if (code.equals(concierto.getCode())) {
+		        	System.out.println("a");
+		        	fechasc.add(new Fecha(dia,mes,ano,Logo.ADELELIVE,seats));
+		        }
+		        
+		        
+			}
+			
+			sc.close();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//Se borran los datos del modelo de datos
 		this.modeloDatosFechas.setRowCount(0);
+		System.out.println(fechasc);
 		//Se añaden los comics uno a uno al modelo de datos
-		this.fechas.forEach(f -> this.modeloDatosFechas.addRow(
-				new Object[] {f.getFecha(), f.getRemainingSeats(), f.getSeats(), f.getDuration(), f.Price(), f.getReserva()} )
+		for (Fecha f:fechasc) {
+			System.out.println("b");
+			this.modeloDatosFechas.addRow(
+					new Object[] {f.getFecha(), f.getSeats(), f.getSeats(), concierto.getDuration(), concierto.getPrice()} );
+		}
+		fechasc.forEach(
+				f -> this.modeloDatosFechas.addRow(
+				new Object[] {f.getFecha(), f.getSeats(), f.getSeats(), concierto.getDuration(), concierto.getPrice()} )
+				
 		);
+		
     }
 
     //hacemos que se puedan filtrar(creamos el buscador)
