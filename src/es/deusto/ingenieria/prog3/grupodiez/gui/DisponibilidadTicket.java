@@ -34,7 +34,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 	private static final long serialVersionUID = 1L;
 	private List<Fecha> fechas;
 	private JTable tablaFechas;
-    private DefaultTableModel modeloDatosFechas = new DefaultTableModel();
+    private DefaultTableModel modeloDatosFechas ;
     private JTextField txtFiltro;
 	private Concert concierto;
 	private final List<String> headers = Arrays.asList(
@@ -42,8 +42,8 @@ public class DisponibilidadTicket extends DefaultTableModel {
 			"DISPONIBILIDAD", //AÑADIR DISPONIBILIDAD DE LOS TICKETS EN CADA FECHA
 			"TICKETS RESTANTES", //número de asientos libres
 			"DURACIÓN", //duración del concierto
-			"PRECIO", //precio del concierto
-			"RESERVAR" //botón de reservar
+			"PRECIO",//precio del concierto //
+			"RESERVAR"
 			);
 
 	//para añadir la disponibilidad:
@@ -105,6 +105,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 			case 2: return Integer.valueOf(concert.getSeats()); //asientos libres
 			case 3: return Integer.valueOf(concierto.getDuration()); //duración
 			case 4: return Float.valueOf(concierto.getPrice()); //precio
+			case 5: return "+";
 			default: return null;
 		}
 	}
@@ -116,7 +117,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 	
 	//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
 	private void initTables() {
-        Vector<String> cabeceraConcert = new Vector<>(Arrays.asList("FECHA","DISPONIBILIDAD", "TICKETS RESTANTES", "DURACION", "PRECIO"));
+        Vector<String> cabeceraConcert = new Vector<>(headers);
         this.modeloDatosFechas = new DefaultTableModel(new Vector<>(), cabeceraConcert);
         this.tablaFechas = new JTable(this.modeloDatosFechas);
 
@@ -175,7 +176,15 @@ public class DisponibilidadTicket extends DefaultTableModel {
     } 
    
     
-    private void loadFechas() {
+    public DefaultTableModel getModeloDatosFechas() {
+		return modeloDatosFechas;
+	}
+
+	public void setModeloDatosFechas(DefaultTableModel modeloDatosFechas) {
+		this.modeloDatosFechas = modeloDatosFechas;
+	}
+
+	public void loadFechas() {
     	
     	ArrayList<Fecha> fechasc = new ArrayList<Fecha>();
     	try {
@@ -202,6 +211,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	
 		//Se borran los datos del modelo de datos
 		this.modeloDatosFechas.setRowCount(0);
 		System.out.println(fechasc);
@@ -211,11 +221,8 @@ public class DisponibilidadTicket extends DefaultTableModel {
 			this.modeloDatosFechas.addRow(
 					new Object[] {f.getFecha(), f.getSeats(), f.getSeats(), concierto.getDuration(), concierto.getPrice()} );
 		}
-		fechasc.forEach(
-				f -> this.modeloDatosFechas.addRow(
-				new Object[] {f.getFecha(), f.getSeats(), f.getSeats(), concierto.getDuration(), concierto.getPrice()} )
-				
-		);
+		System.out.println(modeloDatosFechas.getRowCount());
+		
 		
     }
 
