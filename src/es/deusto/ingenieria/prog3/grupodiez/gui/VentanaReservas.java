@@ -241,6 +241,14 @@ public class VentanaReservas extends JFrame {
 		List<String> lista4 = Arrays.asList("Laura Díaz", "Ángel Ortega", "Elena Navarro");
 		List<String> lista5 = Arrays.asList("Sara Vega", "Alberto Molina", "Pablo Herrera");
 		List<String> lista6 = Arrays.asList("David Ruiz", "Carmen Ramos", "Antonio Gil");
+		List<String> lista7 = Arrays.asList("Inés Prieto", "Luis Castro", "Patricia Ibáñez");
+		List<String> lista8 = Arrays.asList("Francisco Morales", "Beatriz Aguilar", "Ricardo Reyes");
+		List<String> lista9 = Arrays.asList("Adriana Herrera", "Victor Soto", "Marta Delgado");
+		List<String> lista10 = Arrays.asList("Cristina Serrano", "Andrés Peña", "Esteban Vargas");
+		List<String> lista11 = Arrays.asList("Julia Ríos", "Manuel Paredes", "Gabriela Márquez");
+		List<String> lista12 = Arrays.asList("Sergio Bautista", "Paola Vargas", "Juan Cordero");
+
+		
 
 		//crear las reservas
 		reservas.add(new Reserva(fecha1.getConcert().getCode(), fecha1.getConcert(), fecha1, lista1));
@@ -249,12 +257,12 @@ public class VentanaReservas extends JFrame {
 		reservas.add(new Reserva(fecha4.getConcert().getCode(), fecha4.getConcert(), fecha4, lista4));
 		reservas.add(new Reserva(fecha5.getConcert().getCode(), fecha5.getConcert(), fecha5, lista5));
 		reservas.add(new Reserva(fecha6.getConcert().getCode(), fecha6.getConcert(), fecha6, lista6));
-		reservas.add(new Reserva(fecha7.getConcert().getCode(), fecha7.getConcert(), fecha7, lista1));
-		reservas.add(new Reserva(fecha8.getConcert().getCode(), fecha8.getConcert(), fecha8, lista2));
-		reservas.add(new Reserva(fecha9.getConcert().getCode(), fecha9.getConcert(), fecha9, lista3));
-		reservas.add(new Reserva(fecha10.getConcert().getCode(), fecha10.getConcert(), fecha10, lista4));
-		reservas.add(new Reserva(fecha11.getConcert().getCode(), fecha11.getConcert(), fecha11, lista5));
-		reservas.add(new Reserva(fecha12.getConcert().getCode(), fecha12.getConcert(), fecha12, lista6));
+		reservas.add(new Reserva(fecha7.getConcert().getCode(), fecha7.getConcert(), fecha7, lista7));
+		reservas.add(new Reserva(fecha8.getConcert().getCode(), fecha8.getConcert(), fecha8, lista8));
+		reservas.add(new Reserva(fecha9.getConcert().getCode(), fecha9.getConcert(), fecha9, lista9));
+		reservas.add(new Reserva(fecha10.getConcert().getCode(), fecha10.getConcert(), fecha10, lista10));
+		reservas.add(new Reserva(fecha11.getConcert().getCode(), fecha11.getConcert(), fecha11, lista11));
+		reservas.add(new Reserva(fecha12.getConcert().getCode(), fecha12.getConcert(), fecha12, lista12));
         
 		
         SwingUtilities.invokeLater(() -> new VentanaReservas(reservas).setVisible(true));
