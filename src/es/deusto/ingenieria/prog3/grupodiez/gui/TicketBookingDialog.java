@@ -42,10 +42,10 @@ public class TicketBookingDialog extends JDialog {
 	
 	private List<String> attendees = null; //lista de asistentes vacia por default
 	
-	public TicketBookingDialog(Fecha value) {
-		this.setFecha(value);
+	public TicketBookingDialog(Fecha fecha) {
+		this.setFecha(fecha);
 		HashMap<String,Concert> indice=AnadirFecha.readConcert();
-		this.concert = indice.get(value.getCode());
+		this.concert = indice.get(fecha.getCode());
 		
 		JPanel jPanelConcert = new JPanel(); //panel en la ventana
 		jPanelConcert.setBorder(new TitledBorder("Datos del concierto")); //borde para añadir nombre
@@ -55,7 +55,7 @@ public class TicketBookingDialog extends JDialog {
 		jLabelConcert.setIcon(new ImageIcon(String.format("resources/images/%s.png", concert.getName()))); //poner la imagen del concierto en la etiqueta segun el nombre del mismo
 		
 		jPanelConcert.add(jLabelConcert); //añade la etiqueta creada al panel
-		jPanelConcert.add(new JLabel(String.format("Fecha: %s / %s / %s", value.getDia(), value.getMes(), value.getAno()))); //añade al panel label para la fecha
+		jPanelConcert.add(new JLabel(String.format("Fecha: %s / %s / %s", fecha.getDia(), fecha.getMes(), fecha.getAno()))); //añade al panel label para la fecha
 		jPanelConcert.add(new JLabel(String.format("Duración: %d m.", concert.getDuration()))); //etiqueta de duracion
 		jPanelConcert.add(new JLabel(String.format("Precio: %.2f €", concert.getPrice()))); //etiqueta de precio
 
@@ -70,7 +70,7 @@ public class TicketBookingDialog extends JDialog {
 		jPanelAttendees.setBorder(new TitledBorder("Datos personales")); //borde nombre
 		jPanelAttendees.setLayout(new GridLayout(3, 1));//3 elementos
 		
-		int remainingTickets = concert.getSeats()- value.getReserva().size();  //calcular los tickets restantes para que no puedan elegir mas tickets de los que quedan	
+		int remainingTickets = concert.getSeats()- fecha.getReserva().size();  //calcular los tickets restantes para que no puedan elegir mas tickets de los que quedan	
 		jSpinnerTickets = new JSpinner(new SpinnerNumberModel(1, 1, remainingTickets, 1)); //spinner para que puedan elegir el numero de tickets
 		//formato --> (valor inicial = 1, valor minimo = 1, valor maximo = tickets que quedan, incremento = 1)
 	
@@ -194,7 +194,7 @@ public class TicketBookingDialog extends JDialog {
 				add(jPanelButtons, BorderLayout.SOUTH);
 				
 				setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-				setTitle(String.format("Reserva del vuelo '%s'", concert.getCode()));		
+				setTitle(String.format("Reserva del concierto '%s'", concert.getCode()));		
 				setIconImage(new ImageIcon("resources/images/tickets.png").getImage());		
 				setSize(500, 350);
 				setModalityType(ModalityType.APPLICATION_MODAL);

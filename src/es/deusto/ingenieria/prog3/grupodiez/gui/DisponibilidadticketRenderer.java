@@ -3,6 +3,7 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,17 +45,27 @@ public class DisponibilidadticketRenderer implements TableCellRenderer{
 			label.setHorizontalAlignment(JLabel.CENTER);
 		}
 		if (column == 5) {
+			
 			//double disponibilidad = (Double)value;
 			//JProgressBar pb = new JProgressBar(0,100);
 			//pb.setValue((int) Math.round(disponibilidad));
 			//pb.setStringPainted(true);
-			JButton reserva = new JButton((String)value);
+			JButton reserva = new JButton("+");
 			reserva.addActionListener(new ActionListener() { 
 	        	  public void actionPerformed(ActionEvent e) { 
+	        		  	System.out.println(value);
 	        		    TicketBookingDialog tbd=new TicketBookingDialog((Fecha) value);
-	        		    tbd.setVisible(false);
+	        		    tbd.setVisible(true);
 	        		    } 
 	        		} );
+			/*if (isSelected) {
+				System.out.println(value);
+				/*TicketBookingDialog tbd=new TicketBookingDialog((Fecha) value);
+    		    tbd.setVisible(true);
+				reserva.doClick();
+			}
+			*/
+			reserva.setEnabled(true);
 			
 			return reserva;
 		}

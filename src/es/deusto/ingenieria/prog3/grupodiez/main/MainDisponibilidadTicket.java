@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,7 @@ import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 import es.deusto.ingenieria.prog3.grupodiez.gui.DisponibilidadTicket;
 import es.deusto.ingenieria.prog3.grupodiez.gui.DisponibilidadticketRenderer;
+import es.deusto.ingenieria.prog3.grupodiez.gui.TicketBookingDialog;
 
 public class MainDisponibilidadTicket extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -94,6 +97,20 @@ public class MainDisponibilidadTicket extends JFrame{
 		};
 		
 		this.jTableFechas.addKeyListener(refresh);
+		
+		this.jTableFechas.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { // Detecta doble clic
+                    int selectedRow = jTableFechas.getSelectedRow();
+                    int selectedColumn = jTableFechas.getSelectedColumn();
+                    if (selectedColumn == 5) {
+                        //int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Obtiene el ID de la fila seleccionada
+                    	TicketBookingDialog tbd=new TicketBookingDialog((Fecha) jTableFechas.getModel().getValueAt(selectedRow, selectedColumn));
+	        		    tbd.setVisible(true);
+                    }
+                }
+            }
+        });
         
         // Añadir componentes al JFrame
         add(pSearch, BorderLayout.NORTH);
@@ -196,7 +213,7 @@ public class MainDisponibilidadTicket extends JFrame{
 		public static void main(String[] args) {
 			//lista de las fechas de los conciertos
 			
-			Fecha fecha1 = new Fecha(1, 1, 2024,Concert.Logo.ADELELIVE, 92567 );
+			/*Fecha fecha1 = new Fecha(1, 1, 2024,Concert.Logo.ADELELIVE, 92567 );
 			Fecha fecha2 = new Fecha(2,2,2024,Concert.Logo.BELIEVETOUR, 92567 );
 			Fecha fecha3 = new Fecha(3,3,2024, Concert.Logo.BORNTODIE,92567 );
 			Fecha fecha4 = new Fecha(4,4,2024, Concert.Logo.ERASTOUR, 92567);
@@ -218,7 +235,7 @@ public class MainDisponibilidadTicket extends JFrame{
 			fechas.add(fecha7);
 			fechas.add(fecha8);
 			fechas.add(fecha9);
-			fechas.add(fecha10);
+			fechas.add(fecha10);*/
 			
 					
 			SwingUtilities.invokeLater(() -> {

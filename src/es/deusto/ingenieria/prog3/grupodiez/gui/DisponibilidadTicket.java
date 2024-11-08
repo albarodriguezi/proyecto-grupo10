@@ -88,7 +88,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
     
     @Override 
     public void setValueAt(Object aValue, int row, int column) { //para cambiar los valores
-    	if (column == 5 && aValue.equals("Reservar")) { 
+    	if (column == 5) { 
             Fecha concert = fechas.get(row);
             // Lógica de reserva del concierto, e.g., reducir el número de asientos
             concert.getSeats();
@@ -99,7 +99,6 @@ public class DisponibilidadTicket extends DefaultTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Fecha concert = fechas.get(rowIndex);
-		
 		switch (columnIndex) {
 			case 0: return concert.getFecha(); //la fecha de la clase Fecha
 			//disponibilidad --> número de tickets --> número máximo de personas que entran en el recinto (nº seats)
@@ -107,7 +106,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 			case 2: return Integer.valueOf(concert.getSeats()); //asientos libres
 			case 3: return Integer.valueOf(concierto.getDuration()); //duración
 			case 4: return Float.valueOf(concierto.getPrice()); //precio
-			case 5: return concert.getFecha();
+			case 5: return concert;
 			default: return null;
 		}
 	}
@@ -120,8 +119,22 @@ public class DisponibilidadTicket extends DefaultTableModel {
 	//Se define un CellRenderer para las cabeceras de las dos tabla usando una expresión lambda
 	private void initTables() {
         Vector<String> cabeceraConcert = new Vector<>(headers);
-        this.modeloDatosFechas = new DefaultTableModel(new Vector<>(), cabeceraConcert);
+        this.modeloDatosFechas = new DefaultTableModel(new Vector<>(), cabeceraConcert){
+        	/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+            public boolean isCellEditable(int row, int column) {
+               //all cells false
+               return false;
+            }
+        };
         this.tablaFechas = new JTable(this.modeloDatosFechas);
+        
+        
+        
 
 		//Se define un CellRenderer para las celdas de las dos tabla usando una expresión lambda
 		TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
@@ -221,7 +234,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 		for (Fecha f:fechasc) {
 			//System.out.println("b");
 			this.modeloDatosFechas.addRow(
-					new Object[] {f.getFecha(), f.getSeats(), f.getSeats(), concierto.getDuration(), concierto.getPrice()} );
+					new Object[] {f.getFecha(), f.getSeats(), f.getSeats(), concierto.getDuration(), concierto.getPrice(),f} );
 		}
 		//System.out.println(modeloDatosFechas.getRowCount());
 		
