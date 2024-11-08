@@ -1,6 +1,8 @@
 package es.deusto.ingenieria.prog3.grupodiez.gui;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -10,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 
 public class DisponibilidadticketRenderer implements TableCellRenderer{
 	
@@ -46,6 +49,13 @@ public class DisponibilidadticketRenderer implements TableCellRenderer{
 			//pb.setValue((int) Math.round(disponibilidad));
 			//pb.setStringPainted(true);
 			JButton reserva = new JButton((String)value);
+			reserva.addActionListener(new ActionListener() { 
+	        	  public void actionPerformed(ActionEvent e) { 
+	        		    TicketBookingDialog tbd=new TicketBookingDialog((Fecha) value);
+	        		    tbd.setVisible(false);
+	        		    } 
+	        		} );
+			
 			return reserva;
 		}
 		

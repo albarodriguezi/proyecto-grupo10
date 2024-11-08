@@ -107,7 +107,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 			case 2: return Integer.valueOf(concert.getSeats()); //asientos libres
 			case 3: return Integer.valueOf(concierto.getDuration()); //duración
 			case 4: return Float.valueOf(concierto.getPrice()); //precio
-			case 5: return "+";
+			case 5: return concert.getFecha();
 			default: return null;
 		}
 	}
