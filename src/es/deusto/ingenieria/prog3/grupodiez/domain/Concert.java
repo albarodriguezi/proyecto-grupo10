@@ -1,10 +1,15 @@
 package es.deusto.ingenieria.prog3.grupodiez.domain;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
+
+import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 
 
 
@@ -20,7 +25,7 @@ public class Concert implements Comparable<Concert>, Serializable{
 		ADELELIVE, BELIEVETOUR, BORNTODIE, ERASTOUR, FUTURENOSTALGIA, GUTSWORLTOUR, LOVEONTOUR, MUSICOFTHESPHERE, ONTHEROADAGAIN, THEMATHEMATICSTOUR;
 	}
 
-	private Logo imagen;//logo del tour
+	private String imagen;//logo del tour
 	private String code; // codigo del concierto
 	private String name; //nombre del conciert
 	private int duration; //duracion del concierto
@@ -30,7 +35,7 @@ public class Concert implements Comparable<Concert>, Serializable{
 
 
 	
-	public Concert(Logo imagen, String code, String name,int duration, int seats, float price) {
+	public Concert(String imagen, String code, String name,int duration, int seats, float price) {
 		this.imagen = imagen;
 		this.code = code;
 		this.name = name;
@@ -39,8 +44,41 @@ public class Concert implements Comparable<Concert>, Serializable{
 		this.price = price;
 
 	}
+	
+	public Concert(String code) {
+		this.code = code;
+		try {
+			Scanner sc = new Scanner(new File("resources\\data\\Concerts.csv"));
+			while(sc.hasNextLine()){
+		        String linea=sc.nextLine();
+		        String[] campos=linea.split(";");
+		        String logo = campos[0];
+		        String coder = campos[1];
+		        String name = campos[2];
+		        Integer duration = Integer.parseInt(campos[3]);
+		        Float price = Float.parseFloat(campos[5]);
+		        if (coder.equals(code)) {
+		        	this.imagen = logo;
+		        	this.name = name;
+		        	this.duration = duration;
+		        	this.seats= 92000;
+		        	this.price= price;
+		        }
+		        
+		        
+			}
+			
+			sc.close();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
-	public Logo getImagen() {
+	}
+
+	public String getImagen() {
 		return imagen;
 	}
 
@@ -113,7 +151,7 @@ public class Concert implements Comparable<Concert>, Serializable{
 		return 0;
 	}
 
-	public void setValueAt(Object aValue, int row, int column) { 
+	/*public void setValueAt(Object aValue, int row, int column) { 
         if (column == 5 && "Reservar".equals(aValue)) { 
             Concert concert = concert.get(row);
             if (concert.getRemainingSeats() > 0) {
@@ -129,6 +167,7 @@ public class Concert implements Comparable<Concert>, Serializable{
             }
         }
     }
+    */
 
     private String showAttendeeDialog(Concert concert) {
         // Aquí se puede implementar un cuadro de diálogo para capturar los detalles del asistente

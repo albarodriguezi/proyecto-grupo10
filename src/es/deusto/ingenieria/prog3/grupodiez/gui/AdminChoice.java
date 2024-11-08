@@ -65,15 +65,25 @@ import javax.swing.border.TitledBorder;
 	        	mainPanel.add(fondo);
 	        }
 	        
-	        AnadirConcierto add = new AnadirConcierto();
-	        add.setVisible(false);
+	        AnadirConcierto addC = new AnadirConcierto();
+	        addC.setVisible(false);
+	        
+	        AnadirFecha addD = new AnadirFecha();
+	        addD.setVisible(false);
 	        
 	        
 	      
 	        addConcert.addActionListener(new ActionListener() { 
 	        	  public void actionPerformed(ActionEvent e) { 
 	        		      
-	        		    add.setVisible(true);
+	        		    addC.setVisible(true);
+	        		    } 
+	        		} );
+	        
+	        addDate.addActionListener(new ActionListener() { 
+	        	  public void actionPerformed(ActionEvent e) { 
+	        		      
+	        		    addD.setVisible(true);
 	        		    } 
 	        		} );
 	        	
@@ -84,7 +94,7 @@ import javax.swing.border.TitledBorder;
 	        // Definir el título
 	        setTitle("AdminChoise");
 	        // Definir la operación por defecto al cerrar la ventana (terminar la aplicación)
-	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        // Ajustar el tamaño de la ventana (ancho, alto en píxeles)
 	        setSize(800, 600);
 	        // Definir el tamaño mínimo de la ventana (ancho, alto en píxeles)

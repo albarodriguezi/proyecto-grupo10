@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,6 +26,7 @@ import javax.swing.table.TableRowSorter;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+import es.deusto.ingenieria.prog3.grupodiez.main.MainDisponibilidadTicket;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 
 
@@ -40,6 +44,7 @@ public class ConcertsListRenderer extends JFrame {
         initTables();
         loadConcert();
         initGUI();
+
     }
 
     private void initGUI() {
@@ -79,6 +84,60 @@ public class ConcertsListRenderer extends JFrame {
         this.setVisible(true);
     }
     
+    KeyListener refresh = new KeyListener() {
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getKeyCode() == KeyEvent.VK_G && e.isControlDown()) {
+				System.out.println("a");
+				loadConcert();
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
+	
+	KeyListener admin = new KeyListener() {
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			
+			// TODO Auto-generated method stub
+			if(e.getKeyCode() == KeyEvent.VK_A && e.isControlDown()&&e.isAltDown()) {
+				System.out.println("b");
+				AdminChoice cal = new AdminChoice();
+	    		cal.setVisible(true);
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
+	
+	
+    
     // Método para redimensionar las imágenes
 
     private ImageIcon redimensionarImagen (ImageIcon icono, int ancho, int alto) {
@@ -93,59 +152,34 @@ public class ConcertsListRenderer extends JFrame {
 
     private void initTables() {
         Vector<String> cabeceraConcert = new Vector<>(Arrays.asList("LOGO","CODIGO", "NOMBRE", "DURACION", "TICKETS", "PRECIO"));
-        this.modeloDatosConcerts = new DefaultTableModel(new Vector<>(), cabeceraConcert);
+        this.modeloDatosConcerts = new DefaultTableModel(new Vector<>(), cabeceraConcert){
+        	
+			private static final long serialVersionUID = 1L;
+
+			@Override
+            public boolean isCellEditable(int row, int column) {
+               //all cells false
+               return false;
+            }
+        };
+        
         this.tablaConcert = new JTable(this.modeloDatosConcerts);
 
 		//Se define un CellRenderer para las celdas de las dos tabla usando una expresión lambda
 		TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
 			JLabel result = new JLabel(value.toString());
-						
+			
 			//Si el valor es de tipo Logo: se renderiza con la imagen centrada
-			if (value instanceof Logo) {
-				Logo e = (Logo) value;
+			
 				
 				
-				result.setText(e.toString());		
-				result.setToolTipText(e.toString());
-				result.setHorizontalAlignment(JLabel.CENTER);
+			
 
 			
 			    
-				if (column == 0) {
-					switch (e) { 
-						case ADELELIVE:
-							result.setIcon(new ImageIcon("resources/images/adele live.jpg"));
-							break;
-						case BELIEVETOUR:
-							result.setIcon(new ImageIcon("resources/images/Believe Tour.jpg"));
-							break;
-						case BORNTODIE:
-							result.setIcon(new ImageIcon("resources/images/born to die.jpg"));
-							break;
-						case ERASTOUR:
-							result.setIcon(new ImageIcon("resources/images/Eras Tour.jpg"));
-							break;
-						case FUTURENOSTALGIA:
-							result.setIcon(new ImageIcon("resources/images/future nostalgia.jpg"));
-							break;
-						case GUTSWORLTOUR:
-							result.setIcon(new ImageIcon("resources/images/guts world tour.jpg"));
-							break;
-						case MUSICOFTHESPHERE:
-							result.setIcon(new ImageIcon("resources/images/music of the sphere.jpg"));
-							break;
-						case ONTHEROADAGAIN:
-							result.setIcon(new ImageIcon("resources/images/on the road again.png"));
-							break;
-						case LOVEONTOUR:
-							result.setIcon(new ImageIcon("resources/images/love on tour.png"));
-							break;
-						case THEMATHEMATICSTOUR:
-							result.setIcon(new ImageIcon("resources/images/the mathematics tour.jpg"));
-							break;
-						default:
-				}
-				}
+			if (column == 0) {
+				result.setIcon(new ImageIcon(value.toString()));
+				
 			//Si el valor es numérico se renderiza centrado
 			} else if (value instanceof Number) {
 				result.setHorizontalAlignment(JLabel.CENTER);
@@ -162,9 +196,9 @@ public class ConcertsListRenderer extends JFrame {
 			//La filas pares e impares se renderizan de colores diferentes de la tabla de comics			
 			if (table.equals(tablaConcert)) {
 				if (row % 2 == 0) {
-					result.setBackground(new Color(230, 250, 250));
+					result.setBackground(new Color(255, 233, 244));
 				} else {
-					result.setBackground(new Color(190, 230, 220));
+					result.setBackground(new Color(248, 190, 255));
 				}
 			} 
 			
@@ -182,10 +216,12 @@ public class ConcertsListRenderer extends JFrame {
 		JComboBox<Logo> jComboEditorial = new JComboBox<>(Logo.values());		
 		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
 		
-		
-		this.tablaConcert.setRowHeight(40);//altira de las fila
+		this.tablaConcert.addKeyListener(refresh);
+		this.tablaConcert.addKeyListener(admin);
+		this.tablaConcert.setRowHeight(70);//altira de las fila
 		this.tablaConcert.getTableHeader().setReorderingAllowed(false);		//Se deshabilita la reordenación de columnas
-		this.tablaConcert.getTableHeader().setResizingAllowed(false);		//Se deshabilita el redimensionado de las columna
+		this.tablaConcert.getTableHeader().setResizingAllowed(false);//Se deshabilita el redimensionado de las columna
+		
 		this.tablaConcert.setAutoCreateRowSorter(true);		//Se definen criterios de ordenación por defecto para cada columna
 		//Se establecen los renderers al la cabecera y el contenido	
 		this.tablaConcert.setDefaultRenderer(Object.class, cellRenderer);
@@ -194,19 +230,19 @@ public class ConcertsListRenderer extends JFrame {
 		
 //-----------------------------------------------------------------------------como al seleccionar una fila se va a la pagina de fechas-----------------------------
 		this.tablaConcert.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.tablaConcert.getSelectionModel().addListSelectionListener(e -> {
-		    // Verifica que la selección no esté vacía
-		    if (tablaConcert.getSelectedRow() != -1) {
-		        // Obtiene el ID o el objeto necesario de la fila seleccionada
-		        int selectedRow = tablaConcert.getSelectedRow();
-		        int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Ejemplo: obtiene el ID desde la primera columna
-
-		        // Crea y muestra la ventana de DisponibilidadTocket pasando el ID del concierto
-		       // DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(concerts); 
-		        //disponibilidadTicket.setVisible(true);
-		    }
-		});
-    } 
+        this.tablaConcert.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { // Detecta doble clic
+                    int selectedRow = tablaConcert.getSelectedRow();
+                    if (selectedRow != -1) {
+                        //int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Obtiene el ID de la fila seleccionada
+                        MainDisponibilidadTicket maindisponibilidad = new MainDisponibilidadTicket(new Concert((tablaConcert.getValueAt(selectedRow, 1)).toString()));
+                        maindisponibilidad.setVisible(true);
+                    }
+                }
+            }
+        });
+    }
 
    
     
@@ -218,7 +254,7 @@ public class ConcertsListRenderer extends JFrame {
 			while(sc.hasNextLine()){
 		        String linea=sc.nextLine();
 		        String[] campos=linea.split(";");
-		        Logo logo = Logo.valueOf(campos[0]);
+		        String logo = campos[0];
 		        String code = campos[1];
 		        String name = campos[2];
 		        Integer duration = Integer.parseInt(campos[3]);
