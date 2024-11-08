@@ -21,7 +21,7 @@ import javax.swing.border.TitledBorder;
 
 public class AnadirConcierto extends JFrame {
 			
-			private JComboBox<String> jComboCategorias = new JComboBox<>();
+			//private JComboBox<String> jComboCategorias = new JComboBox<>();
 			private JButton jButtonConfirm = new JButton("Confirmar");
 			private JButton jButtonCancel = new JButton("Cancelar");
 			

@@ -196,9 +196,9 @@ public class ConcertsListRenderer extends JFrame {
 			//La filas pares e impares se renderizan de colores diferentes de la tabla de comics			
 			if (table.equals(tablaConcert)) {
 				if (row % 2 == 0) {
-					result.setBackground(new Color(230, 250, 250));
+					result.setBackground(new Color(255, 233, 244));
 				} else {
-					result.setBackground(new Color(190, 230, 220));
+					result.setBackground(new Color(248, 190, 255));
 				}
 			} 
 			
@@ -218,7 +218,7 @@ public class ConcertsListRenderer extends JFrame {
 		
 		this.tablaConcert.addKeyListener(refresh);
 		this.tablaConcert.addKeyListener(admin);
-		this.tablaConcert.setRowHeight(40);//altira de las fila
+		this.tablaConcert.setRowHeight(70);//altira de las fila
 		this.tablaConcert.getTableHeader().setReorderingAllowed(false);		//Se deshabilita la reordenación de columnas
 		this.tablaConcert.getTableHeader().setResizingAllowed(false);//Se deshabilita el redimensionado de las columna
 		
