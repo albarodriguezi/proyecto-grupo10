@@ -26,12 +26,14 @@ public class Fecha {
 		this.seats = seats;
 		
 	}
-/*
+
 	public Fecha (int dia, int mes, int ano, String code, int seats) {
 	this.fecha = LocalDate.of(ano, mes, dia);
 	this.code = code;
 	this.setSeats(seats);
-	}*/
+	}
+
+
 
 	public LocalDate getFecha() {
 		return fecha;
