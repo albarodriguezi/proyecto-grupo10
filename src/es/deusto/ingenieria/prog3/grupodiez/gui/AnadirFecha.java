@@ -51,6 +51,7 @@ public class AnadirFecha extends JFrame {
 				((TitledBorder)jPanelAddDate.getBorder()).setTitleColor(new Color(255,255,255));
 				jPanelAddDate.setLayout(new GridLayout(4, 1));
 				jPanelAddDate.setSize(500, 500);
+
 				
 				JPanel jPanelFecha = new JPanel(new GridLayout(1,3));
 				
@@ -79,7 +80,7 @@ public class AnadirFecha extends JFrame {
 				
 				
 				JPanel yearPanel = new JPanel(new BorderLayout());
-				JLabel yearText = new JLabel("Mes");
+				JLabel yearText = new JLabel("Año");
 				JTextField ano = new JTextField();
 				ano.setFont(new Font("Verdana",Font.BOLD,18));
 				ano.setEditable(true);
@@ -119,6 +120,7 @@ public class AnadirFecha extends JFrame {
 				add(jPanelAddDate);
 				
 				setSize(500,400);
+				setLocationRelativeTo(null);
 				
 				jButtonCancel.addActionListener(new ActionListener() { 
 		        	  public void actionPerformed(ActionEvent e) { 
