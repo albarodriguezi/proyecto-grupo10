@@ -193,7 +193,7 @@ public class ConcertsListRenderer extends JFrame {
 				}		
 			}
 			
-			//La filas pares e impares se renderizan de colores diferentes de la tabla de comics			
+			//La filas pares e impares se renderizan de colores diferentes de la tabla		
 			if (table.equals(tablaConcert)) {
 				if (row % 2 == 0) {
 					result.setBackground(new Color(255, 233, 244));
