@@ -1,6 +1,7 @@
 package es.deusto.ingenieria.prog3.grupodiez.gui;
 
 import java.awt.Component;
+import java.awt.event.MouseEvent;
 import java.util.EventObject;
 
 import javax.swing.AbstractCellEditor;
@@ -12,27 +13,26 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
-import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
-import es.deusto.ingenieria.prog3.grupodiez.main.Main;
+import es.deusto.ingenieria.prog3.grupodiez.main.MainDisponibilidadTicket;
 
 
 public class TicketBookingRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
-	private Fecha fecha;
 	private Concert concert;
-	private Main main;
+	/*private MainBooking mainbooking;
 	
-	public TicketBookingRenderer(Main main) {
-		this.main = main;
+	public TicketBookingRenderer(MainBooking mainbooking) {
+		this.mainbooking = mainbooking;
 	}
-	
+	*/
+
 	private JButton prepare(JTable table, Object value, boolean isSelected, int row, int column) {
 		concert = (Concert) value;
 		
-		JButton button = new JButton("Reservar");
+		JButton button = new JButton("Reservar"); //boton de reservar
 		button.setEnabled(true);
-		button.setToolTipText(String.format("Reservar - %s", concert.getCode()));				
+		button.setToolTipText(String.format("Reservar - %s", concert.getName()));				
 		button.setBackground(table.getBackground());
 		
 		if (isSelected) {
@@ -41,30 +41,30 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 		
 		button.addActionListener((e) -> {
 			//Se crea el cuadro de diálogo para confirmar la reserva
-			TicketBookingDialog dialog = new TicketBookingDialog(concert, fecha);
+			TicketBookingDialog dialog = new TicketBookingDialog(concert);
 			
+			/*
 			//Si hay datos de personas
-			if (dialog.getPassengers() != null && !dialog.getPassengers().isEmpty()) {
-				//Se realiza la reserva a través del servicio de la alianza de aerolíneas
-				String locator = main.getService(concert).book(concert.getCode(), dialog.getPassengers());
+			if (dialog.getAttendees() != null && !dialog.getAttendees().isEmpty()) {
+				//Se realiza la reserva
+				String locator = "Reserva exitosa";
 				
-				JOptionPane.showMessageDialog(main, 
+				JOptionPane.showMessageDialog(mainbooking, 
 						String.format("El localizador de la reserva es: %s", locator),
-						String.format("Confirmación de la reserva del vuelo %s", flight.getCode()),
+						String.format("Confirmación de la reserva del concierto %s", concert.getCode()),
 						JOptionPane.INFORMATION_MESSAGE,
 						new ImageIcon("resources/images/confirm.png"));
 								
-				//Se actualiza la lista de vuelos en la ventana principal
-				mainWindow.updateFlights();
+			
 			} else {
 			//Si no hay datos de personas se muestra un mensaje de error
-				JOptionPane.showMessageDialog(mainWindow, 
+				JOptionPane.showMessageDialog(mainbooking, 
 						"No se ha realizado la reserva. Faltan los datos de alguna persona.",
-						String.format("Reserva del vuelo %s no confirmada", flight.getCode()),
+						String.format("Reserva del concierto %s no confirmada", concert.getCode()),
 						JOptionPane.INFORMATION_MESSAGE,
 						new ImageIcon("resources/images/confirm.png"));
 			}
-			
+			*/
 			dialog.dispose();
 		});
 		
@@ -72,6 +72,7 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 		
 		return button;
 	}
+	
 	
 	@Override
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
@@ -85,7 +86,7 @@ public class TicketBookingRenderer extends AbstractCellEditor implements TableCe
 	
 	@Override
 	public Object getCellEditorValue() {
-		return flight;
+		return concert;
 	}
 	
     @Override

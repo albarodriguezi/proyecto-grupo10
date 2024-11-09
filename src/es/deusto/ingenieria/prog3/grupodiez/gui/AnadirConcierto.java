@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -20,7 +21,7 @@ import javax.swing.border.TitledBorder;
 
 public class AnadirConcierto extends JFrame {
 			
-			private JComboBox<String> jComboCategorias = new JComboBox<>();
+			//private JComboBox<String> jComboCategorias = new JComboBox<>();
 			private JButton jButtonConfirm = new JButton("Confirmar");
 			private JButton jButtonCancel = new JButton("Cancelar");
 			
@@ -98,34 +99,30 @@ public class AnadirConcierto extends JFrame {
 				
 				jButtonCancel.addActionListener(new ActionListener() { 
 		        	  public void actionPerformed(ActionEvent e) { 
-		        		      
+		        		    
 		        		    setVisible(false);
 		        		    } 
 		        		} );
 				
 				jButtonConfirm.addActionListener(new ActionListener() { 
 		        	  public void actionPerformed(ActionEvent e) { 
-		        		    String icon = icono.getText();
-		        		    String code = codigo.getText();
-		        		    String name = nombre.getText();
-		        		    String price = precio.getText();
-		        		    String duration = duracion.getText();
-		        		    
+		        		  	String icon = icono.getText();
+		        		  	String code = codigo.getText();
+		        		  	String name = nombre.getText();
+		        		  	String duration = duracion.getText();
+		        		  	String price = precio.getText();
 		        		    try {
-								FileWriter fw = new FileWriter("resources\\data\\Concerts.csv",true);
-								fw.append("\n"+icon+";"+code+";"+name+";"+duration+";"+price+";");
+								FileWriter fw=new FileWriter("resources\\data\\Concerts.csv",true);
+								fw.append("\nresources/images/"+icon+";"+code+";"+name+";"+duration+";"+price+";");
 								fw.close();
+								JOptionPane.showMessageDialog(null, "Successfull import");
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
-							} 
-		        		  
+							}
 		        		    
-		        		    setVisible(false);
 		        		    } 
 		        		} );
-				
-				
 				
 				
 				
