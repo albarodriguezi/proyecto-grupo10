@@ -38,6 +38,8 @@ public class AnadirConcierto extends JFrame {
 				jPanelAddConcert.setBorder(new TitledBorder("Datos del concierto"));
 				jPanelAddConcert.setLayout(new GridLayout(6, 1));
 				jPanelAddConcert.setSize(500, 500);
+
+
 				
 				JPanel iconPanel = new JPanel(new BorderLayout());
 				JLabel iconText = new JLabel("Icon (source)");
@@ -96,6 +98,7 @@ public class AnadirConcierto extends JFrame {
 				add(jPanelAddConcert);
 				
 				setSize(500,400);
+				setLocationRelativeTo(null);
 				
 				jButtonCancel.addActionListener(new ActionListener() { 
 		        	  public void actionPerformed(ActionEvent e) { 
