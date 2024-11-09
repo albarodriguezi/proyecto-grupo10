@@ -34,20 +34,12 @@ import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 
 public class DisponibilidadTicket extends DefaultTableModel {
 
-
-	
-	
-	
 	private static final long serialVersionUID = 1L;
 
 
 	private List<Concert> concerts;
 	private Fecha fecha;
-
-
-
 	private List<Fecha> fechas;
-
 	private JTable tablaFechas;
     private DefaultTableModel modeloDatosFechas ;
     private JTextField txtFiltro;
@@ -62,38 +54,15 @@ public class DisponibilidadTicket extends DefaultTableModel {
     		"RESERVAR"
     		);
 
+   
     //para añadir la disponibilidad:
-
-
-
-
-
-
-
-
-
-    //constructor con acceso a la lista de conciertos
-
-
-
-
-
-
-
-
-
-
-
-
     public DisponibilidadTicket (List<Fecha> concerts) {
     	this.fechas = concerts;
     	loadFechas();
     	}
 
 
-
-
-
+    //constructor con acceso a la lista de conciertos
     public DisponibilidadTicket (Concert fecha) {
     	this.concierto = fecha;
     	initTables();
@@ -113,14 +82,6 @@ public class DisponibilidadTicket extends DefaultTableModel {
     		return 0; //no aparece nada
 
     	}
-
-
-
-
-
-
-
-
     }
 
     @Override
