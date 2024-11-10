@@ -13,7 +13,8 @@ public class Reserva implements Serializable {
 	private LocalDate fecha;
 	private List<String> attendees;
 	private String nombreConcierto;
-	
+	private int ucode;
+	private static int unique= 010203;
 	private int cantidadAsientos; 
 	
 	
@@ -22,6 +23,8 @@ public class Reserva implements Serializable {
 		this.locator = locator;
 		this.fecha = fecha;
 		this.attendees = attendees;
+		this.ucode=unique;
+		unique++;
 	}
 	
 
@@ -83,6 +86,22 @@ public class Reserva implements Serializable {
 		return attendees.size();
 		
 	}
+
+
+
+	public static int getUnique() {
+		return unique;
+	}
+
+
+
+	public int getUcode() {
+		return ucode;
+	}
+
+
+
+
 	
 
 	

@@ -1,6 +1,7 @@
 package es.deusto.ingenieria.prog3.grupodiez.gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -151,7 +152,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
         //Se define un CellRenderer para las celdas de las dos tabla usando una expresión lambda
         TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
         	JLabel result = new JLabel(value.toString());
-
+        	
 
         	//La filas pares e impares se renderizan de colores diferentes de la tabla de comics
         	if (table.equals(tablaFechas)) {

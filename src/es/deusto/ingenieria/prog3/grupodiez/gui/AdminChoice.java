@@ -39,12 +39,12 @@ import javax.swing.border.TitledBorder;
 	        JButton addConcert =new JButton("Añadir Concierto");
 	        JButton addDate =new JButton("Añadir Fecha");
 	        
-	        addConcert.setBackground(Color.black);
-	        addConcert.setForeground(Color.white);
-	        addDate.setBackground(Color.black);
-	        addDate.setForeground(Color.white);
+	        addConcert.setBackground(new Color(255,233,244));
+	        addConcert.setForeground(Color.black);
+	        addDate.setBackground(new Color(255,233,244));
+	        addDate.setForeground(Color.black);
 	        
-	        
+	        //Intercalo distintos paneles de fondo con los botones
 	        mainPanel.setBackground(new Color(228, 157, 237));
 	        for (int i=1;i<8;i++) {
 	        	JLabel fondo=new JLabel("");
@@ -64,7 +64,7 @@ import javax.swing.border.TitledBorder;
 	        	JLabel fondo=new JLabel("");
 	        	mainPanel.add(fondo);
 	        }
-	        
+	        //Inicializo las pestañas de anadir pero se hacen visibles los listeners de los botones
 	        AnadirConcierto addC = new AnadirConcierto();
 	        addC.setVisible(false);
 	        
@@ -96,7 +96,7 @@ import javax.swing.border.TitledBorder;
 	        // Definir la operación por defecto al cerrar la ventana (terminar la aplicación)
 	        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        // Ajustar el tamaño de la ventana (ancho, alto en píxeles)
-	        setSize(800, 600);
+	        setSize(500, 300);
 	        // Definir el tamaño mínimo de la ventana (ancho, alto en píxeles)
 	        setMinimumSize(new Dimension(500, 300));
 	        // Definir el tamaño máximo de la ventana (ancho, alto en píxeles)
@@ -117,7 +117,7 @@ import javax.swing.border.TitledBorder;
 		
 		
 		
-		public static void main(String[] args) {
+		/*public static void main(String[] args) {
 	        // Crear la ventana en el hilo de eventos de Swing para no bloquear
 	    	// el hilo de ejecución principal
 	    	SwingUtilities.invokeLater(() -> {
@@ -130,5 +130,6 @@ import javax.swing.border.TitledBorder;
 	    		
 	        });
 	    }
+	    */
 	
 }

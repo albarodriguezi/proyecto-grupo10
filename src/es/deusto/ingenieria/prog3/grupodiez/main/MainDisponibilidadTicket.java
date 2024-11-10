@@ -1,6 +1,7 @@
 package es.deusto.ingenieria.prog3.grupodiez.main;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class MainDisponibilidadTicket extends JFrame{
 	public MainDisponibilidadTicket(Concert c) {
 		
 		this.concerts = c;//definimos la lista de los conciertos
-		
+		setBackground(Color.pink);
 		//jComboConcerts.setPrototypeDisplayValue("Selecciona un concierto");
 		List<Fecha> fechas = new ArrayList<>(); // Este es el lugar donde deberías añadir las fechas
         DefaultTableModel model = new DisponibilidadTicket(concerts).getModeloDatosFechas();
@@ -73,8 +74,11 @@ public class MainDisponibilidadTicket extends JFrame{
         jTableFechas.setModel(model);
         jTableFechas.setVisible(true);;
 
-        // Asignar renderers a las columnas necesarias
+        // Asignar renderers a las columnas 
         jTableFechas.getColumnModel().getColumn(0).setCellRenderer(new DisponibilidadticketRenderer());
+        jTableFechas.getColumnModel().getColumn(1).setCellRenderer(new DisponibilidadticketRenderer());
+        jTableFechas.getColumnModel().getColumn(2).setCellRenderer(new DisponibilidadticketRenderer());
+        jTableFechas.getColumnModel().getColumn(3).setCellRenderer(new DisponibilidadticketRenderer());
         jTableFechas.getColumnModel().getColumn(4).setCellRenderer(new DisponibilidadticketRenderer());
         jTableFechas.getColumnModel().getColumn(5).setCellRenderer(new DisponibilidadticketRenderer());
 
@@ -85,7 +89,7 @@ public class MainDisponibilidadTicket extends JFrame{
         
         // Configurar el JPanel para la búsqueda
         JPanel pSearch = new JPanel();
-        pSearch.setBorder(new TitledBorder("Busqueda de fechas"));
+        pSearch.setBackground(new Color(255,150,200));
         pSearch.setLayout(new GridLayout(1,1));
 
         
@@ -117,7 +121,7 @@ public class MainDisponibilidadTicket extends JFrame{
 		};
 		
 		this.jTableFechas.addKeyListener(refresh);
-		
+		//this.jTableFechas.setBackground(new Color(255,233,244));
 		this.jTableFechas.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 1) { // Detecta doble clic
@@ -131,16 +135,17 @@ public class MainDisponibilidadTicket extends JFrame{
                 }
             }
         });
-        
+		JScrollPane scroll=new JScrollPane(jTableFechas);
+		scroll.setForeground(new Color(255, 233, 244));
         // Añadir componentes al JFrame
         add(pSearch, BorderLayout.NORTH);
-        add(new JScrollPane(jTableFechas), BorderLayout.CENTER);
-        add(jLabelInfo, BorderLayout.SOUTH);
+        add(scroll, BorderLayout.CENTER);
+        //add(jLabelInfo, BorderLayout.SOUTH);
         
         
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//definimos que se cierre al pesataña al salir de ella
         setTitle("Fechas conciertos");//definimos el titulo de la ventana
-        setSize(1400,800);//definimos el tamaño de la ventana
+        setSize(1000,300);//definimos el tamaño de la ventana
         setLocationRelativeTo(null);//definimos que la ventana se encuentre en el centro de la pantalla del ordenador
         setVisible(true);//definimos que se pueda ver la pantalla
     }
@@ -149,6 +154,9 @@ public class MainDisponibilidadTicket extends JFrame{
 	public void setRenderer(JTable t) {
 		
 	     t.setVisible(true);
+	     t.getColumnModel().getColumn(1).setCellRenderer(new DisponibilidadticketRenderer());
+	     t.getColumnModel().getColumn(2).setCellRenderer(new DisponibilidadticketRenderer());
+	     t.getColumnModel().getColumn(3).setCellRenderer(new DisponibilidadticketRenderer());
 	     t.getColumnModel().getColumn(0).setCellRenderer(new DisponibilidadticketRenderer());
 	     t.getColumnModel().getColumn(4).setCellRenderer(new DisponibilidadticketRenderer());
 	     t.getColumnModel().getColumn(5).setCellRenderer(new DisponibilidadticketRenderer());

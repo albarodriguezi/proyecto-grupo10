@@ -1,6 +1,7 @@
 package es.deusto.ingenieria.prog3.grupodiez.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -44,13 +45,15 @@ public class TicketBookingDialog extends JDialog {
 	private List<String> attendees = null; //lista de asistentes vacia por default
 	
 	public TicketBookingDialog(Fecha fecha) {
+		setBackground(new Color(255, 233, 244));
 		this.setFecha(fecha);
 		HashMap<String,Concert> indice=AnadirFecha.readConcert();
 		this.concert = indice.get(fecha.getCode());
-		
+		System.out.println(concert);
 		JPanel jPanelConcert = new JPanel(); //panel en la ventana
 		jPanelConcert.setBorder(new TitledBorder("Datos del concierto")); //borde para añadir nombre
 		jPanelConcert.setLayout(new GridLayout(4, 1)); //gridlayout para 5 elementos uno debajo del otro
+		jPanelConcert.setBackground(new Color(255, 233, 244));
 
 		JLabel jLabelConcert = new JLabel(String.format(concert.getName())); //etiqueta con el nombre del concierto
 		jLabelConcert.setIcon(new ImageIcon(String.format("resources/images/%s.png", concert.getName()))); //poner la imagen del concierto en la etiqueta segun el nombre del mismo
@@ -67,13 +70,19 @@ public class TicketBookingDialog extends JDialog {
       		    } 
       		} );
 		
+		jButtonConfirm.setBackground(new Color(255,233,244));
+		jButtonConfirm.setForeground(Color.black);
+        jButtonCancel.setBackground(new Color(255,233,244));
+        jButtonCancel.setForeground(Color.black);
+		
 		JPanel jPanelAttendees = new JPanel(); //otro panel para datos personales
 		jPanelAttendees.setBorder(new TitledBorder("Datos personales")); //borde nombre
 		jPanelAttendees.setLayout(new GridLayout(3, 1));//3 elementos
+		jPanelAttendees.setBackground(new Color(255, 233, 244));
 		
 		int remainingTickets = concert.getSeats()- fecha.getReserva().size();  //calcular los tickets restantes para que no puedan elegir mas tickets de los que quedan	
-		jSpinnerTickets = new JSpinner(new SpinnerNumberModel(1, 1, remainingTickets, 1)); //spinner para que puedan elegir el numero de tickets
-		//formato --> (valor inicial = 1, valor minimo = 1, valor maximo = tickets que quedan, incremento = 1)
+		jSpinnerTickets = new JSpinner(new SpinnerNumberModel(1, 1, 4, 1)); //spinner para que puedan elegir el numero de tickets
+		//formato --> (valor inicial = 1, valor minimo = 1, valor maximo = 4, incremento = 1)
 	
 		
 				jSpinnerTickets.addChangeListener((e) -> { //listener para cada vez que se cambia el numero de tickets en jspinner
@@ -102,7 +111,7 @@ public class TicketBookingDialog extends JDialog {
 
 				jComboAttendees.addItem("- Indique los datos de la personas -");//insertar elementos en combo
 				jComboAttendees.addItem("1 - ¿?"); //por default se inserta 1 persona
-				
+				jComboAttendees.setBackground(new Color(255, 233, 244));
 			
 				jComboAttendees.addActionListener((e) -> { //cuando el usuario selecciona un item del combo
 					int position = ((JComboBox<?>) e.getSource()).getSelectedIndex(); //posicion del item seleccionado
@@ -157,7 +166,7 @@ public class TicketBookingDialog extends JDialog {
 				
 				//paneles para nombrar los elementos
 				JPanel jPanelTickets = new JPanel(new FlowLayout(FlowLayout.LEFT)); 
-				jPanelTickets.add(new JLabel(String.format("N.º billetes (1 - %d): ", remainingTickets)));
+				jPanelTickets.add(new JLabel(String.format("N.º billetes (1 - 4): ", remainingTickets)));
 				jPanelTickets.add(jSpinnerTickets);
 				
 				JPanel jPanelNames = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -166,7 +175,7 @@ public class TicketBookingDialog extends JDialog {
 				
 				JPanel jPanelAmount = new JPanel(new FlowLayout(FlowLayout.LEFT));
 				jPanelAmount.add(jLabelAmount);
-				
+				jPanelAttendees.setBackground(new Color(255, 233, 244));
 				jPanelAttendees.add(jPanelTickets);
 				jPanelAttendees.add(jPanelNames);
 				jPanelAttendees.add(jPanelAmount);
@@ -186,10 +195,13 @@ public class TicketBookingDialog extends JDialog {
 							updatePassengers();
 							System.out.println(tbd.getAttendees());
 							List<String> att = tbd.getAttendees();
+							System.out.println(att);
 							String atts ="";
 							for (String s:att) {
-								atts=s+",";
+								atts=atts+s+":";
+								System.out.println(att.size());
 							}
+							System.out.println(atts);
 							String loc = concert.getCode();
 							String fec = tbd.fecha.getFecha().toString();
 							String con = tbd.concert.getName();

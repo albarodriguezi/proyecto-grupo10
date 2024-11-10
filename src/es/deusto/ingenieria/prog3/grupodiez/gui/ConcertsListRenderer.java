@@ -10,6 +10,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,12 +40,17 @@ public class ConcertsListRenderer extends JFrame {
     private JTable tablaConcert;
     private DefaultTableModel modeloDatosConcerts;
     private JTextField txtFiltro;
-
+    
+    
+    
+    
     public ConcertsListRenderer(List<Concert> concerts) {
         this.concerts = concerts;
         initTables();
         loadConcert();
         initGUI();
+        setLayout(new BorderLayout());
+        
 
     }
 
@@ -76,6 +83,8 @@ public class ConcertsListRenderer extends JFrame {
         JPanel panelConcert = new JPanel();
         panelConcert.setLayout(new BorderLayout());
         panelConcert.add(BorderLayout.CENTER, scrollPaneConcerts);
+        panelConcert.add(BorderLayout.SOUTH, new JLabel("Todas las imagenes pertenecen a Ticketmaster"));
+        
         this.getContentPane().add(panelConcert);
         this.setTitle("Concerts");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -96,8 +105,13 @@ public class ConcertsListRenderer extends JFrame {
 		public void keyPressed(KeyEvent e) {
 			// TODO Auto-generated method stub
 			if(e.getKeyCode() == KeyEvent.VK_G && e.isControlDown()) {
-				System.out.println("a");
-				loadConcert();
+				Thread ref=new Thread() {
+					public void run(){
+						loadConcert();
+						
+					}
+				};
+				ref.run();
 			}
 		}
 
@@ -121,11 +135,16 @@ public class ConcertsListRenderer extends JFrame {
 		public void keyPressed(KeyEvent e) {
 			
 			// TODO Auto-generated method stub
+			Thread adm=new Thread() {
+				public void run(){
 			if(e.getKeyCode() == KeyEvent.VK_A && e.isControlDown()&&e.isAltDown()) {
 				System.out.println("b");
 				AdminChoice cal = new AdminChoice();
 	    		cal.setVisible(true);
 			}
+				}
+			};
+			adm.run();
 		}
 
 		@Override
@@ -137,7 +156,37 @@ public class ConcertsListRenderer extends JFrame {
 	};
 	
 	
-    
+	KeyListener reserve = new KeyListener() {
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			
+			// TODO Auto-generated method stub
+			Thread reser=new Thread() {
+				public void run(){
+			if(e.getKeyCode() == KeyEvent.VK_T && e.isControlDown()) {
+				VentanaReservas res = new VentanaReservas();
+	    		res.setVisible(true);
+			}
+				}
+			};
+			reser.run();
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
     // Método para redimensionar las imágenes
 
     private ImageIcon redimensionarImagen (ImageIcon icono, int ancho, int alto) {
@@ -151,6 +200,12 @@ public class ConcertsListRenderer extends JFrame {
     }
 
     private void initTables() {
+    	try {
+			new FileWriter("resources\\data\\Reservas.csv",false).close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         Vector<String> cabeceraConcert = new Vector<>(Arrays.asList("LOGO","CODIGO", "NOMBRE", "DURACION", "TICKETS", "PRECIO"));
         this.modeloDatosConcerts = new DefaultTableModel(new Vector<>(), cabeceraConcert){
         	
@@ -218,6 +273,7 @@ public class ConcertsListRenderer extends JFrame {
 		
 		this.tablaConcert.addKeyListener(refresh);
 		this.tablaConcert.addKeyListener(admin);
+		this.tablaConcert.addKeyListener(reserve);
 		this.tablaConcert.setRowHeight(70);//altira de las fila
 		this.tablaConcert.getTableHeader().setReorderingAllowed(false);		//Se deshabilita la reordenación de columnas
 		this.tablaConcert.getTableHeader().setResizingAllowed(false);//Se deshabilita el redimensionado de las columna
@@ -258,7 +314,7 @@ public class ConcertsListRenderer extends JFrame {
 		        String code = campos[1];
 		        String name = campos[2];
 		        Integer duration = Integer.parseInt(campos[3]);
-		        Float price = Float.parseFloat(campos[4]);
+		        Float price = Float.parseFloat(campos[5]);
 		        conciertos.add(new Concert(logo,code,name,duration,92000,price));
 		        
 			}

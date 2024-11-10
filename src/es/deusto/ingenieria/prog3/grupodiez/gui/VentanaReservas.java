@@ -3,6 +3,7 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,6 +43,7 @@ public class VentanaReservas extends JFrame {
         
         //tabla d reservas en un panel con scroll
         JScrollPane SPReservas = new JScrollPane(this.tablaReservas);
+        SPReservas.setBackground(new Color(255,233,244));
         SPReservas.setBorder(new TitledBorder("Reservas"));
         this.tablaReservas.setFillsViewportHeight(true);
 
@@ -85,20 +87,21 @@ public class VentanaReservas extends JFrame {
         JPanel panelBusqueda = new JPanel();
         panelBusqueda.add(new JLabel("Buscar: "));
         panelBusqueda.add(textoBusqueda);
+        panelBusqueda.setBackground(new Color(255,233,244));
 
         
         //el layout del panel princilap
         JPanel panelPrincipal = new JPanel(new BorderLayout());
         panelPrincipal.add(BorderLayout.CENTER, SPReservas); //añadirle la tabla de reservas en medio
         panelPrincipal.add(BorderLayout.NORTH, panelBusqueda); //la parte de la busqueda al principio
-
+        panelPrincipal.setBackground(new Color(255,233,244));
         
         this.getContentPane().setLayout(new GridLayout(1, 1));
         this.getContentPane().add(panelPrincipal);
-        
+        this.setBackground(new Color(255,233,244));
         this.setTitle("Reservas");
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
+        this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        this.setSize(700, 300);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         
@@ -131,7 +134,7 @@ public class VentanaReservas extends JFrame {
 		//tamaños
 		this.tablaReservas.setRowHeight(35);
 		this.tablaReservas.getColumnModel().getColumn(0).setPreferredWidth(100);
-		this.tablaReservas.getColumnModel().getColumn(1).setPreferredWidth(300);
+		this.tablaReservas.getColumnModel().getColumn(1).setPreferredWidth(200);
 		this.tablaReservas.getColumnModel().getColumn(2).setPreferredWidth(100);
 		this.tablaReservas.getColumnModel().getColumn(3).setPreferredWidth(50);
 
@@ -139,6 +142,9 @@ public class VentanaReservas extends JFrame {
 		
 		
         //
+		this.tablaReservas.getColumn("Código Reserva").setCellRenderer(new NormalRenderer());
+		this.tablaReservas.getColumn("Concierto").setCellRenderer(new NormalRenderer());
+		this.tablaReservas.getColumn("Fecha").setCellRenderer(new NormalRenderer());
         this.tablaReservas.getColumn("").setCellRenderer(new ButtonRenderer());
         this.tablaReservas.getColumn("").setCellEditor(new ButtonEditor(new JCheckBox(), reservas));
         
@@ -183,7 +189,7 @@ public class VentanaReservas extends JFrame {
 		        System.out.println(linea);
 		        LocalDate ldate=LocalDate.of(Integer.parseInt(datedet[0]),Integer.parseInt(datedet[1]),Integer.parseInt(datedet[2]));
 		        String strAtt = campos[3];
-		        String[] attdet= strAtt.split(",");
+		        String[] attdet= strAtt.split(":");
 		        ArrayList<String> nombre = new ArrayList<String>();
 		        for (String s:attdet) {
 		        	if (!s.equals("")) {
@@ -218,7 +224,7 @@ public class VentanaReservas extends JFrame {
             if (reserva.getLocator().contains(filtro) || c.getName().contains(filtro)) {
             	
                 this.modeloDatosReservas.addRow(new Object[] {
-                    reserva.getLocator(),
+                    reserva.getUcode(),
                     c.getName(),
                     reserva.getFecha(),
                     "Ver Detalles"
@@ -322,6 +328,41 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         setText((value == null) ? "Ver Detalles" : value.toString());
+        if (row % 2 != 0) {
+			setBackground(new Color(255, 233, 244));
+		} else {
+			setBackground(new Color(248, 190, 255));
+		}
+        return this;
+        
+    }  
+}
+
+class NormalRenderer extends JLabel implements TableCellRenderer {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public NormalRenderer() { setOpaque(true); }
+    
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    	
+    	
+    	if (column==1) {
+    		setText((String)value);
+    	}else {
+    		setText(value.toString());
+    	}
+    	setFont(new Font("DIN",Font.BOLD,12));
+    	setHorizontalAlignment(JLabel.CENTER);
+    	
+        if (row % 2 == 0) {
+			setBackground(new Color(255, 233, 244));
+		} else {
+			setBackground(new Color(248, 190, 255));
+		}
         return this;
         
     }  
@@ -348,10 +389,9 @@ class ButtonEditor extends DefaultCellEditor {
             public void actionPerformed(ActionEvent e) {
                 Reserva reserva = reservas.get(rowIndex);
                 
-                JOptionPane.showMessageDialog(botonMasInformacion, "Código:"+ reserva.getLocator() +"\n" 
-                + "Concierto: " + AnadirFecha.readConcert().get(reserva.getLocator()).getName() + "\n" 
+                JOptionPane.showMessageDialog(botonMasInformacion, "Código:"+ reserva.getUcode() + "\n" 
                 + "Fecha: " + reserva.getFecha() + "\n" 
-                + "Asistentes: " +  String.join(", ", reserva.getAttendees()),
+                + "Asistentes:\n- " +  String.join("\n- ", reserva.getAttendees()),
                 
                 "Detalles de Reserva", 
                 JOptionPane.PLAIN_MESSAGE
