@@ -130,33 +130,42 @@ public class AnadirFecha extends JFrame {
 		        		} );
 				
 				jButtonConfirm.addActionListener(new ActionListener() { 
-		        	  public void actionPerformed(ActionEvent e) { 
-		        		  	String day = dia.getText();
-		        		  	String code = codigo.getText();
-		        		  	String month = mes.getText();
-		        		  	String year = ano.getText();
-		        		  	String seat = asiento.getText();
-		        		  	if (readConcert().containsKey(code)) {
-		        		    try {
-								FileWriter fw=new FileWriter("resources\\data\\Fecha.csv",true);
-								fw.append("\n"+day+";"+month+";"+year+";"+code+";"+seat+";");
-								fw.close();
-								JOptionPane.showMessageDialog(null, "Succesfull import");
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-		        		  	}else {
-		        		  	
-		        		  		JOptionPane.showMessageDialog(null, "Code not found");
-		        		  		
-		        		  	}
-		        		    
-		        		    } 
-		        		} );
-				
-				
-				
+					public void actionPerformed(ActionEvent e) { 
+						Thread add=new Thread() {
+							public void run(){
+								String day = dia.getText();
+								String code = codigo.getText();
+								String month = mes.getText();
+								String year = ano.getText();
+								String seat = asiento.getText();
+								if (readConcert().containsKey(code)) {
+									try {
+										FileWriter fw=new FileWriter("resources\\data\\Fecha.csv",true);
+										fw.append("\n"+day+";"+month+";"+year+";"+code+";"+seat+";");
+										fw.close();
+										JOptionPane.showMessageDialog(null, "Succesfull import");
+									} catch (IOException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+								}else {
+
+									JOptionPane.showMessageDialog(null, "Code not found");
+
+								}
+							    }
+
+						
+						};
+						add.run();
+					};
+
+
+				}
+						);
+
+
+
 			}
 			
 			public static HashMap<String,Concert> readConcert(){

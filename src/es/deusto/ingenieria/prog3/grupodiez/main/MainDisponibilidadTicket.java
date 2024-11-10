@@ -120,7 +120,7 @@ public class MainDisponibilidadTicket extends JFrame{
 		
 		this.jTableFechas.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) { // Detecta doble clic
+                if (e.getClickCount() == 1) { // Detecta doble clic
                     int selectedRow = jTableFechas.getSelectedRow();
                     int selectedColumn = jTableFechas.getSelectedColumn();
                     if (selectedColumn == 5) {

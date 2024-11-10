@@ -6,10 +6,13 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -30,9 +33,9 @@ public class VentanaReservas extends JFrame {
     private DefaultTableModel modeloDatosReservas;
 
 
-    public VentanaReservas(List<Reserva> reservas) {
+    public VentanaReservas() {
     	
-        this.reservas = reservas;
+        this.reservas = getReservas();
         this.initTables();
         this.filtroReservas("");
 
@@ -112,6 +115,11 @@ public class VentanaReservas extends JFrame {
         Vector<String> cabecera = new Vector<>(Arrays.asList("Código Reserva", "Concierto", "Fecha", ""));
         
         this.modeloDatosReservas = new DefaultTableModel(new Vector<>(), cabecera) {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			
 
 			
@@ -136,7 +144,7 @@ public class VentanaReservas extends JFrame {
         
 
         // cargar las reservas
-        cargarReservas(this.reservas);
+        cargarReservas(getReservas());
         
         
 			
@@ -153,7 +161,7 @@ public class VentanaReservas extends JFrame {
         
             modeloDatosReservas.addRow(new Object[] {
             	reserva.getLocator(), 
-                reserva.getFecha().getConcert().getName(), 
+            	AnadirFecha.readConcert().get(reserva.getLocator()).getName(), 
                 reserva.getFecha(), 
                 "Ver Detalles" //la ultima columna, la que no tenia titulo, sera la del boton de ver los detalles
             });
@@ -161,6 +169,43 @@ public class VentanaReservas extends JFrame {
         }
     }
 
+    private ArrayList<Reserva> getReservas(){
+    	ArrayList<Reserva> reservas=new ArrayList<Reserva>();
+    	Scanner sc;
+		try {
+			sc = new Scanner(new File("resources\\data\\Reservas.csv"));
+			while(sc.hasNextLine()){
+		        String linea=sc.nextLine();
+		        String[] campos=linea.split(";");
+		        String code = campos[0];
+		        String date = campos[2];
+		        String[] datedet= date.split("-");
+		        System.out.println(linea);
+		        LocalDate ldate=LocalDate.of(Integer.parseInt(datedet[0]),Integer.parseInt(datedet[1]),Integer.parseInt(datedet[2]));
+		        String strAtt = campos[3];
+		        String[] attdet= strAtt.split(",");
+		        ArrayList<String> nombre = new ArrayList<String>();
+		        for (String s:attdet) {
+		        	if (!s.equals("")) {
+		        		nombre.add(s);
+		        	}
+		        }
+		        
+		       //List<String>
+		        //Integer duration = Integer.parseInt(campos[3]);
+		        Reserva r =new Reserva(code,AnadirFecha.readConcert().get(code),ldate,nombre);
+		        reservas.add(r);
+		        
+		        
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return reservas;
+    	
+    }
     
     
     private void filtroReservas(String filtro) {
@@ -168,12 +213,14 @@ public class VentanaReservas extends JFrame {
         
         //podremos filtrar tanto por el codigo de la reserva, como por el nombre del concierto
         this.reservas.forEach(reserva -> {;
-            if (reserva.getLocator().contains(filtro) || reserva.getConcert().getName().contains(filtro)) {
+        System.out.println(reserva.getLocator());
+        Concert c= AnadirFecha.readConcert().get(reserva.getLocator());
+            if (reserva.getLocator().contains(filtro) || c.getName().contains(filtro)) {
             	
                 this.modeloDatosReservas.addRow(new Object[] {
                     reserva.getLocator(),
-                    reserva.getConcert().getName(),
-                    reserva.getFecha().getFecha(),
+                    c.getName(),
+                    reserva.getFecha(),
                     "Ver Detalles"
                 });
                 
@@ -247,7 +294,7 @@ public class VentanaReservas extends JFrame {
 		
 
 		//crear las reservas
-		reservas.add(new Reserva(fecha1.getConcert().getCode(), fecha1.getConcert(), fecha1, lista1));
+		/*reservas.add(new Reserva(fecha1.getConcert().getCode(), fecha1.getConcert(), fecha1, lista1));
 		reservas.add(new Reserva(fecha2.getConcert().getCode(), fecha2.getConcert(), fecha2, lista2));
 		reservas.add(new Reserva(fecha3.getConcert().getCode(), fecha3.getConcert(), fecha3, lista3));
 		reservas.add(new Reserva(fecha4.getConcert().getCode(), fecha4.getConcert(), fecha4, lista4));
@@ -260,8 +307,8 @@ public class VentanaReservas extends JFrame {
 		reservas.add(new Reserva(fecha11.getConcert().getCode(), fecha11.getConcert(), fecha11, lista11));
 		reservas.add(new Reserva(fecha12.getConcert().getCode(), fecha12.getConcert(), fecha12, lista12));
         
-		
-        SwingUtilities.invokeLater(() -> new VentanaReservas(reservas).setVisible(true));
+		*/
+        SwingUtilities.invokeLater(() -> new VentanaReservas().setVisible(true));
    
     }
 }
@@ -302,8 +349,8 @@ class ButtonEditor extends DefaultCellEditor {
                 Reserva reserva = reservas.get(rowIndex);
                 
                 JOptionPane.showMessageDialog(botonMasInformacion, "Código:"+ reserva.getLocator() +"\n" 
-                + "Concierto: " + reserva.getFecha().getConcert().getName() + "\n" 
-                + "Fecha: " + reserva.getFecha().getFecha() + "\n" 
+                + "Concierto: " + AnadirFecha.readConcert().get(reserva.getLocator()).getName() + "\n" 
+                + "Fecha: " + reserva.getFecha() + "\n" 
                 + "Asistentes: " +  String.join(", ", reserva.getAttendees()),
                 
                 "Detalles de Reserva", 

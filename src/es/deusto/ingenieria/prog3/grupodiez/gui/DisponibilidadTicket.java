@@ -217,6 +217,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
     	try {
     		Scanner sc = new Scanner(new File("resources\\data\\Fecha.csv"));
     		while(sc.hasNextLine()){
+    			//System.out.println(sc.nextLine());
     			String linea=sc.nextLine();
     			String[] campos=linea.split(";");
     			Integer dia = Integer.parseInt(campos[0]);

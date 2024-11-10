@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +33,6 @@ public class TicketBookingDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private Fecha fecha;
 	private Concert concert;
-	
 	private JSpinner jSpinnerTickets = new JSpinner(); //spinner para el numero de tickets
 	private JComboBox<String> jComboAttendees = new JComboBox<>(); //elegir el numero de asistentes
 	private JLabel jLabelAmount = new JLabel(); //etiqueta
@@ -175,6 +176,35 @@ public class TicketBookingDialog extends JDialog {
 				jButtonConfirm.addActionListener((e) -> {
 					updatePassengers();
 					setVisible(false);
+				});
+				
+				jButtonCancel.addActionListener((e) -> setVisible(false));
+				jButtonConfirm.addActionListener((e) -> {
+					TicketBookingDialog tbd= this;
+					Thread add=new Thread() {
+						public void run(){
+							updatePassengers();
+							System.out.println(tbd.getAttendees());
+							List<String> att = tbd.getAttendees();
+							String atts ="";
+							for (String s:att) {
+								atts=s+",";
+							}
+							String loc = concert.getCode();
+							String fec = tbd.fecha.getFecha().toString();
+							String con = tbd.concert.getName();
+
+							try {
+								FileWriter fw=new FileWriter("resources\\data\\Reservas.csv",true);
+								fw.append(loc+";"+con+";"+fec+";"+atts+";\n");
+								fw.close();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					};
+					add.run();
 				});
 				
 				JPanel jPanelButtons = new JPanel();

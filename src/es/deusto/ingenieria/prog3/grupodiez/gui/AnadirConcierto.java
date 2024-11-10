@@ -116,7 +116,7 @@ public class AnadirConcierto extends JFrame {
 		        		  	String price = precio.getText();
 		        		    try {
 								FileWriter fw=new FileWriter("resources\\data\\Concerts.csv",true);
-								fw.append("\nresources/images/"+icon+";"+code+";"+name+";"+duration+";"+price+";");
+								fw.append("\nresources/images/"+icon+";"+code+";"+name+";"+duration+";92000;"+price+";");
 								fw.close();
 								JOptionPane.showMessageDialog(null, "Successfull import");
 							} catch (IOException e1) {

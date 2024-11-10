@@ -1,6 +1,7 @@
 package es.deusto.ingenieria.prog3.grupodiez.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,18 +10,16 @@ public class Reserva implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String locator; 
-	private Concert concert; 
-	private Fecha fecha;
+	private LocalDate fecha;
 	private List<String> attendees;
 	private String nombreConcierto;
 	
 	private int cantidadAsientos; 
 	
 	
-	public Reserva(String locator, Concert concert, Fecha fecha, List<String> attendees) {
+	public Reserva(String locator, Concert concert, LocalDate fecha, List<String> attendees) {
 		super();
 		this.locator = locator;
-		this.concert = concert;
 		this.fecha = fecha;
 		this.attendees = attendees;
 	}
@@ -35,19 +34,12 @@ public class Reserva implements Serializable {
 		this.locator = locator;
 	}
 
-	public Concert getConcert() {
-		return concert;
-	}
 
-	public void setConcert(Concert concert) {
-		this.concert = concert;
-	}
-
-	public Fecha getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Fecha fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
@@ -61,7 +53,7 @@ public class Reserva implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(attendees, concert, locator);
+		return Objects.hash(attendees,  locator);
 	}
 
 	@Override
@@ -73,7 +65,7 @@ public class Reserva implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Reserva other = (Reserva) obj;
-		return Objects.equals(attendees, other.attendees) && Objects.equals(concert, other.concert)
+		return Objects.equals(attendees, other.attendees) 
 				&& Objects.equals(locator, other.locator);
 	}
 
