@@ -1,4 +1,4 @@
-Archivo para ejecutar:main.java en la carpeta main
+Archivo para ejecutar:main.java en la carpeta main\n
 Desde main:
 -Doble click en un concierto para consultar sus fechas
 -Ctrl+Alt+A:Abre la pestaña de añadir fechas o conciertos
