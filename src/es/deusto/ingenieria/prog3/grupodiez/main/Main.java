@@ -11,6 +11,7 @@ import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 import es.deusto.ingenieria.prog3.grupodiez.gui.ConcertsListRenderer;
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 
 
@@ -64,7 +65,7 @@ public class Main{
 
 		List<Concert> concerts = new ArrayList<>();
 		List<Fecha> fechas = new ArrayList<>();
-		
+		GestorBD gbd = new GestorBD();
 		/*concerts.add(AdeleLive);
 		concerts.add(BelieveTour);
 		concerts.add(BornToDie);
@@ -76,6 +77,6 @@ public class Main{
 		concerts.add(OnTheRoadAgain);
 		concerts.add(TheMathematicsTour);*/
 		
-		SwingUtilities.invokeLater(() -> new ConcertsListRenderer(concerts));
+		SwingUtilities.invokeLater(() -> new ConcertsListRenderer(concerts,gbd));
 	}	
 }

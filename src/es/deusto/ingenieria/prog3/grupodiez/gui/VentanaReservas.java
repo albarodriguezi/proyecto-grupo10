@@ -25,6 +25,7 @@ import javax.swing.table.TableCellRenderer;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Reserva;
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class VentanaReservas extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -32,10 +33,11 @@ public class VentanaReservas extends JFrame {
     private JTable tablaReservas;
     private JTextField textoBusqueda;
     private DefaultTableModel modeloDatosReservas;
+    private GestorBD gestorBD;
 
 
-    public VentanaReservas() {
-    	
+    public VentanaReservas(GestorBD gbd) {
+    	this.gestorBD = gbd;
         this.reservas = getReservas();
         this.initTables();
         this.filtroReservas("");
@@ -314,7 +316,7 @@ public class VentanaReservas extends JFrame {
 		reservas.add(new Reserva(fecha12.getConcert().getCode(), fecha12.getConcert(), fecha12, lista12));
         
 		*/
-        SwingUtilities.invokeLater(() -> new VentanaReservas().setVisible(true));
+        SwingUtilities.invokeLater(() -> new VentanaReservas(new GestorBD()).setVisible(true));
    
     }
 }

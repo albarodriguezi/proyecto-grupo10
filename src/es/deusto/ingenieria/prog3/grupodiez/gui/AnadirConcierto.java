@@ -21,6 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
+
 public class AnadirConcierto extends JDialog {
 			
 			/**
@@ -30,11 +32,11 @@ public class AnadirConcierto extends JDialog {
 			//private JComboBox<String> jComboCategorias = new JComboBox<>();
 			private JButton jButtonConfirm = new JButton("Confirmar");
 			private JButton jButtonCancel = new JButton("Cancelar");
+			private GestorBD gestorBD;
 			
-			
-			public AnadirConcierto() {
+			public AnadirConcierto(GestorBD gbd) {
 				
-				
+				gestorBD = gbd;
 				
 				setTitle("Concierto");
 				setFont(new Font("DIN",Font.BOLD,12));
@@ -169,7 +171,7 @@ public class AnadirConcierto extends JDialog {
 		    	SwingUtilities.invokeLater(() -> {
 		    		// Crear una instancia de EjemploLayouts y hacerla visible
 		    		
-		    		AnadirConcierto add = new AnadirConcierto();
+		    		AnadirConcierto add = new AnadirConcierto(new GestorBD());
 		    		add.setVisible(true);
 		    		
 		        });
