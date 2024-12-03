@@ -288,8 +288,11 @@ public class GestorBD {
 				List<String> attendees = r.getAttendees();
 				String atts ="";
 				for (String s:attendees) {
+					if (s!= "") {
 					atts=atts+s+":";
+					}
 				}
+				System.out.println(r.getNombreConcierto());
 				stmt.setString(4,atts);
 				//stmt.toString();
 				if (1 == stmt.executeUpdate()) {					
@@ -324,7 +327,7 @@ public class GestorBD {
 			
 			//Se recorre el ResultSet y se crean objetos Cliente
 			while (rs.next()) {
-				concierto = new Concert(rs.getString("IMAGE"), rs.getString("ID"), rs.getString("NAME"),rs.getInt("DURATION"),rs.getInt("TICKETS"),rs.getFloat("PRECIO"));
+				concierto = new Concert(rs.getString("IMAGE"), rs.getString("ID"), rs.getString("NAME"),rs.getInt("DURATION"),rs.getInt("TICKETS"),rs.getFloat("PRICE"));
 				
 				
 				//Se inserta cada nuevo cliente en la lista de clientes
@@ -381,7 +384,7 @@ public class GestorBD {
 		
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     PreparedStatement stmt = con.prepareStatement("SELECT * FROM FECHA")) {
+		     PreparedStatement stmt = con.prepareStatement("SELECT * FROM RESERVA")) {
 			//String sql = "SELECT * FROM CLIENTE WHERE ID >= 0";
 			
 			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
@@ -390,6 +393,7 @@ public class GestorBD {
 			
 			//Se recorre el ResultSet y se crean objetos Cliente
 			while (rs.next()) {
+				System.out.println(rs.toString());
 				String att = rs.getString("ATTENDEES");
 				String[] attdet= att.split(":");
 		        ArrayList<String> nombre = new ArrayList<String>();
@@ -458,7 +462,11 @@ public class GestorBD {
     		// Crear una instancia de EjemploLayouts y hacerla visible
     		GestorBD bd = new GestorBD();
     		bd.crearBBDD();
+    		bd.obtenerConciertos();
+    		bd.obtenerFechas();
+    		bd.obtenerReservas();
     		bd.borrarBBDD();
+    		
     		//AnadirConcierto add = new AnadirConcierto();
     		//add.setVisible(true);
     		
