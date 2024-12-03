@@ -1,5 +1,7 @@
 package es.deusto.ingenieria.prog3.grupodiez.persistence;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -8,12 +10,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import javax.swing.SwingUtilities;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Reserva;
+import es.deusto.ingenieria.prog3.grupodiez.gui.AnadirFecha;
 
 public class GestorBD {
 
@@ -51,13 +58,14 @@ public class GestorBD {
 	                + " YEAR INTEGER NOT NULL,\n"
 	                + " CONCERTID TEXT NOT NULL,\n"
 	                + " SEATSLEFT INT NOT NULL\n"
-	                + " FOREIGN KEY(CONCERTID));";
+	                + " FOREIGN KEY (CONCERTID) REFERENCES CONCIERTO(ID) ON DELETE CASCADE;"
+					+ ");";
 	
 			String sql3 = "CREATE TABLE IF NOT EXISTS RESERVA (\n"
 					+ " CONCERTID TEXT NOT NULL,\n"
 					+ " CONCERTNAME TEXT NOT NULL,\n"
 	                + " FECHA DATE NOT NULL,\n"
-	                + " FOREIGN KEY(CONCERTID) REFERENCES Comic(id) ON DELETE CASCADE\n"
+	                + " FOREIGN KEY (CONCERTID) REFERENCES CONCIERTO(ID) ON DELETE CASCADE\n"
 	                + " ATTENDEES TEXT NOT NULL,\n"
 	                + ");";
 			
@@ -75,8 +83,100 @@ public class GestorBD {
 			} catch (Exception ex) {
 				System.out.println(String.format("Error al crear las tablas: %s", ex.getMessage()));
 			}
+			
+			
+			ArrayList<Concert> conciertos = new ArrayList<Concert>();
+	    	try {
+				Scanner sc = new Scanner(new File("resources\\data\\Concerts.csv"));
+				while(sc.hasNextLine()){
+			        String linea=sc.nextLine();
+			        String[] campos=linea.split(";");
+			        String logo = campos[0];
+			        String code = campos[1];
+			        String name = campos[2];
+			        Integer duration = Integer.parseInt(campos[3]);
+			        Float price = Float.parseFloat(campos[5]);
+			        conciertos.add(new Concert(logo,code,name,duration,92000,price));
+			        
+				}
+				
+				sc.close();
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	
+	    	insertarDatos(conciertos.toArray(new Concert[conciertos.size()]));
+	    	
+	    	ArrayList<Fecha> fechasc = new ArrayList<Fecha>();
+	    	try {
+	    		Scanner sc = new Scanner(new File("resources\\data\\Fecha.csv"));
+	    		while(sc.hasNextLine()){
+	    			//System.out.println(sc.nextLine());
+	    			String linea=sc.nextLine();
+	    			String[] campos=linea.split(";");
+	    			Integer dia = Integer.parseInt(campos[0]);
+	    			Integer mes = Integer.parseInt(campos[1]);
+	    			Integer ano = Integer.parseInt(campos[2]);
+	    			String code = campos[3];
+	    			Integer seats = Integer.parseInt(campos[4]);
+	    			//if (code.equals(concierto.getCode())) {
+	    				//System.out.println("a");
+	    				fechasc.add(new Fecha(dia,mes,ano,code,seats));
+	    			//}
+	       
+	       
+	    		}
+
+	    		sc.close();
+
+	    	} catch (FileNotFoundException e) {
+	    		// TODO Auto-generated catch block
+	    		e.printStackTrace();
+	    	}
+	    	
+	    	insertarDatos(fechasc.toArray(new Fecha[fechasc.size()]));
+	    	
+	    	ArrayList<Reserva> reservas=new ArrayList<Reserva>();
+			try {
+				Scanner sc = new Scanner(new File("resources\\data\\Reservas.csv"));
+				while(sc.hasNextLine()){
+			        String linea=sc.nextLine();
+			        String[] campos=linea.split(";");
+			        String code = campos[0];
+			        String date = campos[2];
+			        String[] datedet= date.split("-");
+			        System.out.println(linea);
+			        LocalDate ldate=LocalDate.of(Integer.parseInt(datedet[0]),Integer.parseInt(datedet[1]),Integer.parseInt(datedet[2]));
+			        String strAtt = campos[3];
+			        String[] attdet= strAtt.split(":");
+			        ArrayList<String> nombre = new ArrayList<String>();
+			        for (String s:attdet) {
+			        	if (!s.equals("")) {
+			        		nombre.add(s);
+			        	}
+			        }
+			        
+			       //List<String>
+			        //Integer duration = Integer.parseInt(campos[3]);
+			        Reserva r =new Reserva(code,AnadirFecha.readConcert().get(code),ldate,nombre);
+			        reservas.add(r);
+			        
+			        
+				}
+				sc.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	
+	    	insertarDatos(reservas.toArray(new Reserva[conciertos.size()]));
+			
+	    }
 		//}
-	}
+	//}
+
 	
 	public void borrarBBDD() {
 		//Se abre la conexión y se obtiene el Statement
@@ -325,18 +425,34 @@ public class GestorBD {
 		}		
 	}*/
 	
-	public void borrarDatos() {
+	public void borrarReservas() {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     PreparedStatement stmt = con.prepareStatement("DELETE FROM CLIENTE;")) {
+		     PreparedStatement stmt = con.prepareStatement("DELETE FROM RESERVA;")) {
 			//Se ejecuta la sentencia de borrado de datos
 			//String sql = "DELETE FROM CLIENTE;";			
 			int result = stmt.executeUpdate();
 			
-			System.out.format("\n\n- Se han borrado %d clientes", result);
+			System.out.format("\n\n- Se han borrado %d reservas", result);
 		} catch (Exception ex) {
 			System.err.format("\n\n* Error al borrar datos de la BBDD: %s", ex.getMessage());
 			ex.printStackTrace();						
 		}		
 	}	
+	
+	
+	public static void main(String[] args) {
+        // Crear la ventana en el hilo de eventos de Swing para no bloquear
+    	// el hilo de ejecución principal
+    	SwingUtilities.invokeLater(() -> {
+    		// Crear una instancia de EjemploLayouts y hacerla visible
+    		GestorBD bd = new GestorBD();
+    		bd.crearBBDD();
+    		
+    		//AnadirConcierto add = new AnadirConcierto();
+    		//add.setVisible(true);
+    		
+        });
+    }
 }
+

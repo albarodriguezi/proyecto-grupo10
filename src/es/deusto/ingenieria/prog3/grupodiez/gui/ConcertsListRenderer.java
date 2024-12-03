@@ -29,6 +29,7 @@ import javax.swing.table.TableRowSorter;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 import es.deusto.ingenieria.prog3.grupodiez.main.MainDisponibilidadTicket;
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 
 
@@ -40,7 +41,7 @@ public class ConcertsListRenderer extends JFrame {
     private JTable tablaConcert;
     private DefaultTableModel modeloDatosConcerts;
     private JTextField txtFiltro;
-    
+    private GestorBD gestorBD;
     
     
     

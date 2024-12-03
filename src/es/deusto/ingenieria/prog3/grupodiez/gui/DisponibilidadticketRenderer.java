@@ -25,10 +25,12 @@ import javax.swing.table.TableCellRenderer;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class DisponibilidadticketRenderer implements TableCellRenderer{
-	
+	private GestorBD gestorBD;
 	@Override
+	
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		JLabel label = new JLabel();
 		label.setBackground(table.getBackground());

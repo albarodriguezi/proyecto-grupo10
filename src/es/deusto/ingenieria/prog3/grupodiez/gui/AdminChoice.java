@@ -20,11 +20,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
+
 
 
 
 
 	public class AdminChoice extends JFrame {
+		
+		private GestorBD gestorBD;
 
 	    private static final long serialVersionUID = 1L;
 

@@ -30,6 +30,7 @@ import javax.swing.table.TableRowSorter;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 
 
@@ -44,7 +45,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 	private JTable tablaFechas;
     private DefaultTableModel modeloDatosFechas ;
     private JTextField txtFiltro;
-
+    private GestorBD gestorBD;
     private Concert concierto;
     private final List<String> headers = Arrays.asList(
     		"FECHA", //fecha del concierto

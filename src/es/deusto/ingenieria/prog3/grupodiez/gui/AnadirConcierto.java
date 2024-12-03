@@ -21,6 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
+
 public class AnadirConcierto extends JDialog {
 			
 			/**
@@ -30,7 +32,7 @@ public class AnadirConcierto extends JDialog {
 			//private JComboBox<String> jComboCategorias = new JComboBox<>();
 			private JButton jButtonConfirm = new JButton("Confirmar");
 			private JButton jButtonCancel = new JButton("Cancelar");
-			
+			private GestorBD gestorBD;
 			
 			public AnadirConcierto() {
 				

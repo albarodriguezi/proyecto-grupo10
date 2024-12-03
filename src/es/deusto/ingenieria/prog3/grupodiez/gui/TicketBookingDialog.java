@@ -29,6 +29,7 @@ import javax.swing.border.TitledBorder;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class TicketBookingDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -39,6 +40,7 @@ public class TicketBookingDialog extends JDialog {
 	private JLabel jLabelAmount = new JLabel(); //etiqueta
 	private JButton jButtonConfirm = new JButton("Confirmar"); //boton de confirmar
 	private JButton jButtonCancel = new JButton("Cancelar"); //boton de cancelar
+	private GestorBD gestorBD;
 	
 	private int tickets = 1; //numero de asientos (tickets) por default 1
 	
