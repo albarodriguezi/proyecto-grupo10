@@ -27,6 +27,16 @@ public class Reserva implements Serializable {
 		unique++;
 	}
 	
+	public Reserva(String locator, String concert, LocalDate fecha, List<String> attendees) {
+		super();
+		this.nombreConcierto = concert;
+		this.locator = locator;
+		this.fecha = fecha;
+		this.attendees = attendees;
+		this.ucode=unique;
+		unique++;
+	}
+	
 
 
 	public String getLocator() {
