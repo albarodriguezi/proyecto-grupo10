@@ -36,8 +36,8 @@ public class VentanaReservas extends JFrame {
     private GestorBD gestorBD;
 
 
-    public VentanaReservas() {
-    	
+    public VentanaReservas(GestorBD gbd) {
+    	this.gestorBD = gbd;
         this.reservas = getReservas();
         this.initTables();
         this.filtroReservas("");
@@ -316,7 +316,7 @@ public class VentanaReservas extends JFrame {
 		reservas.add(new Reserva(fecha12.getConcert().getCode(), fecha12.getConcert(), fecha12, lista12));
         
 		*/
-        SwingUtilities.invokeLater(() -> new VentanaReservas().setVisible(true));
+        SwingUtilities.invokeLater(() -> new VentanaReservas(new GestorBD()).setVisible(true));
    
     }
 }

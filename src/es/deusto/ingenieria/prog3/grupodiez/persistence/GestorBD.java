@@ -57,16 +57,16 @@ public class GestorBD {
 	                + " MONTH INTEGER NOT NULL,\n"
 	                + " YEAR INTEGER NOT NULL,\n"
 	                + " CONCERTID TEXT NOT NULL,\n"
-	                + " SEATSLEFT INT NOT NULL\n"
-	                + " FOREIGN KEY (CONCERTID) REFERENCES CONCIERTO(ID) ON DELETE CASCADE;"
+	                + " SEATSLEFT INT NOT NULL,\n"
+	                + " FOREIGN KEY (CONCERTID) REFERENCES CONCIERTO(ID) ON DELETE CASCADE\n"
 					+ ");";
 	
 			String sql3 = "CREATE TABLE IF NOT EXISTS RESERVA (\n"
 					+ " CONCERTID TEXT NOT NULL,\n"
 					+ " CONCERTNAME TEXT NOT NULL,\n"
 	                + " FECHA DATE NOT NULL,\n"
-	                + " FOREIGN KEY (CONCERTID) REFERENCES CONCIERTO(ID) ON DELETE CASCADE\n"
 	                + " ATTENDEES TEXT NOT NULL,\n"
+	                + " FOREIGN KEY (CONCERTID) REFERENCES CONCIERTO(ID) ON DELETE CASCADE\n"
 	                + ");";
 			
 	        //Se abre la conexión y se crea un PreparedStatement para crer cada tabla
@@ -241,7 +241,7 @@ public class GestorBD {
 	public void insertarDatos(Fecha... fechas) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     PreparedStatement stmt = con.prepareStatement("INSERT INTO FECHA (DAY, MONTH, YEAR,CONCIERTOID,SEATSLEFT) VALUES (?, ?, ?,?,?);")) {
+		     PreparedStatement stmt = con.prepareStatement("INSERT INTO FECHA (DAY, MONTH, YEAR,CONCERTID,SEATSLEFT) VALUES (?, ?, ?,?,?);")) {
 			//Se define la plantilla de la sentencia SQL
 			//String sql = "INSERT INTO CLIENTE (NAME, EMAIL, PASSWORD) VALUES ('%s', '%s', '%s');";
 			
@@ -270,14 +270,18 @@ public class GestorBD {
 	public void insertarDatos(Reserva... reservas) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     PreparedStatement stmt = con.prepareStatement("INSERT INTO CONCIERTO (CONCERTID, CONCERTNAME, FECHA,ATTENDEES) VALUES (?, ?, ?,?);")) {
+		     PreparedStatement stmt = con.prepareStatement("INSERT INTO RESERVA (CONCERTID, CONCERTNAME, FECHA,ATTENDEES) VALUES (?, ?, ?,?);")) {
 			//Se define la plantilla de la sentencia SQL
 			//String sql = "INSERT INTO CLIENTE (NAME, EMAIL, PASSWORD) VALUES ('%s', '%s', '%s');";
 			
-			System.out.print("\n- Insertando conciertos...");
+			System.out.print("\n- Insertando reservas...");
 			
 			//Se recorren los clientes y se insertan uno a uno
+			if (reservas.length!=0) {
+			System.out.println(reservas.length);
+			
 			for (Reserva r : reservas) {
+				if(r!=null) {
 				stmt.setString(1,r.getLocator());
 				stmt.setString(2,r.getNombreConcierto());
 				stmt.setDate(3,Date.valueOf(r.getFecha()));
@@ -293,7 +297,13 @@ public class GestorBD {
 				} else {
 					System.out.format("\n - No se ha insertado la reserva: %s", r.toString());
 				}
-			}			
+			}else {
+				//System.out.println("a");
+			}
+			}
+			}else {
+				System.out.println("No reservations");
+			}
 		} catch (Exception ex) {
 			System.err.format("\n* Error al insertar datos de la BBDD: %s", ex.getMessage());
 			ex.printStackTrace();						
@@ -448,7 +458,7 @@ public class GestorBD {
     		// Crear una instancia de EjemploLayouts y hacerla visible
     		GestorBD bd = new GestorBD();
     		bd.crearBBDD();
-    		
+    		bd.borrarBBDD();
     		//AnadirConcierto add = new AnadirConcierto();
     		//add.setVisible(true);
     		

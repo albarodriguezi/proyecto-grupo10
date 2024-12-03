@@ -46,8 +46,9 @@ public class TicketBookingDialog extends JDialog {
 	
 	private List<String> attendees = null; //lista de asistentes vacia por default
 	
-	public TicketBookingDialog(Fecha fecha) {
+	public TicketBookingDialog(Fecha fecha,GestorBD gbd) {
 		setBackground(new Color(255, 233, 244));
+		this.gestorBD = gbd;
 		this.setFecha(fecha);
 		HashMap<String,Concert> indice=AnadirFecha.readConcert();
 		this.concert = indice.get(fecha.getCode());
@@ -276,7 +277,8 @@ public class TicketBookingDialog extends JDialog {
 		    	// el hilo de ejecución principal
 		    	SwingUtilities.invokeLater(() -> {
 		    		// Crear una instancia de EjemploLayouts y hacerla visible
-		    		TicketBookingDialog cal = new TicketBookingDialog(new Fecha(4,5,2026,"123456",92000));
+		    		
+		    		TicketBookingDialog cal = new TicketBookingDialog(new Fecha(4,5,2026,"123456",92000),new GestorBD());
 		    		cal.setVisible(true);
 		    		
 		    		//AnadirConcierto add = new AnadirConcierto();

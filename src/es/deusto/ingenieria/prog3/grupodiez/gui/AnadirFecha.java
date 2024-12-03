@@ -39,9 +39,9 @@ public class AnadirFecha extends JDialog {
 			private JButton jButtonCancel = new JButton("Cancelar");
 			private GestorBD gestorBD;
 			
-			public AnadirFecha() {
+			public AnadirFecha(GestorBD gbd) {
 				
-				
+				gestorBD = gbd;
 				
 				setTitle("Conciertos");
 				
@@ -223,7 +223,7 @@ public class AnadirFecha extends JDialog {
 		    	SwingUtilities.invokeLater(() -> {
 		    		// Crear una instancia de EjemploLayouts y hacerla visible
 		    		
-		    		AnadirFecha add = new AnadirFecha();
+		    		AnadirFecha add = new AnadirFecha(new GestorBD());
 		    		add.setVisible(true);
 		    		//System.out.println(AnadirFecha.readConcert());
 		    		

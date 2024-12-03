@@ -45,8 +45,9 @@ public class ConcertsListRenderer extends JFrame {
     
     
     
-    public ConcertsListRenderer(List<Concert> concerts) {
+    public ConcertsListRenderer(List<Concert> concerts,GestorBD gbd) {
         this.concerts = concerts;
+        this.gestorBD = gbd;
         initTables();
         loadConcert();
         initGUI();
@@ -140,7 +141,7 @@ public class ConcertsListRenderer extends JFrame {
 				public void run(){
 			if(e.getKeyCode() == KeyEvent.VK_A && e.isControlDown()&&e.isAltDown()) {
 				System.out.println("b");
-				AdminChoice cal = new AdminChoice();
+				AdminChoice cal = new AdminChoice(gestorBD);
 	    		cal.setVisible(true);
 			}
 				}
@@ -172,7 +173,7 @@ public class ConcertsListRenderer extends JFrame {
 			Thread reser=new Thread() {
 				public void run(){
 			if(e.getKeyCode() == KeyEvent.VK_T && e.isControlDown()) {
-				VentanaReservas res = new VentanaReservas();
+				VentanaReservas res = new VentanaReservas(gestorBD);
 	    		res.setVisible(true);
 			}
 				}
@@ -293,7 +294,7 @@ public class ConcertsListRenderer extends JFrame {
                     int selectedRow = tablaConcert.getSelectedRow();
                     if (selectedRow != -1) {
                         //int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Obtiene el ID de la fila seleccionada
-                        MainDisponibilidadTicket maindisponibilidad = new MainDisponibilidadTicket(new Concert((tablaConcert.getValueAt(selectedRow, 1)).toString()));
+                        MainDisponibilidadTicket maindisponibilidad = new MainDisponibilidadTicket((new Concert((tablaConcert.getValueAt(selectedRow, 1)).toString())),gestorBD);
                         maindisponibilidad.setVisible(true);
                     }
                 }

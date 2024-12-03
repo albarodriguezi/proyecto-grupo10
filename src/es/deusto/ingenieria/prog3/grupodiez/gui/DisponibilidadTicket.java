@@ -58,14 +58,16 @@ public class DisponibilidadTicket extends DefaultTableModel {
 
    
     //para añadir la disponibilidad:
-    public DisponibilidadTicket (List<Fecha> concerts) {
+    public DisponibilidadTicket (List<Fecha> concerts,GestorBD gbd) {
+    	this.gestorBD = gbd;
     	this.fechas = concerts;
     	loadFechas();
     	}
 
 
     //constructor con acceso a la lista de conciertos
-    public DisponibilidadTicket (Concert fecha) {
+    public DisponibilidadTicket (Concert fecha,GestorBD gbd) {
+    	this.gestorBD = gbd;
     	this.concierto = fecha;
     	initTables();
     	loadFechas();
@@ -198,7 +200,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
         int idConcierto = (int) tablaFechas.getValueAt(selectedRow, 1); // Ejemplo: obtiene el ID desde la primera columna
 
         // Crea y muestra la ventana de DisponibilidadTocket pasando el ID del concierto
-        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(fechas);
+        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(fechas,gestorBD);
         disponibilidadTicket.setVisible(true);
         }
         });
