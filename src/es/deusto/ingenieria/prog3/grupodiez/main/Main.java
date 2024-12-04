@@ -66,6 +66,8 @@ public class Main{
 		List<Concert> concerts = new ArrayList<>();
 		List<Fecha> fechas = new ArrayList<>();
 		GestorBD gbd = new GestorBD();
+		gbd.crearBBDD();
+		//gbd.borrarBBDD();
 		/*concerts.add(AdeleLive);
 		concerts.add(BelieveTour);
 		concerts.add(BornToDie);
