@@ -20,16 +20,20 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
+
 
 
 
 
 	public class AdminChoice extends JFrame {
+		
+		private GestorBD gestorBD;
 
 	    private static final long serialVersionUID = 1L;
 
-		public AdminChoice() {
-			
+		public AdminChoice(GestorBD gbd) {
+			this.gestorBD = gbd;
 			
 	        // Crear un panel principal con un GridLayout para organizar los otros paneles
 	        // El panel tiene 2 filas y 2 columnas, con 10 píxeles de separación horizontal y vertical
@@ -65,10 +69,10 @@ import javax.swing.border.TitledBorder;
 	        	mainPanel.add(fondo);
 	        }
 	        //Inicializo las pestañas de anadir pero se hacen visibles los listeners de los botones
-	        AnadirConcierto addC = new AnadirConcierto();
+	        AnadirConcierto addC = new AnadirConcierto(gestorBD);
 	        addC.setVisible(false);
 	        
-	        AnadirFecha addD = new AnadirFecha();
+	        AnadirFecha addD = new AnadirFecha(gestorBD);
 	        addD.setVisible(false);
 	        
 	        

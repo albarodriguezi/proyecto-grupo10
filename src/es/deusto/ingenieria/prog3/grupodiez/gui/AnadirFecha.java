@@ -27,6 +27,7 @@ import javax.swing.border.TitledBorder;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class AnadirFecha extends JDialog {
 			
@@ -36,11 +37,11 @@ public class AnadirFecha extends JDialog {
 	private static final long serialVersionUID = 1L;
 			private JButton jButtonConfirm = new JButton("Confirmar");
 			private JButton jButtonCancel = new JButton("Cancelar");
+			private GestorBD gestorBD;
 			
-			
-			public AnadirFecha() {
+			public AnadirFecha(GestorBD gbd) {
 				
-				
+				gestorBD = gbd;
 				
 				setTitle("Conciertos");
 				
@@ -222,7 +223,7 @@ public class AnadirFecha extends JDialog {
 		    	SwingUtilities.invokeLater(() -> {
 		    		// Crear una instancia de EjemploLayouts y hacerla visible
 		    		
-		    		AnadirFecha add = new AnadirFecha();
+		    		AnadirFecha add = new AnadirFecha(new GestorBD());
 		    		add.setVisible(true);
 		    		//System.out.println(AnadirFecha.readConcert());
 		    		

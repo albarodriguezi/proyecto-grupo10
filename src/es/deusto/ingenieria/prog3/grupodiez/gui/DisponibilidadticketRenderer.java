@@ -25,10 +25,15 @@ import javax.swing.table.TableCellRenderer;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class DisponibilidadticketRenderer implements TableCellRenderer{
-	
+	private GestorBD gestorBD;
+	public DisponibilidadticketRenderer(GestorBD gbd) {
+		this.gestorBD = gbd;
+	}
 	@Override
+	
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		JLabel label = new JLabel();
 		label.setBackground(table.getBackground());
@@ -88,7 +93,7 @@ public class DisponibilidadticketRenderer implements TableCellRenderer{
 			reserva.addActionListener(new ActionListener() { 
 	        	  public void actionPerformed(ActionEvent e) { 
 	        		  	System.out.println(value);
-	        		    TicketBookingDialog tbd=new TicketBookingDialog((Fecha) value);
+	        		    TicketBookingDialog tbd=new TicketBookingDialog((Fecha) value,gestorBD);
 	        		    tbd.setVisible(true);
 	        		    } 
 	        		} );

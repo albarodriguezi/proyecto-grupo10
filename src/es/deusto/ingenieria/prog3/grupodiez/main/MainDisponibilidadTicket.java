@@ -50,37 +50,38 @@ import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 import es.deusto.ingenieria.prog3.grupodiez.gui.DisponibilidadTicket;
 import es.deusto.ingenieria.prog3.grupodiez.gui.DisponibilidadticketRenderer;
 import es.deusto.ingenieria.prog3.grupodiez.gui.TicketBookingDialog;
+import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class MainDisponibilidadTicket extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	private Concert concerts;
-	
+	private GestorBD gestorBD;
 	private JTable jTableFechas =  new JTable();//creamos una nueva JTable para las fehcas de los conciertos
 	private JLabel jLabelInfo = new JLabel(" Selecciona un concierto");//definimos el titulo de la JTable 
 	private JComboBox<String> jComboConcerts = new JComboBox<>();//no la necesitamos
 	private JButton jBtnSearch = new JButton("Busqueda de fechas por concierto");//no lo necesitamos
 
 	
-	public MainDisponibilidadTicket(Concert c) {
-		
+	public MainDisponibilidadTicket(Concert c,GestorBD gbd) {
+		this.gestorBD = gbd;
 		this.concerts = c;//definimos la lista de los conciertos
 		setBackground(Color.pink);
 		//jComboConcerts.setPrototypeDisplayValue("Selecciona un concierto");
 		List<Fecha> fechas = new ArrayList<>(); // Este es el lugar donde deberías añadir las fechas
-        DefaultTableModel model = new DisponibilidadTicket(concerts).getModeloDatosFechas();
+        DefaultTableModel model = new DisponibilidadTicket(concerts,gestorBD).getModeloDatosFechas();
         //System.out.println(model.getRowCount());
         //System.out.println(model.getRowCount());
         jTableFechas.setModel(model);
         jTableFechas.setVisible(true);;
 
         // Asignar renderers a las columnas 
-        jTableFechas.getColumnModel().getColumn(0).setCellRenderer(new DisponibilidadticketRenderer());
-        jTableFechas.getColumnModel().getColumn(1).setCellRenderer(new DisponibilidadticketRenderer());
-        jTableFechas.getColumnModel().getColumn(2).setCellRenderer(new DisponibilidadticketRenderer());
-        jTableFechas.getColumnModel().getColumn(3).setCellRenderer(new DisponibilidadticketRenderer());
-        jTableFechas.getColumnModel().getColumn(4).setCellRenderer(new DisponibilidadticketRenderer());
-        jTableFechas.getColumnModel().getColumn(5).setCellRenderer(new DisponibilidadticketRenderer());
+        jTableFechas.getColumnModel().getColumn(0).setCellRenderer(new DisponibilidadticketRenderer(gestorBD));
+        jTableFechas.getColumnModel().getColumn(1).setCellRenderer(new DisponibilidadticketRenderer(gestorBD));
+        jTableFechas.getColumnModel().getColumn(2).setCellRenderer(new DisponibilidadticketRenderer(gestorBD));
+        jTableFechas.getColumnModel().getColumn(3).setCellRenderer(new DisponibilidadticketRenderer(gestorBD));
+        jTableFechas.getColumnModel().getColumn(4).setCellRenderer(new DisponibilidadticketRenderer(gestorBD));
+        jTableFechas.getColumnModel().getColumn(5).setCellRenderer(new DisponibilidadticketRenderer(gestorBD));
 
         // Configurar la tabla
         jTableFechas.setRowHeight(40);
@@ -106,7 +107,7 @@ public class MainDisponibilidadTicket extends JFrame{
 				// TODO Auto-generated method stub
 				if(e.getKeyCode() == KeyEvent.VK_G && e.isControlDown()) {
 					System.out.println("a");
-					DefaultTableModel newModel=new DisponibilidadTicket(concerts).getModeloDatosFechas();
+					DefaultTableModel newModel=new DisponibilidadTicket(concerts,gestorBD).getModeloDatosFechas();
 					jTableFechas.setModel(newModel);
 					setRenderer(jTableFechas);
 				}
@@ -129,7 +130,7 @@ public class MainDisponibilidadTicket extends JFrame{
                     int selectedColumn = jTableFechas.getSelectedColumn();
                     if (selectedColumn == 5) {
                         //int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Obtiene el ID de la fila seleccionada
-                    	TicketBookingDialog tbd=new TicketBookingDialog((Fecha) jTableFechas.getModel().getValueAt(selectedRow, selectedColumn));
+                    	TicketBookingDialog tbd=new TicketBookingDialog((Fecha) jTableFechas.getModel().getValueAt(selectedRow, selectedColumn),gestorBD);
 	        		    tbd.setVisible(true);
                     }
                 }
@@ -154,12 +155,12 @@ public class MainDisponibilidadTicket extends JFrame{
 	public void setRenderer(JTable t) {
 		
 	     t.setVisible(true);
-	     t.getColumnModel().getColumn(1).setCellRenderer(new DisponibilidadticketRenderer());
-	     t.getColumnModel().getColumn(2).setCellRenderer(new DisponibilidadticketRenderer());
-	     t.getColumnModel().getColumn(3).setCellRenderer(new DisponibilidadticketRenderer());
-	     t.getColumnModel().getColumn(0).setCellRenderer(new DisponibilidadticketRenderer());
-	     t.getColumnModel().getColumn(4).setCellRenderer(new DisponibilidadticketRenderer());
-	     t.getColumnModel().getColumn(5).setCellRenderer(new DisponibilidadticketRenderer());
+	     t.getColumnModel().getColumn(1).setCellRenderer(new DisponibilidadticketRenderer(gestorBD));
+	     t.getColumnModel().getColumn(2).setCellRenderer(new DisponibilidadticketRenderer(gestorBD));
+	     t.getColumnModel().getColumn(3).setCellRenderer(new DisponibilidadticketRenderer(gestorBD));
+	     t.getColumnModel().getColumn(0).setCellRenderer(new DisponibilidadticketRenderer(gestorBD));
+	     t.getColumnModel().getColumn(4).setCellRenderer(new DisponibilidadticketRenderer(gestorBD));
+	     t.getColumnModel().getColumn(5).setCellRenderer(new DisponibilidadticketRenderer(gestorBD));
 	     t.setRowHeight(40);
 	     t.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	     ((DefaultTableCellRenderer) t.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
@@ -267,7 +268,7 @@ public class MainDisponibilidadTicket extends JFrame{
 			
 					
 			SwingUtilities.invokeLater(() -> {
-				new MainDisponibilidadTicket(new Concert("123456"));
+				new MainDisponibilidadTicket(new Concert("123456"),new GestorBD());
 				
 		    });
 		}
