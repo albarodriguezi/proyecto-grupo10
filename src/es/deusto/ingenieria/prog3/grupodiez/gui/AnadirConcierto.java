@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
+import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class AnadirConcierto extends JDialog {
@@ -139,11 +140,17 @@ public class AnadirConcierto extends JDialog {
 					public void actionPerformed(ActionEvent e) { 
 						Thread add=new Thread() {
 							public void run(){
+								
 								String icon = icono.getText();
 								String code = codigo.getText();
 								String name = nombre.getText();
 								String duration = duracion.getText();
 								String price = precio.getText();
+								Concert c = new Concert("resources/images/"+icon,code,name,Integer.parseInt(duration),92000,Float.parseFloat(price));
+								Concert[] cs = new Concert[1];
+								cs[0] = c;
+								gestorBD.insertarDatos(cs);
+								/*
 								try {
 									FileWriter fw=new FileWriter("resources\\data\\Concerts.csv",true);
 									fw.append("\nresources/images/"+icon+";"+code+";"+name+";"+duration+";92000;"+price+";");
@@ -153,6 +160,7 @@ public class AnadirConcierto extends JDialog {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
+								*/
 							}
 						};
 

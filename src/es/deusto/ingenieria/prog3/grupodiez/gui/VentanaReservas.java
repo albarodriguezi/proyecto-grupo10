@@ -179,7 +179,8 @@ public class VentanaReservas extends JFrame {
 
     private ArrayList<Reserva> getReservas(){
     	ArrayList<Reserva> reservas=new ArrayList<Reserva>();
-    	Scanner sc;
+    	reservas = new ArrayList<Reserva>(gestorBD.obtenerReservas());
+    	/*Scanner sc;
 		try {
 			sc = new Scanner(new File("resources\\data\\Reservas.csv"));
 			while(sc.hasNextLine()){
@@ -209,7 +210,7 @@ public class VentanaReservas extends JFrame {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 		return reservas;
     	

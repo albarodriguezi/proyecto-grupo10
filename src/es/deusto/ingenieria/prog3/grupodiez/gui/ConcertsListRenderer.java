@@ -48,6 +48,8 @@ public class ConcertsListRenderer extends JFrame {
     public ConcertsListRenderer(List<Concert> concerts,GestorBD gbd) {
         this.concerts = concerts;
         this.gestorBD = gbd;
+        AnadirFecha.setGestorBD(gbd);
+        //gestorBD.borrarReservas();
         initTables();
         loadConcert();
         initGUI();
@@ -307,7 +309,8 @@ public class ConcertsListRenderer extends JFrame {
     private void loadConcert() {
 		//Se borran los datos del modelo de datos
     	ArrayList<Concert> conciertos = new ArrayList<Concert>();
-    	try {
+    	conciertos = new ArrayList<>(gestorBD.obtenerConciertos());
+    	/*try {
 			Scanner sc = new Scanner(new File("resources\\data\\Concerts.csv"));
 			while(sc.hasNextLine()){
 		        String linea=sc.nextLine();
@@ -326,7 +329,7 @@ public class ConcertsListRenderer extends JFrame {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		this.modeloDatosConcerts.setRowCount(0);
 		//Se añaden los comics uno a uno al modelo de datos
 		conciertos.forEach(c -> this.modeloDatosConcerts.addRow(

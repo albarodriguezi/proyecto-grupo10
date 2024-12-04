@@ -218,7 +218,14 @@ public class DisponibilidadTicket extends DefaultTableModel {
     public void loadFechas() {
    
     	ArrayList<Fecha> fechasc = new ArrayList<Fecha>();
-    	try {
+    	
+    	for (Fecha f:gestorBD.obtenerFechas()) {
+    		if (f.getCode().equals(concierto.getCode())&& !fechasc.contains(f)) {
+				//System.out.println("a");
+				fechasc.add(f);
+			}
+    	}
+    	/*try {
     		Scanner sc = new Scanner(new File("resources\\data\\Fecha.csv"));
     		while(sc.hasNextLine()){
     			//System.out.println(sc.nextLine());
@@ -242,7 +249,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
     	} catch (FileNotFoundException e) {
     		// TODO Auto-generated catch block
     		e.printStackTrace();
-    	}
+    	}*/
    
     	//Se borran los datos del modelo de datos
     	this.modeloDatosFechas.setRowCount(0);
