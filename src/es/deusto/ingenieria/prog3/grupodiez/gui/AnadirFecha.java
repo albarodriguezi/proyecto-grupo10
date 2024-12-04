@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -27,6 +28,8 @@ import javax.swing.border.TitledBorder;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Reserva;
 import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class AnadirFecha extends JDialog {
@@ -34,10 +37,11 @@ public class AnadirFecha extends JDialog {
 			/**
 	 * 
 	 */
+	private static GestorBD gestorBD;
 	private static final long serialVersionUID = 1L;
 			private JButton jButtonConfirm = new JButton("Confirmar");
 			private JButton jButtonCancel = new JButton("Cancelar");
-			private GestorBD gestorBD;
+			
 			
 			public AnadirFecha(GestorBD gbd) {
 				
@@ -157,6 +161,10 @@ public class AnadirFecha extends JDialog {
 								String year = ano.getText();
 								String seat = asiento.getText();
 								if (readConcert().containsKey(code)) {
+									Fecha f = new Fecha(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year), code, Integer.parseInt(seat));
+									Fecha[] fc = new Fecha[1];
+									fc[0] = f;
+									gestorBD.insertarDatos(fc);
 									try {
 										FileWriter fw=new FileWriter("resources\\data\\Fecha.csv",true);
 										fw.append("\n"+day+";"+month+";"+year+";"+code+";"+seat+";");
@@ -190,7 +198,11 @@ public class AnadirFecha extends JDialog {
 				HashMap<String,Concert> conciertos = new HashMap<String,Concert>();
 				Thread hash=new Thread() {
 					public void run(){
-						try {
+						List<Concert> cs = new ArrayList<>(gestorBD.obtenerConciertos());
+						for (Concert c:cs) {
+							conciertos.put(c.getCode(), c);
+						}
+						/*try {
 							Scanner sc = new Scanner(new File("resources\\data\\Concerts.csv"));
 							while(sc.hasNextLine()){
 						        String linea=sc.nextLine();
@@ -209,7 +221,7 @@ public class AnadirFecha extends JDialog {
 						} catch (FileNotFoundException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
+						}*/
 					}
 				};
 		    	hash.run();
