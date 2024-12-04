@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ import javax.swing.border.TitledBorder;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Reserva;
 import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class TicketBookingDialog extends JDialog {
@@ -206,9 +208,12 @@ public class TicketBookingDialog extends JDialog {
 							}
 							System.out.println(atts);
 							String loc = concert.getCode();
-							String fec = tbd.fecha.getFecha().toString();
+							LocalDate fec = tbd.fecha.getFecha();
 							String con = tbd.concert.getName();
-
+							Reserva r = new Reserva(loc,con,fec,att );
+							Reserva[] rs = new Reserva[1];
+							rs[0] = r;
+							gestorBD.insertarDatos(rs);
 							try {
 								FileWriter fw=new FileWriter("resources\\data\\Reservas.csv",true);
 								fw.append(loc+";"+con+";"+fec+";"+atts+";\n");
