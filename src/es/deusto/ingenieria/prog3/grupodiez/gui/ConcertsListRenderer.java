@@ -48,6 +48,7 @@ public class ConcertsListRenderer extends JFrame {
     public ConcertsListRenderer(List<Concert> concerts,GestorBD gbd) {
         this.concerts = concerts;
         this.gestorBD = gbd;
+        gestorBD.borrarReservas();
         initTables();
         loadConcert();
         initGUI();

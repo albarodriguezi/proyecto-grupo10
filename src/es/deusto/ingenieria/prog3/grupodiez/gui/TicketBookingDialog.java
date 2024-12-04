@@ -214,14 +214,14 @@ public class TicketBookingDialog extends JDialog {
 							Reserva[] rs = new Reserva[1];
 							rs[0] = r;
 							gestorBD.insertarDatos(rs);
-							try {
+							/*try {
 								FileWriter fw=new FileWriter("resources\\data\\Reservas.csv",true);
 								fw.append(loc+";"+con+";"+fec+";"+atts+";\n");
 								fw.close();
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
-							}
+							}*/
 						}
 					};
 					add.run();

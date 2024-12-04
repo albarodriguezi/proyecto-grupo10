@@ -465,6 +465,7 @@ public class GestorBD {
     		bd.obtenerConciertos();
     		bd.obtenerFechas();
     		bd.obtenerReservas();
+    		bd.borrarReservas();
     		bd.borrarBBDD();
     		
     		//AnadirConcierto add = new AnadirConcierto();
