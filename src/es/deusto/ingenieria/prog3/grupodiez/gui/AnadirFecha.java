@@ -38,6 +38,14 @@ public class AnadirFecha extends JDialog {
 	 * 
 	 */
 	private static GestorBD gestorBD;
+	public static GestorBD getGestorBD() {
+				return gestorBD;
+			}
+
+			public static void setGestorBD(GestorBD gestorBD) {
+				AnadirFecha.gestorBD = gestorBD;
+			}
+
 	private static final long serialVersionUID = 1L;
 			private JButton jButtonConfirm = new JButton("Confirmar");
 			private JButton jButtonCancel = new JButton("Cancelar");
