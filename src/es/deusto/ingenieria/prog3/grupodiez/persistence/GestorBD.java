@@ -53,12 +53,11 @@ public class GestorBD {
 	                + " UNIQUE(ID));";
 	
 			String sql2 = "CREATE TABLE IF NOT EXISTS FECHA (\n"
-	                + " DAY INTEGER NOT NULL,\n"
-	                + " MONTH INTEGER NOT NULL,\n"
-	                + " YEAR INTEGER NOT NULL,\n"
+					+ " FECHA DATE NOT NULL,\n"
 	                + " CONCERTID TEXT NOT NULL,\n"
 	                + " SEATSLEFT INT NOT NULL,\n"
-	                + " FOREIGN KEY (CONCERTID) REFERENCES CONCIERTO(ID) ON DELETE CASCADE\n"
+	                + " FOREIGN KEY (CONCERTID) REFERENCES CONCIERTO(ID) ON DELETE CASCADE,\n"
+	                + " PRIMARY KEY (FECHA,CONCERTID)"
 					+ ");";
 	
 			String sql3 = "CREATE TABLE IF NOT EXISTS RESERVA (\n"
@@ -66,7 +65,7 @@ public class GestorBD {
 					+ " CONCERTNAME TEXT NOT NULL,\n"
 	                + " FECHA DATE NOT NULL,\n"
 	                + " ATTENDEES TEXT NOT NULL,\n"
-	                + " FOREIGN KEY (CONCERTID) REFERENCES CONCIERTO(ID) ON DELETE CASCADE\n"
+	                + " FOREIGN KEY (FECHA,CONCERTID) REFERENCES FECHA(FECHA,CONCERTID) ON DELETE CASCADE\n"
 	                + ");";
 			
 	        //Se abre la conexión y se crea un PreparedStatement para crer cada tabla
@@ -241,7 +240,7 @@ public class GestorBD {
 	public void insertarDatos(Fecha... fechas) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     PreparedStatement stmt = con.prepareStatement("INSERT INTO FECHA (DAY, MONTH, YEAR,CONCERTID,SEATSLEFT) VALUES (?, ?, ?,?,?);")) {
+		     PreparedStatement stmt = con.prepareStatement("INSERT INTO FECHA (FECHA,CONCERTID,SEATSLEFT) VALUES (?,?,?);")) {
 			//Se define la plantilla de la sentencia SQL
 			//String sql = "INSERT INTO CLIENTE (NAME, EMAIL, PASSWORD) VALUES ('%s', '%s', '%s');";
 			
@@ -249,11 +248,9 @@ public class GestorBD {
 			
 			//Se recorren los clientes y se insertan uno a uno
 			for (Fecha f : fechas) {
-				stmt.setInt(1,f.getDia());
-				stmt.setInt(2,f.getMes());
-				stmt.setInt(3,f.getAno());
-				stmt.setString(4,f.getCode());
-				stmt.setInt(5,f.getSeats());
+				stmt.setDate(1,Date.valueOf(f.getFecha()));
+				stmt.setString(2,f.getCode());
+				stmt.setInt(3,f.getSeats());
 				//stmt.toString();
 				if (1 == stmt.executeUpdate()) {					
 					System.out.format("\n - Fecha insertado: %s", f.toString());
@@ -360,7 +357,7 @@ public class GestorBD {
 			
 			//Se recorre el ResultSet y se crean objetos Cliente
 			while (rs.next()) {
-				fecha = new Fecha(rs.getInt("DAY"),rs.getInt("MONTH"),rs.getInt("YEAR"),rs.getString("CONCERTID"),rs.getInt("SEATSLEFT"));
+				fecha = new Fecha(rs.getDate("FECHA").toLocalDate().getDayOfMonth(),rs.getDate("FECHA").toLocalDate().getMonthValue(),rs.getDate("FECHA").toLocalDate().getYear(),rs.getString("CONCERTID"),rs.getInt("SEATSLEFT"));
 				
 				
 				//Se inserta cada nuevo cliente en la lista de clientes

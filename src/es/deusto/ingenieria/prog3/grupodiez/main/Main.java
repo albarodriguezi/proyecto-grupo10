@@ -80,5 +80,7 @@ public class Main{
 		concerts.add(TheMathematicsTour);*/
 		
 		SwingUtilities.invokeLater(() -> new ConcertsListRenderer(concerts,gbd));
+		
+		//gbd.borrarBBDD();
 	}	
 }
