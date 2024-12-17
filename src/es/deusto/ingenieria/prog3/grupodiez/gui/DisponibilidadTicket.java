@@ -148,6 +148,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
             }
         };
         this.tablaFechas = new JTable(this.modeloDatosFechas);
+        
        
        
        

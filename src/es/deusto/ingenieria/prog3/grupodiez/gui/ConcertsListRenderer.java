@@ -297,7 +297,9 @@ public class ConcertsListRenderer extends JFrame {
                     if (selectedRow != -1) {
                         //int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Obtiene el ID de la fila seleccionada
                         MainDisponibilidadTicket maindisponibilidad = new MainDisponibilidadTicket((new Concert((tablaConcert.getValueAt(selectedRow, 1)).toString())),gestorBD);
-                        maindisponibilidad.setVisible(true);
+                        maindisponibilidad.setVisible(false);
+                        new ProgressBar(maindisponibilidad);
+                        //maindisponibilidad.setVisible(true);
                     }
                 }
             }
