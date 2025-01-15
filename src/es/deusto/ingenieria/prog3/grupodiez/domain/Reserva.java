@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Objects;
 
 
+/*
+Definimso la clase de las reservas. en la que definimso el codigo localizador de las reservas, la fecha de esta misma, las personas que han hecho la reserva, 
+el nombre del concierto para el cual se ha hecho la reserva, el codigo del concierto, el numero de asientos que hay para el concierto
+*/
 public class Reserva implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
