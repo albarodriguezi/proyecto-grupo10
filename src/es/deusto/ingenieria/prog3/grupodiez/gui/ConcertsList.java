@@ -89,7 +89,7 @@ public class ConcertsList extends JFrame {
         panelConcert.add(BorderLayout.CENTER, scrollPaneConcerts);
         panelConcert.add(BorderLayout.SOUTH, new JLabel("Todas las imagenes pertenecen a Ticketmaster"));
 
-	this.add(new JButton("Descuentos), BorderLayout.SOUTH);
+	this.add(new JButton("Descuentos"), BorderLayout.SOUTH);
         this.getContentPane().add(panelConcert);
         this.setTitle("Concerts");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
