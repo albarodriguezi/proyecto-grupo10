@@ -66,6 +66,7 @@ public class GestorBD {
 	                + " FECHA DATE NOT NULL,\n"
 	                + " ATTENDEES TEXT NOT NULL,\n"
 	                + " FOREIGN KEY (FECHA,CONCERTID) REFERENCES FECHA(FECHA,CONCERTID) ON DELETE CASCADE\n"
+	                + " PRIMARY KEY (FECHA,ATTENDEES)"
 	                + ");";
 			
 	        //Se abre la conexión y se crea un PreparedStatement para crer cada tabla
