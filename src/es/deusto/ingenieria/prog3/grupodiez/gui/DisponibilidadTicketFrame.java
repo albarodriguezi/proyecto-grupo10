@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.prog3.grupodiez.main;
+package es.deusto.ingenieria.prog3.grupodiez.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,6 +20,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 
@@ -47,12 +48,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
-import es.deusto.ingenieria.prog3.grupodiez.gui.DisponibilidadTicket;
-import es.deusto.ingenieria.prog3.grupodiez.gui.DisponibilidadticketRenderer;
-import es.deusto.ingenieria.prog3.grupodiez.gui.TicketBookingDialog;
-import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
-public class MainDisponibilidadTicket extends JFrame{
+public class DisponibilidadTicketFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	private Concert concerts;
@@ -63,7 +60,7 @@ public class MainDisponibilidadTicket extends JFrame{
 	private JButton jBtnSearch = new JButton("Busqueda de fechas por concierto");//no lo necesitamos
 
 	
-	public MainDisponibilidadTicket(Concert c,GestorBD gbd) {
+	public DisponibilidadTicketFrame(Concert c,GestorBD gbd) {
 		this.gestorBD = gbd;
 		this.concerts = c;//definimos la lista de los conciertos
 		setBackground(Color.pink);
@@ -268,7 +265,7 @@ public class MainDisponibilidadTicket extends JFrame{
 			
 					
 			SwingUtilities.invokeLater(() -> {
-				new MainDisponibilidadTicket(new Concert("123456"),new GestorBD());
+				new DisponibilidadTicketFrame(new Concert("123456"),new GestorBD());
 				
 		    });
 		}

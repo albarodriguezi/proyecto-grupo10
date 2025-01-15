@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
-import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
+import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 
 
 

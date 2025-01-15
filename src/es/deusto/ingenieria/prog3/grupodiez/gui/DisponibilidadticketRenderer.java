@@ -10,6 +10,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 
 import java.awt.event.ActionEvent;
@@ -25,7 +26,6 @@ import javax.swing.table.TableCellRenderer;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
-import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class DisponibilidadticketRenderer implements TableCellRenderer{
 	private GestorBD gestorBD;

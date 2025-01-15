@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.prog3.grupodiez.persistence;
+package es.deusto.ingenieria.prog3.grupodiez.db;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -263,6 +263,7 @@ public class GestorBD {
 			ex.printStackTrace();						
 		}				
 	}
+	
 	
 	public void insertarDatos(Reserva... reservas) {
 		//Se abre la conexión y se obtiene el Statement

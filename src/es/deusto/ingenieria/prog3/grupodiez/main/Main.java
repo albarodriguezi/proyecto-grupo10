@@ -7,11 +7,11 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 
+import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
-import es.deusto.ingenieria.prog3.grupodiez.gui.ConcertsListRenderer;
-import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
+import es.deusto.ingenieria.prog3.grupodiez.gui.ConcertsList;
 
 
 
@@ -79,7 +79,7 @@ public class Main{
 		concerts.add(OnTheRoadAgain);
 		concerts.add(TheMathematicsTour);*/
 		
-		SwingUtilities.invokeLater(() -> new ConcertsListRenderer(concerts,gbd));
+		SwingUtilities.invokeLater(() -> new ConcertsList(concerts,gbd));
 		
 		//gbd.borrarBBDD();
 	}	

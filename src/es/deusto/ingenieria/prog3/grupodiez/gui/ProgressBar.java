@@ -10,8 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
-import es.deusto.ingenieria.prog3.grupodiez.main.MainDisponibilidadTicket;
-
 public class ProgressBar extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -24,7 +22,7 @@ public class ProgressBar extends JFrame {
     // Clase que implementa el hilo contador
  
     
-    public ProgressBar(MainDisponibilidadTicket maindisponibilidad) {      
+    public ProgressBar(DisponibilidadTicketFrame maindisponibilidad) {      
     	setAlwaysOnTop(true);
     	// Configuración del estado inicial de los botones
     	Contador contador = new Contador(maindisponibilidad);
@@ -45,8 +43,8 @@ public class ProgressBar extends JFrame {
     }
     
     private class Contador extends Thread {
-    	private MainDisponibilidadTicket maindisponibilidad;
-    	public Contador(MainDisponibilidadTicket maindisponibilidad) {
+    	private DisponibilidadTicketFrame maindisponibilidad;
+    	public Contador(DisponibilidadTicketFrame maindisponibilidad) {
 			this.maindisponibilidad = maindisponibilidad;
 		}
 

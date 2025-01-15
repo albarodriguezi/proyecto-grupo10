@@ -21,8 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
+import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
-import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class AnadirConcierto extends JDialog {
 			

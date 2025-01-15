@@ -28,10 +28,10 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
+import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Reserva;
-import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class TicketBookingDialog extends JDialog {
 	private static final long serialVersionUID = 1L;

@@ -26,14 +26,13 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
+import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
-import es.deusto.ingenieria.prog3.grupodiez.main.MainDisponibilidadTicket;
-import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 
 
-public class ConcertsListRenderer extends JFrame {
+public class ConcertsList extends JFrame {
     
 	private static final long serialVersionUID = 1L;
 
@@ -45,10 +44,11 @@ public class ConcertsListRenderer extends JFrame {
     
     
     
-    public ConcertsListRenderer(List<Concert> concerts,GestorBD gbd) {
+    public ConcertsList(List<Concert> concerts,GestorBD gbd) {
         this.concerts = concerts;
         this.gestorBD = gbd;
         AnadirFecha.setGestorBD(gbd);
+        gbd.borrarReservas();
         //gestorBD.borrarReservas();
         initTables();
         loadConcert();
@@ -296,7 +296,7 @@ public class ConcertsListRenderer extends JFrame {
                     int selectedRow = tablaConcert.getSelectedRow();
                     if (selectedRow != -1) {
                         //int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Obtiene el ID de la fila seleccionada
-                        MainDisponibilidadTicket maindisponibilidad = new MainDisponibilidadTicket((new Concert((tablaConcert.getValueAt(selectedRow, 1)).toString())),gestorBD);
+                        DisponibilidadTicketFrame maindisponibilidad = new DisponibilidadTicketFrame((new Concert((tablaConcert.getValueAt(selectedRow, 1)).toString())),gestorBD);
                         maindisponibilidad.setVisible(false);
                         new ProgressBar(maindisponibilidad);
                         //maindisponibilidad.setVisible(true);
