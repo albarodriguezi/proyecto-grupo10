@@ -6,6 +6,10 @@ import java.util.Objects;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 
+/*
+Definimos la clase de las fechas en las que se pueden reservar los conciertos, definimos la fecha, el concierto del cual queremos reservar la fecha, 
+el codigo del concierto, el numero de asientos que tiene el estadio del concierto y una lista de las reservas que se han hecho para esta fecha
+*/
 public class Fecha {
 	private LocalDate fecha;
 	private Concert concert;
