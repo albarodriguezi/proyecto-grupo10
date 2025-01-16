@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
+import es.deusto.ingenieria.prog3.grupodiez.gui.AnadirFecha;
 
 /*
 Definimos la clase de las fechas en las que se pueden reservar los conciertos, definimos la fecha, el concierto del cual queremos reservar la fecha, 
@@ -34,6 +35,7 @@ public class Fecha implements Comparable<Fecha>{
 	public Fecha (int dia, int mes, int ano, String code, int seats) {
 	this.fecha = LocalDate.of(ano, mes, dia);
 	this.code = code;
+	//this.concert = AnadirFecha.readConcert().get(code);
 	this.setSeats(seats);
 	}
 
@@ -79,15 +81,17 @@ public class Fecha implements Comparable<Fecha>{
 		Fecha other = (Fecha) obj;
 		return Objects.equals(fecha, other.fecha);
 	}
-
+	
+	public String getCode() {
+		return code;
+	}
+	
 	@Override
 	public String toString() {
 		return "Fecha [fecha=" + fecha + concert.getName() +"]";
 	}
 
-	public String getCode() {
-		return code;
-	}
+
 
 	public void setCode(String code) {
 		this.code = code;

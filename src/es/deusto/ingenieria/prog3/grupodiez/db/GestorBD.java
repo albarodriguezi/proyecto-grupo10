@@ -97,6 +97,7 @@ public class GestorBD {
 			        String name = campos[2];
 			        Integer duration = Integer.parseInt(campos[3]);
 			        Float price = Float.parseFloat(campos[5]);
+			        System.out.println(price);
 			        conciertos.add(new Concert(logo,code,name,duration,92000,price));
 			        
 				}
@@ -123,8 +124,8 @@ public class GestorBD {
 	    			String code = campos[3];
 	    			Integer seats = Integer.parseInt(campos[4]);
 	    			//if (code.equals(concierto.getCode())) {
-	    				//System.out.println("a");
-	    				fechasc.add(new Fecha(dia,mes,ano,code,seats));
+	    				System.out.println("a");
+	    			fechasc.add(new Fecha(dia,mes,ano,code,seats));
 	    			//}
 	       
 	       
@@ -246,10 +247,11 @@ public class GestorBD {
 			//Se define la plantilla de la sentencia SQL
 			//String sql = "INSERT INTO CLIENTE (NAME, EMAIL, PASSWORD) VALUES ('%s', '%s', '%s');";
 			
-			System.out.print("\n- Insertando conciertos...");
+			System.out.print("\n- Insertando fechas...");
 			
 			//Se recorren los clientes y se insertan uno a uno
 			for (Fecha f : fechas) {
+				System.out.println(fechas.length);
 				stmt.setDate(1,Date.valueOf(f.getFecha()));
 				stmt.setString(2,f.getCode());
 				stmt.setInt(3,f.getSeats());
@@ -476,6 +478,21 @@ public class GestorBD {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 		     PreparedStatement stmt = con.prepareStatement("DELETE FROM RESERVA;")) {
+			//Se ejecuta la sentencia de borrado de datos
+			//String sql = "DELETE FROM CLIENTE;";			
+			int result = stmt.executeUpdate();
+			
+			System.out.format("\n\n- Se han borrado %d reservas", result);
+		} catch (Exception ex) {
+			System.err.format("\n\n* Error al borrar datos de la BBDD: %s", ex.getMessage());
+			ex.printStackTrace();						
+		}		
+	}	
+	
+	public void borrarFechas() {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement stmt = con.prepareStatement("DELETE FROM FECHA;")) {
 			//Se ejecuta la sentencia de borrado de datos
 			//String sql = "DELETE FROM CLIENTE;";			
 			int result = stmt.executeUpdate();

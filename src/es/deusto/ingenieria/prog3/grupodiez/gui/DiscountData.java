@@ -251,6 +251,7 @@ public static void generarRutinas(List<Fecha> fechas, int presupuesto, int canti
 public static void generarRutinasAux(List<Fecha> fechas,List<List<Fecha>> result,List<Fecha> aux, int presupuesto, int cantidad ,float gastoaux,List<String> conciertosaux,List<List<String>> conciertos) {
 	//CASO BASE 1 Comprueba que la duracion de la rutina auxiliar se menor que la que marca la conndicion
 	if (presupuesto < gastoaux) {
+		System.out.println(gastoaux);
 		return;
 	}
 	//CASO BASE 2 Comprueba que la duracion total sea la debide)
@@ -272,9 +273,17 @@ public static void generarRutinasAux(List<Fecha> fechas,List<List<Fecha>> result
 			if (!conciertosaux.contains(f.getConcert().getName()) &&
 				!aux.contains(f)) { 
 				aux.add(f);
+				Float c;
+				if(cantidad == 3) {
+					c=(float) 0.1;
+				}else if(cantidad == 4) {
+					c=(float) 0.15;
+				}else{
+					c=(float) 0.2;
+				}
 				//sumo la duracion a las duraciones antiguas
 				conciertosaux.add(f.getConcert().getName());
-				generarRutinasAux(fechas,result,aux,presupuesto,cantidad,gastoaux+f.getConcert().getPrice(),conciertosaux,conciertos);
+				generarRutinasAux(fechas,result,aux,presupuesto,cantidad,gastoaux+f.getConcert().getPrice()*(1-c),conciertosaux,conciertos);
 				//retiro el ultimo ejercicio
 				conciertosaux.remove(conciertosaux.size()-1);
 				aux.remove(aux.size()-1);
