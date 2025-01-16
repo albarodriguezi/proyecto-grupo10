@@ -34,7 +34,7 @@ import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 
 
 
-public class DisponibilidadTicket extends DefaultTableModel {
+public class DisponibilidadTicketModel extends DefaultTableModel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -58,7 +58,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 
    
     //para añadir la disponibilidad:
-    public DisponibilidadTicket (List<Fecha> concerts,GestorBD gbd) {
+    public DisponibilidadTicketModel (List<Fecha> concerts,GestorBD gbd) {
     	this.gestorBD = gbd;
     	this.fechas = concerts;
     	loadFechas();
@@ -66,7 +66,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
 
 
     //constructor con acceso a la lista de conciertos
-    public DisponibilidadTicket (Concert fecha,GestorBD gbd) {
+    public DisponibilidadTicketModel (Concert fecha,GestorBD gbd) {
     	this.gestorBD = gbd;
     	this.concierto = fecha;
     	initTables();
@@ -201,7 +201,7 @@ public class DisponibilidadTicket extends DefaultTableModel {
         int idConcierto = (int) tablaFechas.getValueAt(selectedRow, 1); // Ejemplo: obtiene el ID desde la primera columna
 
         // Crea y muestra la ventana de DisponibilidadTocket pasando el ID del concierto
-        DisponibilidadTicket disponibilidadTicket = new DisponibilidadTicket(fechas,gestorBD);
+        DisponibilidadTicketModel disponibilidadTicket = new DisponibilidadTicketModel(fechas,gestorBD);
         disponibilidadTicket.setVisible(true);
         }
         });

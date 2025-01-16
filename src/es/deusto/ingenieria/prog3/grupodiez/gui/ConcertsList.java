@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -90,7 +92,16 @@ public class ConcertsList extends JFrame {
         panelConcert.add(BorderLayout.SOUTH, new JLabel("Todas las imagenes pertenecen a Ticketmaster"));
 
 	JPanel panelDescuento = new JPanel();
-	panelDescuento.add(new JButton("Descuento"), BorderLayout.EAST);
+	JButton JButtonDescuento = new JButton("Descuento");
+	
+	JButtonDescuento.addActionListener(new ActionListener() { 
+  	  public void actionPerformed(ActionEvent e) { 
+  		    DiscountData dd=new DiscountData(gestorBD);
+  		    dd.setVisible(true);
+  		    } 
+  		} );
+	
+	panelDescuento.add(JButtonDescuento, BorderLayout.EAST);
 	    
 	    
 	this.add(panelDescuento, BorderLayout.SOUTH);

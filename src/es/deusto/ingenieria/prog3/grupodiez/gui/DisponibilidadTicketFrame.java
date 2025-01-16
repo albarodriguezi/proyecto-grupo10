@@ -66,7 +66,7 @@ public class DisponibilidadTicketFrame extends JFrame{
 		setBackground(Color.pink);
 		//jComboConcerts.setPrototypeDisplayValue("Selecciona un concierto");
 		List<Fecha> fechas = new ArrayList<>(); // Este es el lugar donde deberías añadir las fechas
-        DefaultTableModel model = new DisponibilidadTicket(concerts,gestorBD).getModeloDatosFechas();
+        DefaultTableModel model = new DisponibilidadTicketModel(concerts,gestorBD).getModeloDatosFechas();
         //System.out.println(model.getRowCount());
         //System.out.println(model.getRowCount());
         jTableFechas.setModel(model);
@@ -104,7 +104,7 @@ public class DisponibilidadTicketFrame extends JFrame{
 				// TODO Auto-generated method stub
 				if(e.getKeyCode() == KeyEvent.VK_G && e.isControlDown()) {
 					System.out.println("a");
-					DefaultTableModel newModel=new DisponibilidadTicket(concerts,gestorBD).getModeloDatosFechas();
+					DefaultTableModel newModel=new DisponibilidadTicketModel(concerts,gestorBD).getModeloDatosFechas();
 					jTableFechas.setModel(newModel);
 					setRenderer(jTableFechas);
 				}
