@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +30,8 @@ import javax.swing.border.TitledBorder;
 
 import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+
 
 public class DiscountData extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -209,6 +213,10 @@ public DiscountData(GestorBD gbd) {
 			jPanelCenter.add(jPanelConcert);
 			jPanelCenter.add(jPanelAttendees);
 			
+			
+			
+			
+			
 			//this.setLayout(new BorderLayout(10, 10));
 			add(new JPanel(), BorderLayout.NORTH);
 			add(new JPanel(), BorderLayout.EAST);
@@ -222,5 +230,52 @@ public DiscountData(GestorBD gbd) {
 			setModalityType(ModalityType.APPLICATION_MODAL);
 			setLocationRelativeTo(null);
 			setVisible(true);
+}
+
+
+public static void generarRutinas(List<Fecha> fechas, int presupuesto, int cantidad) {
+	//Creo la lista del resultado y la lista auxiliar
+	List<List<Fecha>> total = new ArrayList<>();
+	List<Fecha> auxiliar = new ArrayList<>();
+	List<Concert> concierto = new ArrayList<>();
+	//Llamo a la funcion auxiliar con una duracion auxiliar de 0 
+	generarRutinasAux(fechas,total,auxiliar,presupuesto,cantidad,0,concierto);
+	//Compruebo resultados
+	System.out.println(total.size());
+	System.out.println(total);
+}
+
+
+//Creo una rutina auxiliar 
+public static void generarRutinasAux(List<Fecha> fechas,List<List<Fecha>> result,List<Fecha> aux, int presupuesto, int cantidad ,float gastoaux,List<Concert> conciertos) {
+	//CASO BASE 1 Comprueba que la duracion de la rutina auxiliar se menor que la que marca la conndicion
+	if (presupuesto < gastoaux) {
+		return;
+	}
+	//CASO BASE 2 Comprueba que la duracion total sea la debide)
+	else if (aux.size()==cantidad) {
+		List<Fecha> auxcopia = new ArrayList<>(aux);
+		//Hago un ordenado para evitar los repetidos
+		Collections.sort(auxcopia);
+		if (!result.contains(auxcopia)) {
+			result.add(auxcopia);
 		}
+	}else {
+	// CASO RECURSIVO
+		//Para cada ejercicio
+		for (Fecha f:fechas) {
+			//Compruebo que el nivel sea correcto,que el grupo muscular sea uno de los adecuados y que no tenga repetidos
+			if (!conciertos.contains(f.getConcert()) &&
+				!aux.contains(f)) { 
+				aux.add(f);
+				//sumo la duracion a las duraciones antiguas
+				conciertos.add(f.getConcert());
+				generarRutinasAux(fechas,result,aux,presupuesto,cantidad,gastoaux+f.getConcert().getPrice(),conciertos);
+				//retiro el ultimo ejercicio
+				conciertos.remove(conciertos.size()-1);
+				aux.remove(aux.size()-1);
+			}
+		}
+}
+}
 }
