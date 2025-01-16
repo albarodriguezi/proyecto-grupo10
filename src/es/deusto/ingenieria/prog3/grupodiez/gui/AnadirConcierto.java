@@ -24,6 +24,10 @@ import javax.swing.border.TitledBorder;
 import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 
+
+/*
+En esta clase definimos como el 
+*/
 public class AnadirConcierto extends JDialog {
 			
 			/**
@@ -31,8 +35,12 @@ public class AnadirConcierto extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 			//private JComboBox<String> jComboCategorias = new JComboBox<>();
+
+			//definimos dos botones para confirmar la creacion del nuevo concirto, o cancelar y no añdirlo
 			private JButton jButtonConfirm = new JButton("Confirmar");
 			private JButton jButtonCancel = new JButton("Cancelar");
+
+			//definimos el gestor de la base de datos
 			private GestorBD gestorBD;
 			
 			public AnadirConcierto(GestorBD gbd) {
@@ -41,7 +49,8 @@ public class AnadirConcierto extends JDialog {
 				
 				setTitle("Concierto");
 				setFont(new Font("DIN",Font.BOLD,12));
-				
+
+				//definimos el panel principal de la pantalla donde habra que rellenar toda la informacion para poder añadir un concierto
 				JPanel jPanelAddConcert = new JPanel(new GridLayout(5, 1));
 				
 				getContentPane().setBackground(new Color(255,150,200));
@@ -51,6 +60,7 @@ public class AnadirConcierto extends JDialog {
 
 				
 				//Creo y anado los paneles de cada campo a rellenar,con sus modificaciones de color,etc
+				//panel en el cual se define la imagen del concierto
 				JPanel iconPanel = new JPanel(new BorderLayout());
 				iconPanel.setBorder(new TitledBorder("Icono"));
 				JTextField icono = new JTextField();
@@ -63,9 +73,11 @@ public class AnadirConcierto extends JDialog {
 				((TitledBorder)iconPanel.getBorder()).setTitleColor(new Color(255,150,200));
 				icono.setBackground(new Color(255,233,244));
 				iconPanel.add(icono,BorderLayout.CENTER);
+				//añadimso el panel de la imagen del concierto al panel principal
 				jPanelAddConcert.add(iconPanel);
 				
-				
+
+				//panel en el que se define el codigo del concierto
 				JPanel codePanel = new JPanel(new BorderLayout());
 				codePanel.setBorder(new TitledBorder("Codigo"));
 				JTextField codigo = new JTextField();
@@ -78,9 +90,11 @@ public class AnadirConcierto extends JDialog {
 				codigo.setEditable(true);
 				codePanel.add(codigo,BorderLayout.CENTER);
 				codigo.setBackground(new Color(255,233,244));
+				//añadimos el panel del codigo al panel principal
 				jPanelAddConcert.add(codePanel);
 				
-				
+
+				//panel en el que se define el nombre del concierto
 				JPanel namePanel = new JPanel(new BorderLayout());
 				namePanel.setBorder(new TitledBorder("Nombre"));
 				JTextField nombre = new JTextField();
@@ -89,8 +103,10 @@ public class AnadirConcierto extends JDialog {
 				((TitledBorder)namePanel.getBorder()).setTitleFont(new Font("DIN",Font.BOLD,14));
 				namePanel.add(nombre,BorderLayout.CENTER);
 				nombre.setBackground(new Color(255,233,244));
+				//añadimos el panel del nombre del concierto al panel principal
 				jPanelAddConcert.add(namePanel);
-				
+
+				//panel en el que se define el precio del panel
 				JPanel pricePanel = new JPanel(new BorderLayout());
 				pricePanel.setBorder(new TitledBorder("Precio"));
 				((TitledBorder)pricePanel.getBorder()).setTitleFont(new Font("DIN",Font.BOLD,14));
@@ -99,9 +115,10 @@ public class AnadirConcierto extends JDialog {
 				precio.setEditable(true);
 				pricePanel.add(precio,BorderLayout.CENTER);
 				precio.setBackground(new Color(255,233,244));
+				//añadimos el panel del precio del concierto al panel principal
 				jPanelAddConcert.add(pricePanel);
 				
-
+				//panel en el que se define la duracin del concierto
 				JPanel durationPanel = new JPanel(new BorderLayout());
 				durationPanel.setBorder(new TitledBorder("Duracion"));
 				JTextField duracion = new JTextField();
@@ -111,19 +128,27 @@ public class AnadirConcierto extends JDialog {
 				durationPanel.add(duracion,BorderLayout.CENTER);
 				duracion.setBackground(new Color(255,233,244));
 				duracion.setSize(WIDTH, 30);
+				//añadimos el panel de la duracion del concierto al panel principal
 				jPanelAddConcert.add(durationPanel);
+
+				//a la ventana le añaimos el panel principal el el centro
 				add(jPanelAddConcert,BorderLayout.CENTER);
 				
-				
+
+				//definimos un panle en el que se van a encontrar los botones de "Confirmar" y "Cancelar"
 				JPanel buttonPanel = new JPanel(new GridLayout(1,2));
+				//añadimos los botones
 				buttonPanel.add(jButtonConfirm);
 				buttonPanel.add(jButtonCancel);
+
+				//añadimos este panel a la ventana, en la parte inferior
 				add(buttonPanel,BorderLayout.SOUTH);
 				
 				
 				setSize(600,300);
 				setLocationRelativeTo(null);
-				
+
+				//definimos el color de los botones
 				jButtonConfirm.setBackground(new Color(255,233,244));
 				jButtonConfirm.setForeground(Color.black);
 		        jButtonCancel.setBackground(new Color(255,233,244));
