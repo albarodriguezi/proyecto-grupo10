@@ -82,7 +82,7 @@ public class Fecha implements Comparable<Fecha>{
 
 	@Override
 	public String toString() {
-		return "Fecha [fecha=" + fecha + "]";
+		return "Fecha [fecha=" + fecha + concert.getName() +"]";
 	}
 
 	public String getCode() {

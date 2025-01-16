@@ -45,11 +45,12 @@ public class GestorBD {
 			//La base de datos tiene 3 tablas: Personaje, Comic y Personajes_Comic
 			String sql1 = "CREATE TABLE IF NOT EXISTS CONCIERTO (\n"
 					+ " IMAGE TEXT NOT NULL,\n"
-	                + " ID TEXT PRIMARY KEY ,\n"
+	                + " ID TEXT NOT NULL ,\n"
 	                + " NAME TEXT NOT NULL,\n"
 	                + " DURATION INT NOT NULL,\n"
 	                + " TICKETS INT NOT NULL,\n"
 	                + " PRICE FLOAT NOT NULL,\n"
+	                + " PRIMARY KEY (ID),\n"
 	                + " UNIQUE(ID));";
 	
 			String sql2 = "CREATE TABLE IF NOT EXISTS FECHA (\n"
@@ -343,6 +344,39 @@ public class GestorBD {
 		}		
 		
 		return conciertos;
+	}
+	
+	public List<Fecha> obtenerFecha() {
+		List<Fecha> fechas = new ArrayList<>();
+		
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement stmt = con.prepareStatement("SELECT * FROM FECHA")) {
+			//String sql = "SELECT * FROM CLIENTE WHERE ID >= 0";
+			
+			//Se ejecuta la sentencia y se obtiene el ResultSet con los resutlados
+			ResultSet rs = stmt.executeQuery();			
+			Fecha fecha;
+			
+			//Se recorre el ResultSet y se crean objetos Cliente
+			while (rs.next()) {
+				fecha = new Fecha(rs.getDate("FECHA").toLocalDate(), AnadirFecha.readConcert().get(rs.getString("CONCERTID")), rs.getInt("SEATSLEFT"));
+				
+				
+				//Se inserta cada nuevo cliente en la lista de clientes
+				fechas.add(fecha);
+			}
+			
+			//Se cierra el ResultSet
+			rs.close();
+			
+			System.out.format("\n\n- Se han recuperado %d fechas...", fechas.size());			
+		} catch (Exception ex) {
+			System.err.format("\n\n* Error al obtener datos de la BBDD: %s", ex.getMessage());
+			ex.printStackTrace();						
+		}		
+		
+		return fechas;
 	}
 	
 	public List<Fecha> obtenerFechas() {

@@ -198,7 +198,7 @@ public DiscountData(GestorBD gbd) {
 				//TicketBookingDialog tbd= this;
 				Thread add=new Thread() {
 					public void run(){
-						
+						generarRutinas(gbd.obtenerFecha(),Integer.parseInt(jTextAmount.getText()),jComboConcerts.getSelectedIndex()+3);
 					}
 				};
 				add.run();
@@ -237,9 +237,10 @@ public static void generarRutinas(List<Fecha> fechas, int presupuesto, int canti
 	//Creo la lista del resultado y la lista auxiliar
 	List<List<Fecha>> total = new ArrayList<>();
 	List<Fecha> auxiliar = new ArrayList<>();
-	List<Concert> concierto = new ArrayList<>();
+	List<String> concierto = new ArrayList<>();
+	List<List<String>> conciertotot = new ArrayList<>();
 	//Llamo a la funcion auxiliar con una duracion auxiliar de 0 
-	generarRutinasAux(fechas,total,auxiliar,presupuesto,cantidad,0,concierto);
+	generarRutinasAux(fechas,total,auxiliar,presupuesto,cantidad,0,concierto,conciertotot);
 	//Compruebo resultados
 	System.out.println(total.size());
 	System.out.println(total);
@@ -247,7 +248,7 @@ public static void generarRutinas(List<Fecha> fechas, int presupuesto, int canti
 
 
 //Creo una rutina auxiliar 
-public static void generarRutinasAux(List<Fecha> fechas,List<List<Fecha>> result,List<Fecha> aux, int presupuesto, int cantidad ,float gastoaux,List<Concert> conciertos) {
+public static void generarRutinasAux(List<Fecha> fechas,List<List<Fecha>> result,List<Fecha> aux, int presupuesto, int cantidad ,float gastoaux,List<String> conciertosaux,List<List<String>> conciertos) {
 	//CASO BASE 1 Comprueba que la duracion de la rutina auxiliar se menor que la que marca la conndicion
 	if (presupuesto < gastoaux) {
 		return;
@@ -255,24 +256,27 @@ public static void generarRutinasAux(List<Fecha> fechas,List<List<Fecha>> result
 	//CASO BASE 2 Comprueba que la duracion total sea la debide)
 	else if (aux.size()==cantidad) {
 		List<Fecha> auxcopia = new ArrayList<>(aux);
+		List<String> auxcopiacon = new ArrayList<>(conciertosaux);
 		//Hago un ordenado para evitar los repetidos
 		Collections.sort(auxcopia);
-		if (!result.contains(auxcopia)) {
+		Collections.sort(auxcopiacon);
+		if (!result.contains(auxcopia)&&!conciertos.contains(auxcopiacon)) {
 			result.add(auxcopia);
+			conciertos.add(auxcopiacon);
 		}
 	}else {
 	// CASO RECURSIVO
 		//Para cada ejercicio
 		for (Fecha f:fechas) {
 			//Compruebo que el nivel sea correcto,que el grupo muscular sea uno de los adecuados y que no tenga repetidos
-			if (!conciertos.contains(f.getConcert()) &&
+			if (!conciertosaux.contains(f.getConcert().getName()) &&
 				!aux.contains(f)) { 
 				aux.add(f);
 				//sumo la duracion a las duraciones antiguas
-				conciertos.add(f.getConcert());
-				generarRutinasAux(fechas,result,aux,presupuesto,cantidad,gastoaux+f.getConcert().getPrice(),conciertos);
+				conciertosaux.add(f.getConcert().getName());
+				generarRutinasAux(fechas,result,aux,presupuesto,cantidad,gastoaux+f.getConcert().getPrice(),conciertosaux,conciertos);
 				//retiro el ultimo ejercicio
-				conciertos.remove(conciertos.size()-1);
+				conciertosaux.remove(conciertosaux.size()-1);
 				aux.remove(aux.size()-1);
 			}
 		}
