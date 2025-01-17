@@ -198,7 +198,7 @@ public DiscountData(GestorBD gbd) {
 				//TicketBookingDialog tbd= this;
 				Thread add=new Thread() {
 					public void run(){
-						generarRutinas(gbd.obtenerFecha(),Integer.parseInt(jTextAmount.getText()),jComboConcerts.getSelectedIndex()+3);
+						List<List<Fecha>> combinaciones = generarRutinas(gbd.obtenerFecha(),Integer.parseInt(jTextAmount.getText()),jComboConcerts.getSelectedIndex()+3);
 					}
 				};
 				add.run();
@@ -233,7 +233,7 @@ public DiscountData(GestorBD gbd) {
 }
 
 
-public static void generarRutinas(List<Fecha> fechas, int presupuesto, int cantidad) {
+public static List<List<Fecha>> generarRutinas(List<Fecha> fechas, int presupuesto, int cantidad) {
 	//Creo la lista del resultado y la lista auxiliar
 	List<List<Fecha>> total = new ArrayList<>();
 	List<Fecha> auxiliar = new ArrayList<>();
@@ -244,6 +244,7 @@ public static void generarRutinas(List<Fecha> fechas, int presupuesto, int canti
 	//Compruebo resultados
 	System.out.println(total.size());
 	System.out.println(total);
+	return total;
 }
 
 
