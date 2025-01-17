@@ -2,6 +2,7 @@ package es.deusto.ingenieria.prog3.grupodiez.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -21,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -36,6 +38,7 @@ import javax.swing.table.TableCellRenderer;
 import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
+import es.deusto.ingenieria.prog3.grupodiez.domain.Reserva;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 
 public class DiscountFrame extends JFrame{
@@ -43,11 +46,11 @@ public class DiscountFrame extends JFrame{
 	private List<List<Fecha>> combinaciones;
     private JTable tablaCombinaciones;
     private DefaultTableModel modeloDatosCombinaciones;
-    private String attendees;
+    private List<String> attendees;
     private GestorBD gestorBD;
 	private static final long serialVersionUID = 1L;
 	
-	public DiscountFrame(List<List<Fecha>> combinaciones,String attendees,GestorBD gbd) {
+	public DiscountFrame(List<List<Fecha>> combinaciones,List<String> attendees,GestorBD gbd) {
         this.combinaciones = combinaciones;
         this.attendees = attendees;
         this.gestorBD = gbd;
@@ -55,7 +58,27 @@ public class DiscountFrame extends JFrame{
         //loadCombinaciones();
         initGUI();
         setLayout(new BorderLayout());
+        
+        this.tablaCombinaciones.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) { // Detecta doble clic
+                    int selectedRow = tablaCombinaciones.getSelectedRow();
+                    int selectedColumn = tablaCombinaciones.getSelectedColumn();
+                    if (selectedColumn == 2) {
+                    	JOptionPane.showMessageDialog(null, "Successfull import");
+	        		  	@SuppressWarnings("unchecked")
+						List<Fecha> comb = (List<Fecha>) tablaCombinaciones.getValueAt(selectedRow, 0);
+	        		  	for (Fecha f:comb) {
+	        		  		System.out.println(f);
+	        		  		Reserva r = new Reserva(f.getConcert().getCode(),f.getConcert(),f.getFecha(),attendees);
+	        		  		gestorBD.insertarDatos(r);
+	        		  	}
+                    }
+                }
+            }
+        });
     }
+	
 	
     private void initGUI() {
         JScrollPane scrollPaneCombinaciones = new JScrollPane(this.tablaCombinaciones);
@@ -72,7 +95,7 @@ public class DiscountFrame extends JFrame{
 
         this.getContentPane().add(scrollPaneCombinaciones);
         this.setTitle("Options");
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setSize(2000, 800);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -88,7 +111,12 @@ public class DiscountFrame extends JFrame{
 			@Override
             public boolean isCellEditable(int row, int column) {
                //all cells false
-               return false;
+			   //if (column == 2) {
+				//   return true;
+			  // }else {
+				   return false;
+			  // }
+               
             }
         };
         loadCombinaciones();
@@ -108,15 +136,37 @@ public class DiscountFrame extends JFrame{
 			}
 			else if (column == 1) {
 				result.setHorizontalAlignment(JLabel.CENTER);
-			}/* else {
+			}else if (column == 2){
 				//Si el valor es texto pero representa un número se renderiza centrado
-				try {
-					Integer.parseInt(value.toString());
-					result.setHorizontalAlignment(JLabel.CENTER);				
-				} catch(Exception ex) {
-					result.setText(value.toString());
-				}		
-			}*/
+				JButton reserva = new JButton("+");
+				reserva.setFont(new Font("DIN",Font.BOLD,24));
+				if (row % 2 != 0) {
+					reserva.setBackground(new Color(255, 233, 244));
+				} else {
+					reserva.setBackground(new Color(248, 190, 255));
+				}
+
+				reserva.addActionListener(new ActionListener() { 
+		        	  public void actionPerformed(ActionEvent e) { 
+		        		  	JOptionPane.showMessageDialog(null, "Successfull import");
+		        		  	@SuppressWarnings("unchecked")
+							List<Fecha> comb = (List<Fecha>) tablaCombinaciones.getValueAt(row, 0);
+		        		  	/*List<String> att = attendees;
+							String atts ="";
+							for (String s:att) {
+								atts=atts+s+":";
+								System.out.println(att.size());
+							}*/
+		        		  	for (Fecha f:comb) {
+		        		  		System.out.println(f);
+		        		  		Reserva r = new Reserva(f.getCode(),f.getConcert(),f.getFecha(),attendees);
+		        		  		gestorBD.insertarDatos(r);
+		        		  	}
+		        		    } 
+		        		} );
+				reserva.setEnabled(true);
+				return reserva;
+			}
 			
 			//La filas pares e impares se renderizan de colores diferentes de la tabla		
 			if (table.equals(tablaCombinaciones)) {
@@ -139,7 +189,7 @@ public class DiscountFrame extends JFrame{
 		};
 		//Se crea un CellEditor a partir de un JComboBox()
 		JComboBox<Logo> jComboEditorial = new JComboBox<>(Logo.values());		
-		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
+		//DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
 		
 		this.tablaCombinaciones.setFillsViewportHeight(true);
 		this.tablaCombinaciones.setRowHeight(70);//altira de las fila

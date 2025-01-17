@@ -207,7 +207,7 @@ public DiscountData(GestorBD gbd) {
 							atts=atts+s+":";
 							System.out.println(att.size());
 						}
-						DiscountFrame df = new DiscountFrame(combinaciones,atts,gbd);
+						DiscountFrame df = new DiscountFrame(combinaciones,attendees,gbd);
 						
 						df.setVisible(true);
 					}
