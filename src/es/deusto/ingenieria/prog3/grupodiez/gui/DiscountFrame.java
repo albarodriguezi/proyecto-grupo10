@@ -20,6 +20,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -73,6 +74,7 @@ public class DiscountFrame extends JFrame{
 	        		  		Reserva r = new Reserva(f.getConcert().getCode(),f.getConcert(),f.getFecha(),attendees);
 	        		  		gestorBD.insertarDatos(r);
 	        		  	}
+	        		  	setVisible(false);
                     }
                 }
             }

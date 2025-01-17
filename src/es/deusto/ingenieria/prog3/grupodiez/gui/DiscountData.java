@@ -212,8 +212,9 @@ public DiscountData(GestorBD gbd) {
 						df.setVisible(true);
 					}
 				};
-				add.run();
 				this.setVisible(false);
+				add.run();
+				
 			});
 			
 			JPanel jPanelButtons = new JPanel();
