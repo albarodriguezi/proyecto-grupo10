@@ -505,7 +505,7 @@ public class GestorBD {
 	}	
 	
 	
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
         // Crear la ventana en el hilo de eventos de Swing para no bloquear
     	// el hilo de ejecución principal
     	SwingUtilities.invokeLater(() -> {
@@ -522,6 +522,6 @@ public class GestorBD {
     		//add.setVisible(true);
     		
         });
-    }
+    }*/
 }
 

@@ -88,7 +88,7 @@ public class Fecha implements Comparable<Fecha>{
 	
 	@Override
 	public String toString() {
-		return "Fecha [fecha=" + fecha + concert.getName() +"]";
+		return "Fecha [fecha=" + fecha  +"]";
 	}
 
 

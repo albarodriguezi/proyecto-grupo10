@@ -195,13 +195,25 @@ public DiscountData(GestorBD gbd) {
 			
 			jButtonCancel.addActionListener((e) -> setVisible(false));
 			jButtonConfirm.addActionListener((e) -> {
-				//TicketBookingDialog tbd= this;
+				DiscountData tbd= this;
 				Thread add=new Thread() {
 					public void run(){
 						List<List<Fecha>> combinaciones = generarRutinas(gbd.obtenerFecha(),Integer.parseInt(jTextAmount.getText()),jComboConcerts.getSelectedIndex()+3);
+						updatePassengers();
+						
+						List<String> att = tbd.getAttendees();
+						String atts ="";
+						for (String s:att) {
+							atts=atts+s+":";
+							System.out.println(att.size());
+						}
+						DiscountFrame df = new DiscountFrame(combinaciones,atts,gbd);
+						
+						df.setVisible(true);
 					}
 				};
 				add.run();
+				this.setVisible(false);
 			});
 			
 			JPanel jPanelButtons = new JPanel();
@@ -291,5 +303,27 @@ public static void generarRutinasAux(List<Fecha> fechas,List<List<Fecha>> result
 			}
 		}
 }
+}
+
+private void updatePassengers() {
+	String item;
+	
+	attendees = new ArrayList<>();
+	
+	for (int i = 1; i <= tickets; i++) {
+		item = jComboAttendees.getItemAt(i);
+		
+		if (!item.contains("¿?")) {
+			attendees.add(item.substring(item.indexOf("-")+2, item.length()));
+		} else {
+			//Si faltan los datos de alguna persona se vacía la lista de pasajeros
+			attendees.clear();
+			break;
+		}
+	}		
+}
+
+public List<String> getAttendees() {
+	return attendees;
 }
 }
