@@ -58,18 +58,19 @@ public class DiscountFrame extends JFrame{
     }
 	
     private void initGUI() {
-        JScrollPane scrollPaneConcerts = new JScrollPane(this.tablaCombinaciones);
-        scrollPaneConcerts.setBorder(new TitledBorder("Concerts"));
+        JScrollPane scrollPaneCombinaciones = new JScrollPane(this.tablaCombinaciones);
+        scrollPaneCombinaciones.setBorder(new TitledBorder("Concerts"));
         this.tablaCombinaciones.setFillsViewportHeight(true);
-        this.tablaCombinaciones.setSize(2000,800);
+        //scrollPaneCombinaciones.setSize(2000,800);
         JPanel panelConcert = new JPanel();
-        panelConcert.add(scrollPaneConcerts);
+        //panelConcert.setSize(2000,800);
+        panelConcert.add(scrollPaneCombinaciones);
 
         
 	    
 	    
 
-        this.getContentPane().add(panelConcert);
+        this.getContentPane().add(scrollPaneCombinaciones);
         this.setTitle("Options");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(2000, 800);
@@ -101,7 +102,7 @@ public class DiscountFrame extends JFrame{
 				@SuppressWarnings("unchecked")
 				List<Fecha> comb =(List<Fecha>) value;
 				for (Fecha f:comb) {
-					concerts = concerts + f.getConcert().getName() + ": "+ f.getFecha().toString()+ "\n";
+					concerts = concerts + f.getConcert().getName().toUpperCase() + ": "+ f.getFecha().toString()+ "   +   \n";
 				}
 				result.setText(concerts);
 			}
@@ -140,7 +141,7 @@ public class DiscountFrame extends JFrame{
 		JComboBox<Logo> jComboEditorial = new JComboBox<>(Logo.values());		
 		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
 		
-
+		this.tablaCombinaciones.setFillsViewportHeight(true);
 		this.tablaCombinaciones.setRowHeight(70);//altira de las fila
 		this.tablaCombinaciones.getTableHeader().setReorderingAllowed(false);		//Se deshabilita la reordenación de columnas
 		this.tablaCombinaciones.getTableHeader().setResizingAllowed(false);//Se deshabilita el redimensionado de las columna
@@ -149,7 +150,7 @@ public class DiscountFrame extends JFrame{
 		//Se establecen los renderers al la cabecera y el contenido	
 		this.tablaCombinaciones.setDefaultRenderer(Object.class, cellRenderer);
 		//Se define la anchura de la columna Título
-		this.tablaCombinaciones.getColumnModel().getColumn(0).setPreferredWidth(500);
+		this.tablaCombinaciones.getColumnModel().getColumn(0).setPreferredWidth(1000);
 		
 //-----------------------------------------------------------------------------como al seleccionar una fila se va a la pagina de fechas-----------------------------
 		this.tablaCombinaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -162,7 +163,7 @@ public class DiscountFrame extends JFrame{
 		combinaciones.forEach(c -> {
 		String concerts = "";
 		for (Fecha f:c) {
-			concerts = concerts + f.getConcert().getName() + ": "+ f.getFecha().toString()+ "\n";
+			concerts = concerts + f.getConcert().getName().toUpperCase() + ": "+ f.getFecha().toString()+ "     ";
 		}
 		Float price = (float) 0;
 		for (Fecha f:c) {
