@@ -38,7 +38,6 @@ import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 	        // Crear un panel principal con un GridLayout para organizar los otros paneles
 	        // El panel tiene 2 filas y 2 columnas, con 10 píxeles de separación horizontal y vertical
 	        JPanel mainPanel = new JPanel(new GridLayout(8,3,10,10));
-	        JPanel subPanel = new JPanel(new BorderLayout());
 	        
 	        JButton addConcert =new JButton("Añadir Concierto");
 	        JButton addDate =new JButton("Añadir Fecha");

@@ -84,8 +84,6 @@ public class AnadirConcierto extends JDialog {
 				codePanel.setOpaque(true);
 				codePanel.setBackground(getBackground());
 				((TitledBorder)codePanel.getBorder()).setTitleColor(new Color(255,150,200));
-				//codeText.setOpaque(true);
-				//((TitledBorder)codePanel.getBorder()).setBackground(new Color(255,150,200)));
 				((TitledBorder)codePanel.getBorder()).setTitleFont(new Font("DIN",Font.BOLD,14));
 				codigo.setEditable(true);
 				codePanel.add(codigo,BorderLayout.CENTER);
@@ -175,6 +173,7 @@ public class AnadirConcierto extends JDialog {
 								Concert[] cs = new Concert[1];
 								cs[0] = c;
 								gestorBD.insertarDatos(cs);
+								JOptionPane.showMessageDialog(null, "Successfull import");
 								/*
 								try {
 									FileWriter fw=new FileWriter("resources\\data\\Concerts.csv",true);
@@ -198,7 +197,7 @@ public class AnadirConcierto extends JDialog {
 
 			}
 
-			public static void main(String[] args) {
+			/*public static void main(String[] args) {
 		        // Crear la ventana en el hilo de eventos de Swing para no bloquear
 		    	// el hilo de ejecución principal
 		    	SwingUtilities.invokeLater(() -> {
@@ -208,7 +207,7 @@ public class AnadirConcierto extends JDialog {
 		    		add.setVisible(true);
 		    		
 		        });
-		    }
+		    }*/
 			
 		}
 

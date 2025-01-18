@@ -62,19 +62,21 @@ public class DiscountFrame extends JFrame{
         
         this.tablaCombinaciones.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 1) { // Detecta doble clic
+                if (e.getClickCount() == 2) { // Detecta doble clic
                     int selectedRow = tablaCombinaciones.getSelectedRow();
                     int selectedColumn = tablaCombinaciones.getSelectedColumn();
                     if (selectedColumn == 2) {
-                    	JOptionPane.showMessageDialog(null, "Successfull import");
+                    	//JOptionPane.showMessageDialog(null, "Successfull import");
 	        		  	@SuppressWarnings("unchecked")
 						List<Fecha> comb = (List<Fecha>) tablaCombinaciones.getValueAt(selectedRow, 0);
 	        		  	for (Fecha f:comb) {
 	        		  		//System.out.println(f);
+	        		  		//Hace una reserva para cada fecha de la lista
 	        		  		Reserva r = new Reserva(f.getConcert().getCode(),f.getConcert(),f.getFecha(),attendees);
 	        		  		r.setDescuento(comb.size());
 	        		  		gestorBD.insertarDatos(r);
 	        		  	}
+	        		  	//Tras la reserva oculta la pestaña
 	        		  	setVisible(false);
                     }
                 }
@@ -84,13 +86,11 @@ public class DiscountFrame extends JFrame{
 	
 	
     private void initGUI() {
+    	//ScrollPane con los lotes
         JScrollPane scrollPaneCombinaciones = new JScrollPane(this.tablaCombinaciones);
-        scrollPaneCombinaciones.setBorder(new TitledBorder("Concerts"));
+        scrollPaneCombinaciones.setBorder(new TitledBorder("Lotes"));
         this.tablaCombinaciones.setFillsViewportHeight(true);
         //scrollPaneCombinaciones.setSize(2000,800);
-        JPanel panelConcert = new JPanel();
-        //panelConcert.setSize(2000,800);
-        panelConcert.add(scrollPaneCombinaciones);
 
         
 	    
@@ -106,17 +106,15 @@ public class DiscountFrame extends JFrame{
     
     
     private void initTables() {
-        Vector<String> cabeceraConcert = new Vector<>(Arrays.asList("CONCIERTOS","PRECIO","RESERVAR"));
-        this.modeloDatosCombinaciones = new DefaultTableModel(new Vector<>(), cabeceraConcert){
+    	//Titulos de las columnas
+        Vector<String> cabeceraLotes = new Vector<>(Arrays.asList("CONCIERTOS","PRECIO","RESERVAR"));
+        this.modeloDatosCombinaciones = new DefaultTableModel(new Vector<>(), cabeceraLotes){
         	
 			private static final long serialVersionUID = 1L;
 
 			@Override
             public boolean isCellEditable(int row, int column) {
                //all cells false
-			   //if (column == 2) {
-				//   return true;
-			  // }else {
 				   return false;
 			  // }
                
@@ -131,6 +129,7 @@ public class DiscountFrame extends JFrame{
 			if (column == 0){
 				String concerts = "";
 				@SuppressWarnings("unchecked")
+				//Concatena las fechas para enseñarlas por pantalla
 				List<Fecha> comb =(List<Fecha>) value;
 				for (int i = 0;i<comb.size()-1;i++) {
 					concerts = concerts + comb.get(i).getConcert().getName().toUpperCase() + ": "+ comb.get(i).getFecha().toString()+ "   +   \n";
@@ -139,10 +138,11 @@ public class DiscountFrame extends JFrame{
 				result.setText(concerts);
 			}
 			else if (column == 1) {
+				//Dos decimales y centrados
 				result.setHorizontalAlignment(JLabel.CENTER);
 				result.setText(String.format("%.2f", value));
 			}else if (column == 2){
-				//Si el valor es texto pero representa un número se renderiza centrado
+				//Boton con colores alternos
 				JButton reserva = new JButton("+");
 				reserva.setFont(new Font("DIN",Font.BOLD,24));
 				if (row % 2 != 0) {
@@ -207,13 +207,8 @@ public class DiscountFrame extends JFrame{
     private void loadCombinaciones() {
 
 		this.modeloDatosCombinaciones.setRowCount(0);
-		//Se añaden los comics uno a uno al modelo de datos
+		//Se añaden las combinaciones una a una al modelo de datos
 		combinaciones.forEach(c -> {
-		String concerts = "";
-		// Soncatena las fechas
-		for (Fecha f:c) {
-			concerts = concerts + f.getConcert().getName().toUpperCase() + ": "+ f.getFecha().toString()+ "     ";
-		}
 		//Calcula el precio total con el precio de los conciertos,la cantidad de fechas en la lista y la cantidad de attendees
 		Float price = (float) 0;
 		for (Fecha f:c) {

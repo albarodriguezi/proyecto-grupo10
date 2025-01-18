@@ -34,7 +34,6 @@ public class ProgressBar extends JFrame {
 
         this.add(progressBar, BorderLayout.CENTER);
         progressBar.setForeground(new Color(248, 190, 255));
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(300, 100);
         this.setTitle("Cargando..");
         this.setLocationRelativeTo(null);

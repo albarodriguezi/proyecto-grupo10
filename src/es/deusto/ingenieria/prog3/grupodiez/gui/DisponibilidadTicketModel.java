@@ -39,12 +39,9 @@ public class DisponibilidadTicketModel extends DefaultTableModel {
 	private static final long serialVersionUID = 1L;
 
 
-	private List<Concert> concerts;
-	private Fecha fecha;
 	private List<Fecha> fechas;
 	private JTable tablaFechas;
     private DefaultTableModel modeloDatosFechas ;
-    private JTextField txtFiltro;
     private GestorBD gestorBD;
     private Concert concierto;
     private final List<String> headers = Arrays.asList(
@@ -266,12 +263,7 @@ public class DisponibilidadTicketModel extends DefaultTableModel {
 
     }
 
-    //hacemos que se puedan filtrar(creamos el buscador)
-    private void filterConcerts(String text) {
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(this.modeloDatosFechas);
-        this.tablaFechas.setRowSorter(sorter);
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
-    }
+
    
    
 }
