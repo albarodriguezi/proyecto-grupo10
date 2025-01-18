@@ -132,9 +132,10 @@ public class DiscountFrame extends JFrame{
 				String concerts = "";
 				@SuppressWarnings("unchecked")
 				List<Fecha> comb =(List<Fecha>) value;
-				for (Fecha f:comb) {
-					concerts = concerts + f.getConcert().getName().toUpperCase() + ": "+ f.getFecha().toString()+ "   +   \n";
+				for (int i = 0;i<comb.size()-1;i++) {
+					concerts = concerts + comb.get(i).getConcert().getName().toUpperCase() + ": "+ comb.get(i).getFecha().toString()+ "   +   \n";
 				}
+				concerts = concerts + comb.getLast().getConcert().getName().toUpperCase() + ": "+ comb.getLast().getFecha().toString();
 				result.setText(concerts);
 			}
 			else if (column == 1) {
