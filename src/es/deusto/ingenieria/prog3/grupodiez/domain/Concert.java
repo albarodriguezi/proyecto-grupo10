@@ -10,6 +10,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
+import es.deusto.ingenieria.prog3.grupodiez.gui.AnadirFecha;
 
 
 
@@ -47,7 +48,8 @@ public class Concert implements Comparable<Concert>, Serializable{
 	
 	public Concert(String code) {
 		this.code = code;
-		try {
+		//Antigua implementacion de csv
+		/*try {
 			Scanner sc = new Scanner(new File("resources\\data\\Concerts.csv"));
 			while(sc.hasNextLine()){
 		        String linea=sc.nextLine();
@@ -67,13 +69,21 @@ public class Concert implements Comparable<Concert>, Serializable{
 		        
 		        
 			}
-			
 			sc.close();
+			
+			
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+		Concert c = AnadirFecha.readConcert().get(code);
+		this.imagen = c.getImagen();
+    	this.name = c.getName();
+    	this.duration = c.getDuration();
+    	this.seats= c.getSeats();
+    	this.price= c.price;
+		
 		
 
 	}
