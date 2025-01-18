@@ -57,6 +57,7 @@ public class ConcertsList extends JFrame {
         
 
     }
+    
 
     private void initGUI() {
     	//Crea el scrollPane
