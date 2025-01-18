@@ -163,16 +163,20 @@ public class AnadirFecha extends JDialog {
 					public void actionPerformed(ActionEvent e) { 
 						Thread add=new Thread() {
 							public void run(){
+								//Obtener datos de las casillas
 								String day = dia.getText();
 								String code = codigo.getText();
 								String month = mes.getText();
 								String year = ano.getText();
 								String seat = asiento.getText();
+								//Para conciertos existentes añadir fechas a la base de datos
 								if (readConcert().containsKey(code)) {
 									Fecha f = new Fecha(Integer.parseInt(day), Integer.parseInt(month), Integer.parseInt(year), code, Integer.parseInt(seat));
 									Fecha[] fc = new Fecha[1];
 									fc[0] = f;
 									gestorBD.insertarDatos(fc);
+									//Antigua aplicacion con csv
+									/*
 									try {
 										FileWriter fw=new FileWriter("resources\\data\\Fecha.csv",true);
 										fw.append("\n"+day+";"+month+";"+year+";"+code+";"+seat+";");
@@ -181,7 +185,7 @@ public class AnadirFecha extends JDialog {
 									} catch (IOException e1) {
 										// TODO Auto-generated catch block
 										e1.printStackTrace();
-									}
+									}*/
 								}else {
 
 									JOptionPane.showMessageDialog(null, "Code not found");
@@ -202,6 +206,8 @@ public class AnadirFecha extends JDialog {
 
 			}
 			
+			//Mapa de codigos de concieto con sus respectivos conciertos
+			
 			public static HashMap<String,Concert> readConcert(){
 				HashMap<String,Concert> conciertos = new HashMap<String,Concert>();
 				Thread hash=new Thread() {
@@ -210,6 +216,7 @@ public class AnadirFecha extends JDialog {
 						for (Concert c:cs) {
 							conciertos.put(c.getCode(), c);
 						}
+						//Antigua aplicacion con csv
 						/*try {
 							Scanner sc = new Scanner(new File("resources\\data\\Concerts.csv"));
 							while(sc.hasNextLine()){
@@ -237,7 +244,7 @@ public class AnadirFecha extends JDialog {
 		    	return conciertos;
 			}
 			
-			public static void main(String[] args) {
+			/*public static void main(String[] args) {
 		        // Crear la ventana en el hilo de eventos de Swing para no bloquear
 		    	// el hilo de ejecución principal
 		    	SwingUtilities.invokeLater(() -> {
@@ -248,6 +255,6 @@ public class AnadirFecha extends JDialog {
 		    		//System.out.println(AnadirFecha.readConcert());
 		    		
 		        });
-		    }
+		    }*/
 			
 		}

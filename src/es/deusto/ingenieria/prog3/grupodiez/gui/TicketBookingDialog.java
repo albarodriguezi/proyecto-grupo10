@@ -54,14 +54,13 @@ public class TicketBookingDialog extends JDialog {
 		this.setFecha(fecha);
 		HashMap<String,Concert> indice=AnadirFecha.readConcert();
 		this.concert = indice.get(fecha.getCode());
-		System.out.println(concert);
+		//System.out.println(concert);
 		JPanel jPanelConcert = new JPanel(); //panel en la ventana
 		jPanelConcert.setBorder(new TitledBorder("Datos del concierto")); //borde para añadir nombre
 		jPanelConcert.setLayout(new GridLayout(4, 1)); //gridlayout para 5 elementos uno debajo del otro
 		jPanelConcert.setBackground(new Color(255, 233, 244));
 
 		JLabel jLabelConcert = new JLabel(String.format(concert.getName())); //etiqueta con el nombre del concierto
-		jLabelConcert.setIcon(new ImageIcon(String.format("resources/images/%s.png", concert.getName()))); //poner la imagen del concierto en la etiqueta segun el nombre del mismo
 		
 		jPanelConcert.add(jLabelConcert); //añade la etiqueta creada al panel
 		jPanelConcert.add(new JLabel(String.format("Fecha: %s / %s / %s", fecha.getDia(), fecha.getMes(), fecha.getAno()))); //añade al panel label para la fecha
@@ -277,7 +276,7 @@ public class TicketBookingDialog extends JDialog {
 				return attendees;
 			}
 			
-			public static void main(String[] args) {
+			/*public static void main(String[] args) {
 		        // Crear la ventana en el hilo de eventos de Swing para no bloquear
 		    	// el hilo de ejecución principal
 		    	SwingUtilities.invokeLater(() -> {
@@ -290,7 +289,7 @@ public class TicketBookingDialog extends JDialog {
 		    		//add.setVisible(true);
 		    		
 		        });
-		    }
+		    }*/
 
 
 			public Fecha getFecha() {

@@ -73,6 +73,8 @@ public class GestorBD {
 			
 	        //Se abre la conexión y se crea un PreparedStatement para crer cada tabla
 			//Al abrir la conexión, si no existía el fichero por defecto, se crea.
+			borrarFechas();
+			borrarConciertos();
 			try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
 			     PreparedStatement pStmt1 = con.prepareStatement(sql1);
 				 PreparedStatement pStmt2 = con.prepareStatement(sql2);
@@ -80,7 +82,7 @@ public class GestorBD {
 				
 				//Se ejecutan las sentencias de creación de las tablas
 		        if (!pStmt1.execute() && !pStmt2.execute() && !pStmt3.execute()) {
-		        	System.out.println("Se han creado las tablas");
+		        	//System.out.println("Se han creado las tablas");
 		        }
 			} catch (Exception ex) {
 				System.out.println(String.format("Error al crear las tablas: %s", ex.getMessage()));
@@ -98,7 +100,7 @@ public class GestorBD {
 			        String name = campos[2];
 			        Integer duration = Integer.parseInt(campos[3]);
 			        Float price = Float.parseFloat(campos[5]);
-			        System.out.println(price);
+			        //System.out.println(price);
 			        conciertos.add(new Concert(logo,code,name,duration,92000,price));
 			        
 				}
@@ -125,7 +127,7 @@ public class GestorBD {
 	    			String code = campos[3];
 	    			Integer seats = Integer.parseInt(campos[4]);
 	    			//if (code.equals(concierto.getCode())) {
-	    				System.out.println("a");
+	    				//System.out.println("a");
 	    			fechasc.add(new Fecha(dia,mes,ano,code,seats));
 	    			//}
 	       
@@ -150,7 +152,7 @@ public class GestorBD {
 			        String code = campos[0];
 			        String date = campos[2];
 			        String[] datedet= date.split("-");
-			        System.out.println(linea);
+			        //System.out.println(linea);
 			        LocalDate ldate=LocalDate.of(Integer.parseInt(datedet[0]),Integer.parseInt(datedet[1]),Integer.parseInt(datedet[2]));
 			        String strAtt = campos[3];
 			        String[] attdet= strAtt.split(":");
@@ -194,7 +196,7 @@ public class GestorBD {
 			
 	        //Se ejecuta la sentencia de creación de la tabla Estudiantes
 	        if (!stmt.execute()) {
-	        	System.out.println("\n\n- Se ha borrado la tabla Cliente");
+	        	//System.out.println("\n\n- Se ha borrado la tabla Cliente");
 	        }
 		} catch (Exception ex) {
 			System.err.format("\n* Error al borrar la BBDD: %s", ex.getMessage());
@@ -204,7 +206,7 @@ public class GestorBD {
 		try {
 			//Se borra el fichero de la BBDD
 			Files.delete(Paths.get(DATABASE_FILE));
-			System.out.println("\n- Se ha borrado el fichero de la BBDD");
+			//System.out.println("\n- Se ha borrado el fichero de la BBDD");
 		} catch (Exception ex) {
 			System.err.format("\n* Error al borrar el archivo de la BBDD: %s", ex.getMessage());
 			ex.printStackTrace();						
@@ -218,7 +220,7 @@ public class GestorBD {
 			//Se define la plantilla de la sentencia SQL
 			//String sql = "INSERT INTO CLIENTE (NAME, EMAIL, PASSWORD) VALUES ('%s', '%s', '%s');";
 			
-			System.out.print("\n- Insertando conciertos...");
+			//System.out.print("\n- Insertando conciertos...");
 			
 			//Se recorren los clientes y se insertan uno a uno
 			for (Concert c : conciertos) {
@@ -230,7 +232,7 @@ public class GestorBD {
 				stmt.setFloat(6,c.getPrice());
 				//stmt.toString();
 				if (1 == stmt.executeUpdate()) {					
-					System.out.format("\n - Concierto insertado: %s", c.toString());
+					//System.out.format("\n - Concierto insertado: %s", c.toString());
 				} else {
 					System.out.format("\n - No se ha insertado el concierto: %s", c.toString());
 				}
@@ -248,17 +250,17 @@ public class GestorBD {
 			//Se define la plantilla de la sentencia SQL
 			//String sql = "INSERT INTO CLIENTE (NAME, EMAIL, PASSWORD) VALUES ('%s', '%s', '%s');";
 			
-			System.out.print("\n- Insertando fechas...");
+			//System.out.print("\n- Insertando fechas...");
 			
 			//Se recorren los clientes y se insertan uno a uno
 			for (Fecha f : fechas) {
-				System.out.println(fechas.length);
+				//System.out.println(fechas.length);
 				stmt.setDate(1,Date.valueOf(f.getFecha()));
 				stmt.setString(2,f.getCode());
 				stmt.setInt(3,f.getSeats());
 				//stmt.toString();
 				if (1 == stmt.executeUpdate()) {					
-					System.out.format("\n - Fecha insertado: %s", f.toString());
+					//System.out.format("\n - Fecha insertado: %s", f.toString());
 				} else {
 					System.out.format("\n - No se ha insertado la fecha: %s", f.toString());
 				}
@@ -277,11 +279,11 @@ public class GestorBD {
 			//Se define la plantilla de la sentencia SQL
 			//String sql = "INSERT INTO CLIENTE (NAME, EMAIL, PASSWORD) VALUES ('%s', '%s', '%s');";
 			
-			System.out.print("\n- Insertando reservas...");
+			//System.out.print("\n- Insertando reservas...");
 			
 			//Se recorren los clientes y se insertan uno a uno
 			if (reservas.length!=0) {
-			System.out.println(reservas.length);
+			//System.out.println(reservas.length);
 			
 			for (Reserva r : reservas) {
 				if(r!=null) {
@@ -295,12 +297,12 @@ public class GestorBD {
 					atts=atts+s+":";
 					}
 				}
-				System.out.println(r.getNombreConcierto());
+				//System.out.println(r.getNombreConcierto());
 				stmt.setString(4,atts);
 				stmt.setInt(5, r.getDescuento());
 				//stmt.toString();
 				if (1 == stmt.executeUpdate()) {					
-					System.out.format("\n - Reserva insertado: %s", r.toString());
+					//System.out.format("\n - Reserva insertado: %s", r.toString());
 				} else {
 					System.out.format("\n - No se ha insertado la reserva: %s", r.toString());
 				}
@@ -341,7 +343,7 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			System.out.format("\n\n- Se han recuperado %d conciertos...", conciertos.size());			
+			//System.out.format("\n\n- Se han recuperado %d conciertos...", conciertos.size());			
 		} catch (Exception ex) {
 			System.err.format("\n\n* Error al obtener datos de la BBDD: %s", ex.getMessage());
 			ex.printStackTrace();						
@@ -374,7 +376,7 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			System.out.format("\n\n- Se han recuperado %d fechas...", fechas.size());			
+			//System.out.format("\n\n- Se han recuperado %d fechas...", fechas.size());			
 		} catch (Exception ex) {
 			System.err.format("\n\n* Error al obtener datos de la BBDD: %s", ex.getMessage());
 			ex.printStackTrace();						
@@ -407,7 +409,7 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			System.out.format("\n\n- Se han recuperado %d fechas...", fechas.size());			
+			//System.out.format("\n\n- Se han recuperado %d fechas...", fechas.size());			
 		} catch (Exception ex) {
 			System.err.format("\n\n* Error al obtener datos de la BBDD: %s", ex.getMessage());
 			ex.printStackTrace();						
@@ -430,7 +432,7 @@ public class GestorBD {
 			
 			//Se recorre el ResultSet y se crean objetos Cliente
 			while (rs.next()) {
-				System.out.println(rs.toString());
+				//System.out.println(rs.toString());
 				String att = rs.getString("ATTENDEES");
 				String[] attdet= att.split(":");
 		        ArrayList<String> nombre = new ArrayList<String>();
@@ -450,7 +452,7 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			System.out.format("\n\n- Se han recuperado %d reservas...", reservas.size());			
+			//System.out.format("\n\n- Se han recuperado %d reservas...", reservas.size());			
 		} catch (Exception ex) {
 			System.err.format("\n\n* Error al obtener datos de la BBDD: %s", ex.getMessage());
 			ex.printStackTrace();						
@@ -483,9 +485,9 @@ public class GestorBD {
 		     PreparedStatement stmt = con.prepareStatement("DELETE FROM RESERVA;")) {
 			//Se ejecuta la sentencia de borrado de datos
 			//String sql = "DELETE FROM CLIENTE;";			
-			int result = stmt.executeUpdate();
+			stmt.executeUpdate();
 			
-			System.out.format("\n\n- Se han borrado %d reservas", result);
+			//System.out.format("\n\n- Se han borrado %d reservas", result);
 		} catch (Exception ex) {
 			System.err.format("\n\n* Error al borrar datos de la BBDD: %s", ex.getMessage());
 			ex.printStackTrace();						
@@ -498,14 +500,30 @@ public class GestorBD {
 		     PreparedStatement stmt = con.prepareStatement("DELETE FROM FECHA;")) {
 			//Se ejecuta la sentencia de borrado de datos
 			//String sql = "DELETE FROM CLIENTE;";			
-			int result = stmt.executeUpdate();
+			stmt.executeUpdate();
 			
-			System.out.format("\n\n- Se han borrado %d reservas", result);
+			//System.out.format("\n\n- Se han borrado %d reservas", result);
 		} catch (Exception ex) {
 			System.err.format("\n\n* Error al borrar datos de la BBDD: %s", ex.getMessage());
 			ex.printStackTrace();						
 		}		
 	}	
+	
+	public void borrarConciertos() {
+		//Se abre la conexión y se obtiene el Statement
+		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
+		     PreparedStatement stmt = con.prepareStatement("DELETE FROM CONCIERTO;")) {
+			//Se ejecuta la sentencia de borrado de datos
+			//String sql = "DELETE FROM CLIENTE;";			
+			stmt.executeUpdate();
+			
+			//System.out.format("\n\n- Se han borrado %d reservas", result);
+		} catch (Exception ex) {
+			System.err.format("\n\n* Error al borrar datos de la BBDD: %s", ex.getMessage());
+			ex.printStackTrace();						
+		}		
+	}	
+	
 	
 	
 /*	public static void main(String[] args) {

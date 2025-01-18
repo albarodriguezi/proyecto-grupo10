@@ -38,7 +38,7 @@ public class DiscountData extends JDialog {
 	private JComboBox<String> jComboConcerts = new JComboBox<>();
 	private JSpinner jSpinnerTickets = new JSpinner(); //spinner para el numero de tickets
 	private JComboBox<String> jComboAttendees = new JComboBox<>(); //elegir el numero de asistentes
-	private JTextField jTextAmount = new JTextField(); //etiqueta
+	private JTextField jTextAmount = new JTextField(); //presupuesto
 	private JButton jButtonConfirm = new JButton("Confirmar"); //boton de confirmar
 	private JButton jButtonCancel = new JButton("Cancelar"); //boton de cancelar
 	private GestorBD gestorBD;
@@ -52,18 +52,20 @@ public DiscountData(GestorBD gbd) {
 	this.gestorBD = gbd;
 	HashMap<String,Concert> indice=AnadirFecha.readConcert();
 	JPanel jPanelConcert = new JPanel(); //panel en la ventana
-	jPanelConcert.setBorder(new TitledBorder("aa")); //borde para añadir nombre
+	jPanelConcert.setBorder(new TitledBorder("Datos del lote:")); //borde para añadir nombre
 	jPanelConcert.setLayout(new GridLayout(3, 1)); //gridlayout para 2 elementos uno debajo del otro
 	jPanelConcert.setBackground(new Color(255, 233, 244));
-	
+	 //Opciones de lotes
 	jComboConcerts.addItem("3 conciertos - 10% de descuento");
 	jComboConcerts.addItem("4 conciertos - 15% de descuento");
 	jComboConcerts.addItem("5 conciertos - 20% de descuento");
 	
+	//Panel con el combobox de los lotes
 	JPanel jPanelDiscount = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	jPanelDiscount.add(new JLabel("Tipo de descuento: "));
 	jPanelDiscount.add(jComboConcerts);
 	
+	//Panel para introducir el presupuesto
 	JPanel jPanelAmount = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	jPanelAmount.add(new JLabel("Presupuesto: "));
 	jTextAmount.setEditable(true);
@@ -72,23 +74,12 @@ public DiscountData(GestorBD gbd) {
 	jPanelConcert.add(jPanelAmount);
 	jPanelConcert.add(jPanelDiscount);
 	
-	jButtonCancel.addActionListener(new ActionListener() { 
-  	  public void actionPerformed(ActionEvent e) { 
-  		    
-  		    setVisible(false);
-  		    } 
-  		} );
 	
-	jButtonConfirm.setBackground(new Color(255,233,244));
-	jButtonConfirm.setForeground(Color.black);
-    jButtonCancel.setBackground(new Color(255,233,244));
-    jButtonCancel.setForeground(Color.black);
 	
 	JPanel jPanelAttendees = new JPanel(); //otro panel para datos personales
 	jPanelAttendees.setBorder(new TitledBorder("Datos personales")); //borde nombre
 	jPanelAttendees.setLayout(new GridLayout(3, 1));//3 elementos
 	jPanelAttendees.setBackground(new Color(255, 233, 244));
-	 //calcular los tickets restantes para que no puedan elegir mas tickets de los que quedan	
 	jSpinnerTickets = new JSpinner(new SpinnerNumberModel(1, 1, 4, 1)); //spinner para que puedan elegir el numero de tickets
 	//formato --> (valor inicial = 1, valor minimo = 1, valor maximo = 4, incremento = 1)
 
@@ -187,28 +178,39 @@ public DiscountData(GestorBD gbd) {
 			jPanelAttendees.add(jPanelTickets);
 			jPanelAttendees.add(jPanelNames);
 			
+			//Boton cancelar,oculta la pestaña
+			jButtonCancel.addActionListener(new ActionListener() { 
+			  	  public void actionPerformed(ActionEvent e) { 
+			  		    
+			  		    setVisible(false);
+			  		    } 
+			  		} );
+			
+			//Color de fondo y del textp
+			jButtonConfirm.setBackground(new Color(255,233,244));
+			jButtonConfirm.setForeground(Color.black);
+			jButtonCancel.setBackground(new Color(255,233,244));
+			jButtonCancel.setForeground(Color.black);
+			    
 			//Eventos de los botones
 			jButtonCancel.addActionListener((e) -> setVisible(false));
+			
 			jButtonConfirm.addActionListener((e) -> {
 				setVisible(false);
 			});
 			
 			jButtonCancel.addActionListener((e) -> setVisible(false));
 			jButtonConfirm.addActionListener((e) -> {
-				DiscountData tbd= this;
 				Thread add=new Thread() {
+					
 					public void run(){
-						List<List<Fecha>> combinaciones = generarRutinas(gbd.obtenerFecha(),Integer.parseInt(jTextAmount.getText()),jComboConcerts.getSelectedIndex()+3);
+						//Genera combinaciones de fechas
+						List<List<Fecha>> combinaciones = generarLotes(gbd.obtenerFecha(),Integer.parseInt(jTextAmount.getText()),jComboConcerts.getSelectedIndex()+3,(Integer) jSpinnerTickets.getValue());
+						//actualiza attendees
 						updatePassengers();
-						
-						List<String> att = tbd.getAttendees();
-						String atts ="";
-						for (String s:att) {
-							atts=atts+s+":";
-							System.out.println(att.size());
-						}
+						//Crea una pestaña con las fechas y los attendees
 						DiscountFrame df = new DiscountFrame(combinaciones,attendees,gbd);
-						
+						//Hace visible la pestaña
 						df.setVisible(true);
 					}
 				};
@@ -217,20 +219,18 @@ public DiscountData(GestorBD gbd) {
 				
 			});
 			
+			//Panel de botones
 			JPanel jPanelButtons = new JPanel();
 			jPanelButtons.add(jButtonCancel);
 			jPanelButtons.add(jButtonConfirm);
-			
+			//Panes de datos
 			JPanel jPanelCenter = new JPanel();
 			jPanelCenter.setLayout(new GridLayout(2, 1));
 			jPanelCenter.add(jPanelConcert);
 			jPanelCenter.add(jPanelAttendees);
+
 			
-			
-			
-			
-			
-			//this.setLayout(new BorderLayout(10, 10));
+			//Mete los panesles en un BorderLayout
 			add(new JPanel(), BorderLayout.NORTH);
 			add(new JPanel(), BorderLayout.EAST);
 			add(new JPanel(), BorderLayout.WEST);
@@ -238,7 +238,6 @@ public DiscountData(GestorBD gbd) {
 			add(jPanelButtons, BorderLayout.SOUTH);
 			
 			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);	
-			setIconImage(new ImageIcon("resources/images/tickets.png").getImage());		
 			setSize(500, 350);
 			setModalityType(ModalityType.APPLICATION_MODAL);
 			setLocationRelativeTo(null);
@@ -246,35 +245,36 @@ public DiscountData(GestorBD gbd) {
 }
 
 
-public static List<List<Fecha>> generarRutinas(List<Fecha> fechas, int presupuesto, int cantidad) {
+public static List<List<Fecha>> generarLotes(List<Fecha> fechas, int presupuesto, int cantidad,int index) {
 	//Creo la lista del resultado y la lista auxiliar
 	List<List<Fecha>> total = new ArrayList<>();
 	List<Fecha> auxiliar = new ArrayList<>();
 	List<String> concierto = new ArrayList<>();
 	List<List<String>> conciertotot = new ArrayList<>();
-	//Llamo a la funcion auxiliar con una duracion auxiliar de 0 
-	generarRutinasAux(fechas,total,auxiliar,presupuesto,cantidad,0,concierto,conciertotot);
+	//Llamo a la funcion auxiliar con un gasto auxiliar de 0 
+	generarLotesAux(fechas,total,auxiliar,presupuesto,cantidad,0,concierto,conciertotot,index);
 	//Compruebo resultados
-	System.out.println(total.size());
-	System.out.println(total);
+	//System.out.println(total.size());
+	//System.out.println(total);
 	return total;
 }
 
 
 //Creo una rutina auxiliar 
-public static void generarRutinasAux(List<Fecha> fechas,List<List<Fecha>> result,List<Fecha> aux, int presupuesto, int cantidad ,float gastoaux,List<String> conciertosaux,List<List<String>> conciertos) {
-	//CASO BASE 1 Comprueba que la duracion de la rutina auxiliar se menor que la que marca la conndicion
+public static void generarLotesAux(List<Fecha> fechas,List<List<Fecha>> result,List<Fecha> aux, int presupuesto, int cantidad ,float gastoaux,List<String> conciertosaux,List<List<String>> conciertos,int index) {
+	//CASO BASE 1 Comprueba que el gasto del lote auxiliar se menor que el que marca la conndicion
 	if (presupuesto < gastoaux) {
-		System.out.println(gastoaux);
+		//System.out.println(gastoaux);
 		return;
 	}
-	//CASO BASE 2 Comprueba que la duracion total sea la debide)
+	//CASO BASE 2 Comprueba que el tamaño sea correcto)
 	else if (aux.size()==cantidad) {
 		List<Fecha> auxcopia = new ArrayList<>(aux);
 		List<String> auxcopiacon = new ArrayList<>(conciertosaux);
 		//Hago un ordenado para evitar los repetidos
 		Collections.sort(auxcopia);
 		Collections.sort(auxcopiacon);
+		//Compruebo que no haya Fechas o Conciertos petidos
 		if (!result.contains(auxcopia)&&!conciertos.contains(auxcopiacon)) {
 			result.add(auxcopia);
 			conciertos.add(auxcopiacon);
@@ -283,11 +283,13 @@ public static void generarRutinasAux(List<Fecha> fechas,List<List<Fecha>> result
 	// CASO RECURSIVO
 		//Para cada ejercicio
 		for (Fecha f:fechas) {
-			//Compruebo que el nivel sea correcto,que el grupo muscular sea uno de los adecuados y que no tenga repetidos
+			//Compruebo que ni el concierto ni la fecha sea repetido
 			if (!conciertosaux.contains(f.getConcert().getName()) &&
 				!aux.contains(f)) { 
+				//Añado la fecha
 				aux.add(f);
 				Float c;
+				// Aplico el descuento
 				if(cantidad == 3) {
 					c=(float) 0.1;
 				}else if(cantidad == 4) {
@@ -295,10 +297,12 @@ public static void generarRutinasAux(List<Fecha> fechas,List<List<Fecha>> result
 				}else{
 					c=(float) 0.2;
 				}
-				//sumo la duracion a las duraciones antiguas
+				
+				//sumo el gasto
+				//Añado el nombre del concierto
 				conciertosaux.add(f.getConcert().getName());
-				generarRutinasAux(fechas,result,aux,presupuesto,cantidad,gastoaux+f.getConcert().getPrice()*(1-c),conciertosaux,conciertos);
-				//retiro el ultimo ejercicio
+				generarLotesAux(fechas,result,aux,presupuesto,cantidad,gastoaux+f.getConcert().getPrice()*(1-c)*index,conciertosaux,conciertos,index);
+				//retiro la ultima fecha y el ultimo concierto
 				conciertosaux.remove(conciertosaux.size()-1);
 				aux.remove(aux.size()-1);
 			}

@@ -59,10 +59,11 @@ public class ConcertsList extends JFrame {
     }
 
     private void initGUI() {
+    	//Crea el scrollPane
         JScrollPane scrollPaneConcerts = new JScrollPane(this.tablaConcert);
         scrollPaneConcerts.setBorder(new TitledBorder("Concerts"));
         this.tablaConcert.setFillsViewportHeight(true);
-
+        //FIltro por nombre de concierto
         this.txtFiltro = new JTextField(20);
         DocumentListener documentListener = new DocumentListener() {
             @Override
@@ -83,14 +84,14 @@ public class ConcertsList extends JFrame {
         JPanel panelFiltro = new JPanel();
         panelFiltro.add(new JLabel("Filtrar por nombre: "));
         panelFiltro.add(txtFiltro);
-        
+        //Panel con el boton de descuento con dos Grid
         JPanel panelDescuento = new JPanel();
     	panelDescuento.setLayout(new GridLayout(1,3));
     	JPanel panelDescuentoAux = new JPanel();
     	panelDescuentoAux.setLayout(new GridLayout(1,3));
     	
     	JButton JButtonDescuento = new JButton("Descuento");
-    	
+    	//Action Listener que abre la pestaña de introduccion de datos para los lotes
     	JButtonDescuento.addActionListener(new ActionListener() { 
       	  public void actionPerformed(ActionEvent e) { 
       		    DiscountData dd=new DiscountData(gestorBD);
@@ -110,8 +111,10 @@ public class ConcertsList extends JFrame {
     	panelDescuento.setBackground(new Color(255, 233, 244));
     	panelDescuentoAux.setBackground(new Color(255, 233, 244));
     	
+    	//Mete en un BorderLayout el filtro los conciertos en ScrollPane y el boton de descuentos
         JPanel panelConcert = new JPanel();
         panelConcert.setLayout(new BorderLayout());
+        panelConcert.add(BorderLayout.NORTH, panelFiltro);
         panelConcert.add(BorderLayout.CENTER, scrollPaneConcerts);
         panelConcert.add(BorderLayout.SOUTH, panelDescuento);
 
@@ -357,7 +360,7 @@ public class ConcertsList extends JFrame {
     private void filterConcerts(String text) {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(this.modeloDatosConcerts);
         this.tablaConcert.setRowSorter(sorter);
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 2));
     }
     
     

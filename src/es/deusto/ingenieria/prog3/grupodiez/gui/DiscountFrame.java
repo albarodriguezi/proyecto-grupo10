@@ -70,7 +70,7 @@ public class DiscountFrame extends JFrame{
 	        		  	@SuppressWarnings("unchecked")
 						List<Fecha> comb = (List<Fecha>) tablaCombinaciones.getValueAt(selectedRow, 0);
 	        		  	for (Fecha f:comb) {
-	        		  		System.out.println(f);
+	        		  		//System.out.println(f);
 	        		  		Reserva r = new Reserva(f.getConcert().getCode(),f.getConcert(),f.getFecha(),attendees);
 	        		  		r.setDescuento(comb.size());
 	        		  		gestorBD.insertarDatos(r);
@@ -124,7 +124,7 @@ public class DiscountFrame extends JFrame{
         };
         loadCombinaciones();
         this.tablaCombinaciones = new JTable(this.modeloDatosCombinaciones);
-        System.out.println(tablaCombinaciones.getValueAt(1, 0));
+        //System.out.println(tablaCombinaciones.getValueAt(1, 0));
 		//Se define un CellRenderer para las celdas de las dos tabla usando una expresión lambda
 		TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
 			JLabel result = new JLabel(value.toString());
@@ -140,6 +140,7 @@ public class DiscountFrame extends JFrame{
 			}
 			else if (column == 1) {
 				result.setHorizontalAlignment(JLabel.CENTER);
+				result.setText(String.format("%.2f", value));
 			}else if (column == 2){
 				//Si el valor es texto pero representa un número se renderiza centrado
 				JButton reserva = new JButton("+");
@@ -152,17 +153,12 @@ public class DiscountFrame extends JFrame{
 
 				reserva.addActionListener(new ActionListener() { 
 		        	  public void actionPerformed(ActionEvent e) { 
-		        		  	JOptionPane.showMessageDialog(null, "Successfull import");
+		        		  	//JOptionPane.showMessageDialog(null, "Successfull import");
 		        		  	@SuppressWarnings("unchecked")
 							List<Fecha> comb = (List<Fecha>) tablaCombinaciones.getValueAt(row, 0);
-		        		  	/*List<String> att = attendees;
-							String atts ="";
-							for (String s:att) {
-								atts=atts+s+":";
-								System.out.println(att.size());
-							}*/
+		        		  	
 		        		  	for (Fecha f:comb) {
-		        		  		System.out.println(f);
+		        		  		//System.out.println(f);
 		        		  		Reserva r = new Reserva(f.getCode(),f.getConcert(),f.getFecha(),attendees);
 		        		  		gestorBD.insertarDatos(r);
 		        		  	}
@@ -191,9 +187,7 @@ public class DiscountFrame extends JFrame{
 			
 			return result;
 		};
-		//Se crea un CellEditor a partir de un JComboBox()
-		JComboBox<Logo> jComboEditorial = new JComboBox<>(Logo.values());		
-		//DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
+
 		
 		this.tablaCombinaciones.setFillsViewportHeight(true);
 		this.tablaCombinaciones.setRowHeight(70);//altira de las fila
@@ -216,9 +210,11 @@ public class DiscountFrame extends JFrame{
 		//Se añaden los comics uno a uno al modelo de datos
 		combinaciones.forEach(c -> {
 		String concerts = "";
+		// Soncatena las fechas
 		for (Fecha f:c) {
 			concerts = concerts + f.getConcert().getName().toUpperCase() + ": "+ f.getFecha().toString()+ "     ";
 		}
+		//Calcula el precio total con el precio de los conciertos,la cantidad de fechas en la lista y la cantidad de attendees
 		Float price = (float) 0;
 		for (Fecha f:c) {
 			price+=f.getConcert().getPrice();
@@ -231,8 +227,8 @@ public class DiscountFrame extends JFrame{
 		case 5:
 			price= (float) (price*0.8);
 		}
-		System.out.println(c);
-		System.out.println("A");
+		
+		price = price * attendees.size();
 		this.modeloDatosCombinaciones.addRow(
 		
 		new Object[] {c, price, attendees} );}
