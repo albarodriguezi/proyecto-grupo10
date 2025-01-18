@@ -238,93 +238,13 @@ public class VentanaReservas extends JFrame {
     }
 
     
-    public static void main(String[] args) {
-    	
-    	//reservas de prueba
-        ArrayList<Reserva> reservas = new ArrayList<>();
-        
-        
-        //conciertos de prueba
-        Concert AdeleLive = new Concert("Concert.Logo.ADELELIVE", "123456", "Adele Live", 3, 92567, 150);
-		Concert BelieveTour = new Concert("Concert.Logo.BELIEVETOUR", "456789", "Believe Tour", 3, 92567, 150);
-		Concert BornToDie = new Concert("Concert.Logo.BORNTODIE", "789123", "Born To Die", 3, 92567, 150);
-		Concert ErasTour = new Concert("Concert.Logo.ERASTOUR", "789456", "Eras Tour", 3, 92567, 150);
-		Concert FutureNostalgia = new Concert("Concert.Logo.FUTURENOSTALGIA", "123123", "Future Nostalgia", 3, 92567, 150);
-		Concert GutsWorldTour = new Concert("Concert.Logo.GUTSWORLTOUR", "456456", "Guts World Tour", 3, 92567, 150);
-		Concert LoveOnTour = new Concert("Concert.Logo.LOVEONTOUR", "789789", "Love on Tour", 3, 92567, 150);
-		Concert MusicOfTheSphere = new Concert("Concert.Logo.MUSICOFTHESPHERE", "147369", "Music Of The Sphere", 3, 92567, 150);
-		Concert OnTheRoadAgain = new Concert("Concert.Logo.ONTHEROADAGAIN", "258147", "On the Road Again", 3, 92567, 150);
-		Concert TheMathematicsTour = new Concert("Concert.Logo.THEMATHEMATICSTOUR", "369258", "The Mathematics Tour", 3, 92567, 150);
-		
-		
-		//fechas locales de prueba para meter en las fechas, tambien de prueba
-		LocalDate Lfecha1 = LocalDate.of(2024, 11, 15); 
-		LocalDate Lfecha2 = LocalDate.of(2023, 12, 25);
-		LocalDate Lfecha3 = LocalDate.of(2025, 1, 1);
-		LocalDate Lfecha4 = LocalDate.of(2022, 5, 20);
-		LocalDate Lfecha5 = LocalDate.of(2024, 3, 8);
-		LocalDate Lfecha6 = LocalDate.of(2023, 7, 14);
-		LocalDate Lfecha7 = LocalDate.of(2022, 10, 31);
-		LocalDate Lfecha8 = LocalDate.of(2026, 4, 19);
-		LocalDate Lfecha9 = LocalDate.of(2023, 8, 23);
-		LocalDate Lfecha10 = LocalDate.of(2025, 6, 15);
-		LocalDate Lfecha11 = LocalDate.of(2024, 9, 9);
-		LocalDate Lfecha12 = LocalDate.of(2023, 2, 14);
-		
-		//fechas, de prueba
-		Fecha fecha1 = new Fecha(Lfecha1, TheMathematicsTour, 35000);
-		Fecha fecha2 = new Fecha(Lfecha2, BornToDie, 60000);
-		Fecha fecha3 = new Fecha(Lfecha3, AdeleLive, 75000);
-		Fecha fecha4 = new Fecha(Lfecha4, MusicOfTheSphere, 50000);
-		Fecha fecha5 = new Fecha(Lfecha5, GutsWorldTour, 29500);
-		Fecha fecha6 = new Fecha(Lfecha6, LoveOnTour, 38000);
-		Fecha fecha7 = new Fecha(Lfecha7, GutsWorldTour, 27000);
-		Fecha fecha8 = new Fecha(Lfecha8, BelieveTour, 16000);
-		Fecha fecha9 = new Fecha(Lfecha9, FutureNostalgia, 30000);
-		Fecha fecha10 = new Fecha(Lfecha10, MusicOfTheSphere, 41000);
-		Fecha fecha11 = new Fecha(Lfecha11, ErasTour, 67000);
-		Fecha fecha12= new Fecha(Lfecha12, OnTheRoadAgain, 39500);
-        
-		
-		//crear listas de las personas que atienden
-		List<String> lista1 = Arrays.asList("Ana Martínez", "Carlos Ramírez", "Lucía Pérez");
-		List<String> lista2 = Arrays.asList("Pedro Gómez", "María López", "José Fernández");
-		List<String> lista3 = Arrays.asList("Sofía García", "Miguel Torres", "Raúl Sánchez");
-		List<String> lista4 = Arrays.asList("Laura Díaz", "Ángel Ortega", "Elena Navarro");
-		List<String> lista5 = Arrays.asList("Sara Vega", "Alberto Molina", "Pablo Herrera");
-		List<String> lista6 = Arrays.asList("David Ruiz", "Carmen Ramos", "Antonio Gil");
-		List<String> lista7 = Arrays.asList("Inés Prieto", "Luis Castro", "Patricia Ibáñez");
-		List<String> lista8 = Arrays.asList("Francisco Morales", "Beatriz Aguilar", "Ricardo Reyes");
-		List<String> lista9 = Arrays.asList("Adriana Herrera", "Victor Soto", "Marta Delgado");
-		List<String> lista10 = Arrays.asList("Cristina Serrano", "Andrés Peña", "Esteban Vargas");
-		List<String> lista11 = Arrays.asList("Julia Ríos", "Manuel Paredes", "Gabriela Márquez");
-		List<String> lista12 = Arrays.asList("Sergio Bautista", "Paola Vargas", "Juan Cordero");
+    
 
-		
-        SwingUtilities.invokeLater(() -> new VentanaReservas(new GestorBD()).setVisible(true));
-   
-    }
-}
 
 
 //el boton de la tabla
 
-class ButtonRenderer extends JButton implements TableCellRenderer {
-    public ButtonRenderer() { setOpaque(true); }
-    
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-    	if (row % 2 != 0) {
-			setBackground(new Color(255, 233, 244));
-		} else {
-			setBackground(new Color(248, 190, 255));
-		}
-    	
-        setText((value == null) ? "Ver Detalles" : value.toString());
-        return this;
-        
-    }  
-}
+
 
 class NormalRenderer extends JLabel implements TableCellRenderer {
     /**
@@ -368,8 +288,27 @@ class NormalRenderer extends JLabel implements TableCellRenderer {
     }  
 }
 
+//IAG ChatGPT
+//DESCARTADO:Este codigo fue generado con chatgpt pero fue totalmente descartado
+class ButtonRenderer extends JButton implements TableCellRenderer {
+    public ButtonRenderer() { setOpaque(true); }
+    
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    	if (row % 2 != 0) {
+			setBackground(new Color(255, 233, 244));
+		} else {
+			setBackground(new Color(248, 190, 255));
+		}
+    	
+        setText((value == null) ? "Ver Detalles" : value.toString());
+        return this;
+        
+    }  
+}
 
-
+//IAG ChatGPT
+//DESCARTADO:Este codigo fue generado con chatgpt pero fue totalmente descartado
 class ButtonEditor extends DefaultCellEditor {
     private JButton botonMasInformacion;
     private List<Reserva> reservas;
@@ -410,4 +349,73 @@ class ButtonEditor extends DefaultCellEditor {
     
     @Override
     public Object getCellEditorValue() { return botonMasInformacion.getText(); }
+    
+    /*public static void main(String[] args) {
+	
+	//reservas de prueba
+    ArrayList<Reserva> reservas = new ArrayList<>();
+    
+    
+    //conciertos de prueba
+    Concert AdeleLive = new Concert("Concert.Logo.ADELELIVE", "123456", "Adele Live", 3, 92567, 150);
+	Concert BelieveTour = new Concert("Concert.Logo.BELIEVETOUR", "456789", "Believe Tour", 3, 92567, 150);
+	Concert BornToDie = new Concert("Concert.Logo.BORNTODIE", "789123", "Born To Die", 3, 92567, 150);
+	Concert ErasTour = new Concert("Concert.Logo.ERASTOUR", "789456", "Eras Tour", 3, 92567, 150);
+	Concert FutureNostalgia = new Concert("Concert.Logo.FUTURENOSTALGIA", "123123", "Future Nostalgia", 3, 92567, 150);
+	Concert GutsWorldTour = new Concert("Concert.Logo.GUTSWORLTOUR", "456456", "Guts World Tour", 3, 92567, 150);
+	Concert LoveOnTour = new Concert("Concert.Logo.LOVEONTOUR", "789789", "Love on Tour", 3, 92567, 150);
+	Concert MusicOfTheSphere = new Concert("Concert.Logo.MUSICOFTHESPHERE", "147369", "Music Of The Sphere", 3, 92567, 150);
+	Concert OnTheRoadAgain = new Concert("Concert.Logo.ONTHEROADAGAIN", "258147", "On the Road Again", 3, 92567, 150);
+	Concert TheMathematicsTour = new Concert("Concert.Logo.THEMATHEMATICSTOUR", "369258", "The Mathematics Tour", 3, 92567, 150);
+	
+	
+	//fechas locales de prueba para meter en las fechas, tambien de prueba
+	LocalDate Lfecha1 = LocalDate.of(2024, 11, 15); 
+	LocalDate Lfecha2 = LocalDate.of(2023, 12, 25);
+	LocalDate Lfecha3 = LocalDate.of(2025, 1, 1);
+	LocalDate Lfecha4 = LocalDate.of(2022, 5, 20);
+	LocalDate Lfecha5 = LocalDate.of(2024, 3, 8);
+	LocalDate Lfecha6 = LocalDate.of(2023, 7, 14);
+	LocalDate Lfecha7 = LocalDate.of(2022, 10, 31);
+	LocalDate Lfecha8 = LocalDate.of(2026, 4, 19);
+	LocalDate Lfecha9 = LocalDate.of(2023, 8, 23);
+	LocalDate Lfecha10 = LocalDate.of(2025, 6, 15);
+	LocalDate Lfecha11 = LocalDate.of(2024, 9, 9);
+	LocalDate Lfecha12 = LocalDate.of(2023, 2, 14);
+	
+	//fechas, de prueba
+	Fecha fecha1 = new Fecha(Lfecha1, TheMathematicsTour, 35000);
+	Fecha fecha2 = new Fecha(Lfecha2, BornToDie, 60000);
+	Fecha fecha3 = new Fecha(Lfecha3, AdeleLive, 75000);
+	Fecha fecha4 = new Fecha(Lfecha4, MusicOfTheSphere, 50000);
+	Fecha fecha5 = new Fecha(Lfecha5, GutsWorldTour, 29500);
+	Fecha fecha6 = new Fecha(Lfecha6, LoveOnTour, 38000);
+	Fecha fecha7 = new Fecha(Lfecha7, GutsWorldTour, 27000);
+	Fecha fecha8 = new Fecha(Lfecha8, BelieveTour, 16000);
+	Fecha fecha9 = new Fecha(Lfecha9, FutureNostalgia, 30000);
+	Fecha fecha10 = new Fecha(Lfecha10, MusicOfTheSphere, 41000);
+	Fecha fecha11 = new Fecha(Lfecha11, ErasTour, 67000);
+	Fecha fecha12= new Fecha(Lfecha12, OnTheRoadAgain, 39500);
+    
+	
+	//crear listas de las personas que atienden
+	List<String> lista1 = Arrays.asList("Ana Martínez", "Carlos Ramírez", "Lucía Pérez");
+	List<String> lista2 = Arrays.asList("Pedro Gómez", "María López", "José Fernández");
+	List<String> lista3 = Arrays.asList("Sofía García", "Miguel Torres", "Raúl Sánchez");
+	List<String> lista4 = Arrays.asList("Laura Díaz", "Ángel Ortega", "Elena Navarro");
+	List<String> lista5 = Arrays.asList("Sara Vega", "Alberto Molina", "Pablo Herrera");
+	List<String> lista6 = Arrays.asList("David Ruiz", "Carmen Ramos", "Antonio Gil");
+	List<String> lista7 = Arrays.asList("Inés Prieto", "Luis Castro", "Patricia Ibáñez");
+	List<String> lista8 = Arrays.asList("Francisco Morales", "Beatriz Aguilar", "Ricardo Reyes");
+	List<String> lista9 = Arrays.asList("Adriana Herrera", "Victor Soto", "Marta Delgado");
+	List<String> lista10 = Arrays.asList("Cristina Serrano", "Andrés Peña", "Esteban Vargas");
+	List<String> lista11 = Arrays.asList("Julia Ríos", "Manuel Paredes", "Gabriela Márquez");
+	List<String> lista12 = Arrays.asList("Sergio Bautista", "Paola Vargas", "Juan Cordero");
+
+	
+    SwingUtilities.invokeLater(() -> new VentanaReservas(new GestorBD()).setVisible(true));
+
 }
+}*/
+}}
+

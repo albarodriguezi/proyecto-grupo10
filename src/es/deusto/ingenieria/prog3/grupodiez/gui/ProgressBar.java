@@ -84,8 +84,8 @@ public class ProgressBar extends JFrame {
         SwingUtilities.invokeLater(() -> progressBar.setValue(value));
     }
     
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new ProgressBar(null)); 
-    }
+    }*/
 }
 
