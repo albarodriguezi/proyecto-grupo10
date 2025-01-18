@@ -66,6 +66,7 @@ public class GestorBD {
 					+ " CONCERTNAME TEXT NOT NULL,\n"
 	                + " FECHA DATE NOT NULL,\n"
 	                + " ATTENDEES TEXT NOT NULL,\n"
+	                + " DESCUENTO INT NOT NULL ,\n"
 	                + " FOREIGN KEY (FECHA,CONCERTID) REFERENCES FECHA(FECHA,CONCERTID) ON DELETE CASCADE\n"
 	                + " PRIMARY KEY (FECHA,ATTENDEES)"
 	                + ");";
@@ -272,7 +273,7 @@ public class GestorBD {
 	public void insertarDatos(Reserva... reservas) {
 		//Se abre la conexión y se obtiene el Statement
 		try (Connection con = DriverManager.getConnection(CONNECTION_STRING);
-		     PreparedStatement stmt = con.prepareStatement("INSERT INTO RESERVA (CONCERTID, CONCERTNAME, FECHA,ATTENDEES) VALUES (?, ?, ?,?);")) {
+		     PreparedStatement stmt = con.prepareStatement("INSERT INTO RESERVA (CONCERTID, CONCERTNAME, FECHA,ATTENDEES,DESCUENTO) VALUES (?, ?, ?,?,?);")) {
 			//Se define la plantilla de la sentencia SQL
 			//String sql = "INSERT INTO CLIENTE (NAME, EMAIL, PASSWORD) VALUES ('%s', '%s', '%s');";
 			
@@ -296,6 +297,7 @@ public class GestorBD {
 				}
 				System.out.println(r.getNombreConcierto());
 				stmt.setString(4,atts);
+				stmt.setInt(5, r.getDescuento());
 				//stmt.toString();
 				if (1 == stmt.executeUpdate()) {					
 					System.out.format("\n - Reserva insertado: %s", r.toString());
@@ -439,7 +441,8 @@ public class GestorBD {
 		        }
 				reserva = new Reserva(rs.getString("CONCERTID"),rs.getString("CONCERTNAME"),rs.getDate("FECHA").toLocalDate(),nombre);
 				
-				
+				Integer i = rs.getInt("DESCUENTO");
+				reserva.setDescuento(i);
 				//Se inserta cada nuevo cliente en la lista de clientes
 				reservas.add(reserva);
 			}

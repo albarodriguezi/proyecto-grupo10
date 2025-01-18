@@ -103,7 +103,7 @@ public class VentanaReservas extends JFrame {
         this.setBackground(new Color(255,233,244));
         this.setTitle("Reservas");
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        this.setSize(700, 300);
+        this.setSize(800, 300);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         
@@ -227,7 +227,7 @@ public class VentanaReservas extends JFrame {
             if (reserva.getLocator().contains(filtro) || c.getName().contains(filtro)) {
             	
                 this.modeloDatosReservas.addRow(new Object[] {
-                    reserva.getUcode(),
+                    reserva,
                     c.getName(),
                     reserva.getFecha(),
                     "Ver Detalles"
@@ -330,12 +330,13 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
     
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        setText((value == null) ? "Ver Detalles" : value.toString());
-        if (row % 2 != 0) {
+    	if (row % 2 != 0) {
 			setBackground(new Color(255, 233, 244));
 		} else {
 			setBackground(new Color(248, 190, 255));
 		}
+    	
+        setText((value == null) ? "Ver Detalles" : value.toString());
         return this;
         
     }  
@@ -366,6 +367,18 @@ class NormalRenderer extends JLabel implements TableCellRenderer {
 		} else {
 			setBackground(new Color(248, 190, 255));
 		}
+        if (column == 0) {
+    		setText(String.valueOf(((Reserva) value).getUcode()));
+    	}
+    	if (column == 1) {
+    		if (((Reserva) table.getValueAt(row,0)).getDescuento() == 3) {
+    			setBackground(new Color(204, 255, 255));
+    		}else if(((Reserva) table.getValueAt(row,0)).getDescuento() == 4) {
+    			setBackground(new Color(204, 204, 255));
+    		}else if(((Reserva) table.getValueAt(row,0)).getDescuento() == 5) {
+    			setBackground(new Color(229, 204, 255));
+    		}
+    	}
         return this;
         
     }  

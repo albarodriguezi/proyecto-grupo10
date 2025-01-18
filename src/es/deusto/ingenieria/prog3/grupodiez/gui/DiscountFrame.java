@@ -72,6 +72,7 @@ public class DiscountFrame extends JFrame{
 	        		  	for (Fecha f:comb) {
 	        		  		System.out.println(f);
 	        		  		Reserva r = new Reserva(f.getConcert().getCode(),f.getConcert(),f.getFecha(),attendees);
+	        		  		r.setDescuento(comb.size());
 	        		  		gestorBD.insertarDatos(r);
 	        		  	}
 	        		  	setVisible(false);
