@@ -218,9 +218,9 @@ public class VentanaReservas extends JFrame {
     
     
     private void filtroReservas(String filtro) {
-        this.modeloDatosReservas.setRowCount(0); //otra vez borrar porqye estamos filtrando y queremos q solo salgan los q cumplan la condicion
+        this.modeloDatosReservas.setRowCount(0);
         
-        //podremos filtrar tanto por el codigo de la reserva, como por el nombre del concierto
+
         this.reservas.forEach(reserva -> {;
         System.out.println(reserva.getLocator());
         Concert c= AnadirFecha.readConcert().get(reserva.getLocator());
@@ -240,11 +240,11 @@ public class VentanaReservas extends JFrame {
     
     public static void main(String[] args) {
     	
-    	//hacer unas reservas de prueba. habra q cambiarlo en un futuro para q cuando hagamos una reserva tambien se nos añada y porque tendran otros atributos
+    	//reservas de prueba
         ArrayList<Reserva> reservas = new ArrayList<>();
         
         
-        //crear unos conciertos
+        //conciertos de prueba
         Concert AdeleLive = new Concert("Concert.Logo.ADELELIVE", "123456", "Adele Live", 3, 92567, 150);
 		Concert BelieveTour = new Concert("Concert.Logo.BELIEVETOUR", "456789", "Believe Tour", 3, 92567, 150);
 		Concert BornToDie = new Concert("Concert.Logo.BORNTODIE", "789123", "Born To Die", 3, 92567, 150);
@@ -257,7 +257,7 @@ public class VentanaReservas extends JFrame {
 		Concert TheMathematicsTour = new Concert("Concert.Logo.THEMATHEMATICSTOUR", "369258", "The Mathematics Tour", 3, 92567, 150);
 		
 		
-		//crear unas fechas locales para meter en el constructor de las fecha
+		//fechas locales de prueba para meter en las fechas, tambien de prueba
 		LocalDate Lfecha1 = LocalDate.of(2024, 11, 15); 
 		LocalDate Lfecha2 = LocalDate.of(2023, 12, 25);
 		LocalDate Lfecha3 = LocalDate.of(2025, 1, 1);
@@ -271,7 +271,7 @@ public class VentanaReservas extends JFrame {
 		LocalDate Lfecha11 = LocalDate.of(2024, 9, 9);
 		LocalDate Lfecha12 = LocalDate.of(2023, 2, 14);
 		
-		//las fechas, usando las fechas locales q acabmos de hacer y los conciertos
+		//fechas, de prueba
 		Fecha fecha1 = new Fecha(Lfecha1, TheMathematicsTour, 35000);
 		Fecha fecha2 = new Fecha(Lfecha2, BornToDie, 60000);
 		Fecha fecha3 = new Fecha(Lfecha3, AdeleLive, 75000);
@@ -301,29 +301,13 @@ public class VentanaReservas extends JFrame {
 		List<String> lista12 = Arrays.asList("Sergio Bautista", "Paola Vargas", "Juan Cordero");
 
 		
-
-		//crear las reservas
-		/*reservas.add(new Reserva(fecha1.getConcert().getCode(), fecha1.getConcert(), fecha1, lista1));
-		reservas.add(new Reserva(fecha2.getConcert().getCode(), fecha2.getConcert(), fecha2, lista2));
-		reservas.add(new Reserva(fecha3.getConcert().getCode(), fecha3.getConcert(), fecha3, lista3));
-		reservas.add(new Reserva(fecha4.getConcert().getCode(), fecha4.getConcert(), fecha4, lista4));
-		reservas.add(new Reserva(fecha5.getConcert().getCode(), fecha5.getConcert(), fecha5, lista5));
-		reservas.add(new Reserva(fecha6.getConcert().getCode(), fecha6.getConcert(), fecha6, lista6));
-		reservas.add(new Reserva(fecha7.getConcert().getCode(), fecha7.getConcert(), fecha7, lista7));
-		reservas.add(new Reserva(fecha8.getConcert().getCode(), fecha8.getConcert(), fecha8, lista8));
-		reservas.add(new Reserva(fecha9.getConcert().getCode(), fecha9.getConcert(), fecha9, lista9));
-		reservas.add(new Reserva(fecha10.getConcert().getCode(), fecha10.getConcert(), fecha10, lista10));
-		reservas.add(new Reserva(fecha11.getConcert().getCode(), fecha11.getConcert(), fecha11, lista11));
-		reservas.add(new Reserva(fecha12.getConcert().getCode(), fecha12.getConcert(), fecha12, lista12));
-        
-		*/
         SwingUtilities.invokeLater(() -> new VentanaReservas(new GestorBD()).setVisible(true));
    
     }
 }
 
 
-//el boton d la tabla
+//el boton de la tabla
 
 class ButtonRenderer extends JButton implements TableCellRenderer {
     public ButtonRenderer() { setOpaque(true); }
@@ -386,8 +370,6 @@ class NormalRenderer extends JLabel implements TableCellRenderer {
 
 
 
-
-//desde aqui con ayuda de ia generativa aunq he tenido q cambiar cosas xq me estoy volviendo loca no puc més
 class ButtonEditor extends DefaultCellEditor {
     private JButton botonMasInformacion;
     private List<Reserva> reservas;
