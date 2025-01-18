@@ -28,10 +28,10 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
+import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Reserva;
-import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class TicketBookingDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -54,14 +54,13 @@ public class TicketBookingDialog extends JDialog {
 		this.setFecha(fecha);
 		HashMap<String,Concert> indice=AnadirFecha.readConcert();
 		this.concert = indice.get(fecha.getCode());
-		System.out.println(concert);
+		//System.out.println(concert);
 		JPanel jPanelConcert = new JPanel(); //panel en la ventana
 		jPanelConcert.setBorder(new TitledBorder("Datos del concierto")); //borde para añadir nombre
 		jPanelConcert.setLayout(new GridLayout(4, 1)); //gridlayout para 5 elementos uno debajo del otro
 		jPanelConcert.setBackground(new Color(255, 233, 244));
 
 		JLabel jLabelConcert = new JLabel(String.format(concert.getName())); //etiqueta con el nombre del concierto
-		jLabelConcert.setIcon(new ImageIcon(String.format("resources/images/%s.png", concert.getName()))); //poner la imagen del concierto en la etiqueta segun el nombre del mismo
 		
 		jPanelConcert.add(jLabelConcert); //añade la etiqueta creada al panel
 		jPanelConcert.add(new JLabel(String.format("Fecha: %s / %s / %s", fecha.getDia(), fecha.getMes(), fecha.getAno()))); //añade al panel label para la fecha
@@ -198,21 +197,21 @@ public class TicketBookingDialog extends JDialog {
 					Thread add=new Thread() {
 						public void run(){
 							updatePassengers();
-							System.out.println(tbd.getAttendees());
+							//Convierte los attendees en un string para la BBDD
 							List<String> att = tbd.getAttendees();
-							System.out.println(att);
 							String atts ="";
 							for (String s:att) {
 								atts=atts+s+":";
 								System.out.println(att.size());
 							}
-							System.out.println(atts);
+							//Crea reservas con los datos introducidos
 							String loc = concert.getCode();
 							LocalDate fec = tbd.fecha.getFecha();
 							String con = tbd.concert.getName();
 							Reserva r = new Reserva(loc,con,fec,att );
 							Reserva[] rs = new Reserva[1];
 							rs[0] = r;
+							//Guarda la reserva en la BBDD
 							gestorBD.insertarDatos(rs);
 							/*try {
 								FileWriter fw=new FileWriter("resources\\data\\Reservas.csv",true);
@@ -227,16 +226,18 @@ public class TicketBookingDialog extends JDialog {
 					add.run();
 				});
 				
+				//Anade los botones a su panel
 				JPanel jPanelButtons = new JPanel();
 				jPanelButtons.add(jButtonCancel);
 				jPanelButtons.add(jButtonConfirm);
 				
+				//Anade al panel de datos
 				JPanel jPanelCenter = new JPanel();
 				jPanelCenter.setLayout(new GridLayout(2, 1));
 				jPanelCenter.add(jPanelConcert);
 				jPanelCenter.add(jPanelAttendees);
 				
-				//this.setLayout(new BorderLayout(10, 10));
+				//Anade los paneles de botones y de datos
 				add(new JPanel(), BorderLayout.NORTH);
 				add(new JPanel(), BorderLayout.EAST);
 				add(new JPanel(), BorderLayout.WEST);
@@ -277,20 +278,7 @@ public class TicketBookingDialog extends JDialog {
 				return attendees;
 			}
 			
-			public static void main(String[] args) {
-		        // Crear la ventana en el hilo de eventos de Swing para no bloquear
-		    	// el hilo de ejecución principal
-		    	SwingUtilities.invokeLater(() -> {
-		    		// Crear una instancia de EjemploLayouts y hacerla visible
-		    		
-		    		TicketBookingDialog cal = new TicketBookingDialog(new Fecha(4,5,2026,"123456",92000),new GestorBD());
-		    		cal.setVisible(true);
-		    		
-		    		//AnadirConcierto add = new AnadirConcierto();
-		    		//add.setVisible(true);
-		    		
-		        });
-		    }
+			
 
 
 			public Fecha getFecha() {
@@ -301,6 +289,21 @@ public class TicketBookingDialog extends JDialog {
 			public void setFecha(Fecha fecha) {
 				this.fecha = fecha;
 			}
+			
+			/*public static void main(String[] args) {
+	        // Crear la ventana en el hilo de eventos de Swing para no bloquear
+	    	// el hilo de ejecución principal
+	    	SwingUtilities.invokeLater(() -> {
+	    		// Crear una instancia de EjemploLayouts y hacerla visible
+	    		
+	    		TicketBookingDialog cal = new TicketBookingDialog(new Fecha(4,5,2026,"123456",92000),new GestorBD());
+	    		cal.setVisible(true);
+	    		
+	    		//AnadirConcierto add = new AnadirConcierto();
+	    		//add.setVisible(true);
+	    		
+	        });
+	    }*/
 		
 
 	}

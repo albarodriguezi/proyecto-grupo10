@@ -2,16 +2,22 @@ package es.deusto.ingenieria.prog3.grupodiez.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 
+/*
+Definimso la clase de las reservas. en la que definimso el codigo localizador de las reservas, la fecha de esta misma, las personas que han hecho la reserva, 
+el nombre del concierto para el cual se ha hecho la reserva, el codigo del concierto, el numero de asientos que hay para el concierto
+*/
 public class Reserva implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String locator; 
 	private LocalDate fecha;
 	private List<String> attendees;
+	private Integer descuento = 0;
 	private String nombreConcierto;
 	private int ucode;
 	private static int unique= 010203;
@@ -108,6 +114,14 @@ public class Reserva implements Serializable {
 
 	public int getUcode() {
 		return ucode;
+	}
+
+	public Integer getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(Integer descuento) {
+		this.descuento = descuento;
 	}
 
 

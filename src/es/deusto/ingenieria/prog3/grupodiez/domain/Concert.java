@@ -139,9 +139,7 @@ public class Concert implements Comparable<Concert>, Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Concert other = (Concert) obj;
-		return Objects.equals(code, other.code) && duration == other.duration && imagen == other.imagen
-				&& name == other.name && Float.floatToIntBits(price) == Float.floatToIntBits(other.price)
-				&& Objects.equals(reserva, other.reserva) && seats == other.seats;
+		return name.equals(other.getName());
 	}
 
 

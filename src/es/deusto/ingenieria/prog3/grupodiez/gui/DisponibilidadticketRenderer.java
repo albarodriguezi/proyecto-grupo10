@@ -10,6 +10,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 
 import java.awt.event.ActionEvent;
@@ -25,7 +26,6 @@ import javax.swing.table.TableCellRenderer;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
-import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
 public class DisponibilidadticketRenderer implements TableCellRenderer{
 	private GestorBD gestorBD;
@@ -39,27 +39,20 @@ public class DisponibilidadticketRenderer implements TableCellRenderer{
 		label.setBackground(table.getBackground());
 		label.setHorizontalAlignment(JLabel.CENTER);
 		
-		/*if (value.getClass().equals(Concert.class)) {
-			label.setIcon(new ImageIcon(String.format("resources/images/%s.png", ((Concert) value).getImagen())));
-		}*/
-		
+		// Colores alternos para las filas
 		if (row % 2 == 0) {
 			label.setBackground(new Color(255, 233, 244));
 		} else {
 			label.setBackground(new Color(248, 190, 255));
 		}
 
-		
-		if (column == 1 || column == 4) {
+		// Texto centrado
+		if (column == 1 || column == 2 || column == 0) {
 			label.setText(value.toString());
 			label.setFont(new Font("DIN",Font.BOLD,12));
 		}
 		
-		if (column == 2) {
-			label.setText(String.format("%s m.", value.toString()));
-			label.setHorizontalAlignment(JLabel.RIGHT);
-			label.setFont(new Font("DIN",Font.BOLD,12));
-		}
+		//Minutos de concierto alineadoa la derecha
 		
 		if (column == 3) {
 			label.setText(String.format("%s min", value));
@@ -67,21 +60,16 @@ public class DisponibilidadticketRenderer implements TableCellRenderer{
 			
 		}
 		
+		//Precio alineadoa la derecha
 		if (column == 4) {
 			label.setText(String.format("%.2f €", value));
 			label.setHorizontalAlignment(JLabel.RIGHT);
 			
 		}
-		if (column == 0) {
-			label.setText(value.toString());
-			label.setHorizontalAlignment(JLabel.CENTER);
-		}
+
 		if (column == 5) {
 			
-			//double disponibilidad = (Double)value;
-			//JProgressBar pb = new JProgressBar(0,100);
-			//pb.setValue((int) Math.round(disponibilidad));
-			//pb.setStringPainted(true);
+			// Boton con colores alternos
 			JButton reserva = new JButton("+");
 			reserva.setFont(new Font("DIN",Font.BOLD,24));
 			if (row % 2 != 0) {
@@ -97,13 +85,7 @@ public class DisponibilidadticketRenderer implements TableCellRenderer{
 	        		    tbd.setVisible(true);
 	        		    } 
 	        		} );
-			/*if (isSelected) {
-				System.out.println(value);
-				/*TicketBookingDialog tbd=new TicketBookingDialog((Fecha) value);
-    		    tbd.setVisible(true);
-				reserva.doClick();
-			}
-			*/
+
 			reserva.setEnabled(true);
 			
 			return reserva;

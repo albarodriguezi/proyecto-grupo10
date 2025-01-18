@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -26,18 +28,16 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
+import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
-import es.deusto.ingenieria.prog3.grupodiez.main.MainDisponibilidadTicket;
-import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert.Logo;
 
 
-public class ConcertsListRenderer extends JFrame {
+public class ConcertsList extends JFrame {
     
 	private static final long serialVersionUID = 1L;
 
-    private List<Concert> concerts;
     private JTable tablaConcert;
     private DefaultTableModel modeloDatosConcerts;
     private JTextField txtFiltro;
@@ -45,10 +45,10 @@ public class ConcertsListRenderer extends JFrame {
     
     
     
-    public ConcertsListRenderer(List<Concert> concerts,GestorBD gbd) {
-        this.concerts = concerts;
+    public ConcertsList(List<Concert> concerts,GestorBD gbd) {
         this.gestorBD = gbd;
         AnadirFecha.setGestorBD(gbd);
+        gbd.borrarReservas();
         //gestorBD.borrarReservas();
         initTables();
         loadConcert();
@@ -59,10 +59,11 @@ public class ConcertsListRenderer extends JFrame {
     }
 
     private void initGUI() {
+    	//Crea el scrollPane
         JScrollPane scrollPaneConcerts = new JScrollPane(this.tablaConcert);
         scrollPaneConcerts.setBorder(new TitledBorder("Concerts"));
         this.tablaConcert.setFillsViewportHeight(true);
-
+        //FIltro por nombre de concierto
         this.txtFiltro = new JTextField(20);
         DocumentListener documentListener = new DocumentListener() {
             @Override
@@ -83,12 +84,43 @@ public class ConcertsListRenderer extends JFrame {
         JPanel panelFiltro = new JPanel();
         panelFiltro.add(new JLabel("Filtrar por nombre: "));
         panelFiltro.add(txtFiltro);
-
+        //Panel con el boton de descuento con dos Grid
+        JPanel panelDescuento = new JPanel();
+    	panelDescuento.setLayout(new GridLayout(1,3));
+    	JPanel panelDescuentoAux = new JPanel();
+    	panelDescuentoAux.setLayout(new GridLayout(1,3));
+    	
+    	JButton JButtonDescuento = new JButton("Descuento");
+    	//Action Listener que abre la pestaña de introduccion de datos para los lotes
+    	JButtonDescuento.addActionListener(new ActionListener() { 
+      	  public void actionPerformed(ActionEvent e) { 
+      		    DiscountData dd=new DiscountData(gestorBD);
+      		    dd.setVisible(true);
+      		    } 
+      		} );
+    	JLabel back = new JLabel("a");
+    	JLabel backTres = new JLabel("c");
+    	back.setForeground(new Color(255, 233, 244));
+    	backTres.setForeground(new Color(255, 233, 244));
+    	JLabel texto = new JLabel("Descuentos  comprando  en  lote  :");
+    	panelDescuento.add(back);
+    	panelDescuento.add(panelDescuentoAux);
+    	panelDescuento.add(backTres);
+    	panelDescuentoAux.add(texto);
+    	panelDescuentoAux.add(JButtonDescuento);
+    	panelDescuento.setBackground(new Color(255, 233, 244));
+    	panelDescuentoAux.setBackground(new Color(255, 233, 244));
+    	
+    	//Mete en un BorderLayout el filtro los conciertos en ScrollPane y el boton de descuentos
         JPanel panelConcert = new JPanel();
         panelConcert.setLayout(new BorderLayout());
+        panelConcert.add(BorderLayout.NORTH, panelFiltro);
         panelConcert.add(BorderLayout.CENTER, scrollPaneConcerts);
-        panelConcert.add(BorderLayout.SOUTH, new JLabel("Todas las imagenes pertenecen a Ticketmaster"));
-        
+        panelConcert.add(BorderLayout.SOUTH, panelDescuento);
+
+	
+	    
+	this.add(new JLabel("Todas las imagenes pertenecen a Ticketmaster"), BorderLayout.SOUTH);
         this.getContentPane().add(panelConcert);
         this.setTitle("Concerts");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -193,15 +225,6 @@ public class ConcertsListRenderer extends JFrame {
 	};
     // Método para redimensionar las imágenes
 
-    private ImageIcon redimensionarImagen (ImageIcon icono, int ancho, int alto) {
-
-        Image imagen = icono.getImage(); // Obtener la imagen del ImageIcon
-
-        Image imagenRedimensionada = imagen.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH); // Redimensionar la imagen
-
-        return new ImageIcon(imagenRedimensionada); // Devolver la imagen redimensionada como ImageIcon
-
-    }
 
     private void initTables() {
     	try {
@@ -228,14 +251,8 @@ public class ConcertsListRenderer extends JFrame {
 		TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
 			JLabel result = new JLabel(value.toString());
 			
-			//Si el valor es de tipo Logo: se renderiza con la imagen centrada
-			
-				
-				
-			
-
-			
-			    
+			//En la columna 0: se renderiza con la imagen centrada
+  
 			if (column == 0) {
 				result.setIcon(new ImageIcon(value.toString()));
 				
@@ -271,9 +288,7 @@ public class ConcertsListRenderer extends JFrame {
 			
 			return result;
 		};
-		//Se crea un CellEditor a partir de un JComboBox()
-		JComboBox<Logo> jComboEditorial = new JComboBox<>(Logo.values());		
-		DefaultCellEditor editorialEditor = new DefaultCellEditor(jComboEditorial);
+
 		
 		this.tablaConcert.addKeyListener(refresh);
 		this.tablaConcert.addKeyListener(admin);
@@ -296,7 +311,7 @@ public class ConcertsListRenderer extends JFrame {
                     int selectedRow = tablaConcert.getSelectedRow();
                     if (selectedRow != -1) {
                         //int idConcierto = (int) tablaConcert.getValueAt(selectedRow, 1); // Obtiene el ID de la fila seleccionada
-                        MainDisponibilidadTicket maindisponibilidad = new MainDisponibilidadTicket((new Concert((tablaConcert.getValueAt(selectedRow, 1)).toString())),gestorBD);
+                        DisponibilidadTicketFrame maindisponibilidad = new DisponibilidadTicketFrame((new Concert((tablaConcert.getValueAt(selectedRow, 1)).toString())),gestorBD);
                         maindisponibilidad.setVisible(false);
                         new ProgressBar(maindisponibilidad);
                         //maindisponibilidad.setVisible(true);
@@ -312,6 +327,8 @@ public class ConcertsListRenderer extends JFrame {
 		//Se borran los datos del modelo de datos
     	ArrayList<Concert> conciertos = new ArrayList<Concert>();
     	conciertos = new ArrayList<>(gestorBD.obtenerConciertos());
+    	
+    	//Procedimiento antiguo antes de las BBDD,utilizando unfichero csv
     	/*try {
 			Scanner sc = new Scanner(new File("resources\\data\\Concerts.csv"));
 			while(sc.hasNextLine()){
@@ -343,7 +360,7 @@ public class ConcertsListRenderer extends JFrame {
     private void filterConcerts(String text) {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(this.modeloDatosConcerts);
         this.tablaConcert.setRowSorter(sorter);
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 1));
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 2));
     }
     
     

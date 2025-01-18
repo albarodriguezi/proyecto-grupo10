@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.prog3.grupodiez.main;
+package es.deusto.ingenieria.prog3.grupodiez.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,6 +20,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import es.deusto.ingenieria.prog3.grupodiez.db.GestorBD;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
 
@@ -47,31 +48,20 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import es.deusto.ingenieria.prog3.grupodiez.domain.Concert;
 import es.deusto.ingenieria.prog3.grupodiez.domain.Fecha;
-import es.deusto.ingenieria.prog3.grupodiez.gui.DisponibilidadTicket;
-import es.deusto.ingenieria.prog3.grupodiez.gui.DisponibilidadticketRenderer;
-import es.deusto.ingenieria.prog3.grupodiez.gui.TicketBookingDialog;
-import es.deusto.ingenieria.prog3.grupodiez.persistence.GestorBD;
 
-public class MainDisponibilidadTicket extends JFrame{
+public class DisponibilidadTicketFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	private Concert concerts;
 	private GestorBD gestorBD;
 	private JTable jTableFechas =  new JTable();//creamos una nueva JTable para las fehcas de los conciertos
-	private JLabel jLabelInfo = new JLabel(" Selecciona un concierto");//definimos el titulo de la JTable 
-	private JComboBox<String> jComboConcerts = new JComboBox<>();//no la necesitamos
-	private JButton jBtnSearch = new JButton("Busqueda de fechas por concierto");//no lo necesitamos
 
 	
-	public MainDisponibilidadTicket(Concert c,GestorBD gbd) {
+	public DisponibilidadTicketFrame(Concert c,GestorBD gbd) {
 		this.gestorBD = gbd;
 		this.concerts = c;//definimos la lista de los conciertos
 		setBackground(Color.pink);
-		//jComboConcerts.setPrototypeDisplayValue("Selecciona un concierto");
-		List<Fecha> fechas = new ArrayList<>(); // Este es el lugar donde deberías añadir las fechas
-        DefaultTableModel model = new DisponibilidadTicket(concerts,gestorBD).getModeloDatosFechas();
-        //System.out.println(model.getRowCount());
-        //System.out.println(model.getRowCount());
+        DefaultTableModel model = new DisponibilidadTicketModel(concerts,gestorBD).getModeloDatosFechas();
         jTableFechas.setModel(model);
         jTableFechas.setVisible(true);;
 
@@ -107,7 +97,7 @@ public class MainDisponibilidadTicket extends JFrame{
 				// TODO Auto-generated method stub
 				if(e.getKeyCode() == KeyEvent.VK_G && e.isControlDown()) {
 					System.out.println("a");
-					DefaultTableModel newModel=new DisponibilidadTicket(concerts,gestorBD).getModeloDatosFechas();
+					DefaultTableModel newModel=new DisponibilidadTicketModel(concerts,gestorBD).getModeloDatosFechas();
 					jTableFechas.setModel(newModel);
 					setRenderer(jTableFechas);
 				}
@@ -167,79 +157,10 @@ public class MainDisponibilidadTicket extends JFrame{
 
 	}
 	
-		/*jComboConcerts.addActionListener((e) -> {
-			Object fromItem = ((JComboBox<?>) e.getSource()).getSelectedItem();
-			
-			if (fromItem != null && !fromItem.toString().isEmpty()) {
-				final String concert = fromItem.toString().substring(0, fromItem.toString().indexOf("-"));
-			}
-			
-			jLabelInfo.setText("selecciona concierto");
-		});
-		
-		/*jBtnSearch.setEnabled(false);
-		jBtnSearch.addActionListener((e) -> {
-			Object item = jComboConcerts.getSelectedItem();
-			String concert = item.toString().substring(0, item.toString().indexOf("-"));
-			
-			List<concerts> listconcerts = new ArrayList<>();
-			
-			new Thread(()->{
-				listconcerts.addAll(search(concert));
-				DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(String.format("%02d Itinerarios", listconcerts.size()));
-				DefaultMutableTreeNode itineraryNode;
-				
-				float price = 0;
-				int duration = 0;
-				 for (int i=0, i<listconcerts.size(); i++) {
-					 itineraryNode = new DefaultMutableTreeNode();
-					 rootNode.add(itineraryNode);
-					 
-					 for (Concert c : listconcerts.get(i)) {
-						 itineraryNode.add(new DefaultMutableTreeNode(c));
-						 duration += c.getDuration();
-						 price += c.getPrice();
-					 }
-					 
-					 itineraryNode.setUserObject(String.format("%2d fecha, %2d min., %.2f €", 
-							 listconcerts.get(i).size(), 
-							 duration, 
-							 price));
-				 }
-				 JScrollPane scrollPane = new JScrollPane(new JTree(rootNode));
-				 scrollPane.sPreferredSize(new Dimension(600.300));
-				 JOptionPane.showMessageDialog(this,
-				 		scrollPane,
-				 		String.format("itinerarios en %2", concert),
-				 		JOptionPane.PLAIN_MESSAGE,
-			}).start();
-		});
 		
 		
-		jTableFechas.setRowHeight(40);
-		jTableFechas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		((DefaultTableCellRenderer) jTableFechas.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 		
-		jLabelInfo.setHorizontalAlignment(JLabel.RIGHT);
-		
-		JPanel pSearch = new JPanel();
-		pSearch.setBorder(new TitledBorder("Busqueda de fechas"));
-		pSearch.setLayout(new GridLayout(1,1));
-		
-		add(pSearch, BorderLayout.NORTH);
-		add(new JScrollPane(jTableFechas), BorderLayout.CENTER);
-		add(jLabelInfo, BorderLayout.SOUTH);
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Fechas conciertos");
-		setSize(1400,800);
-		setLocationRelativeTo(null);
-		setVisible(true);
-	}
-	*/
-		
-		
-		public static void main(String[] args) {
+		/*public static void main(String[] args) {
 			//lista de las fechas de los conciertos
 			
 			/*Fecha fecha1 = new Fecha(1, 1, 2024,Concert.Logo.ADELELIVE, 92567 );
@@ -264,13 +185,13 @@ public class MainDisponibilidadTicket extends JFrame{
 			fechas.add(fecha7);
 			fechas.add(fecha8);
 			fechas.add(fecha9);
-			fechas.add(fecha10);*/
+			fechas.add(fecha10);
 			
 					
 			SwingUtilities.invokeLater(() -> {
-				new MainDisponibilidadTicket(new Concert("123456"),new GestorBD());
+				new DisponibilidadTicketFrame(new Concert("123456"),new GestorBD());
 				
 		    });
-		}
+		}*/
 }
 	
